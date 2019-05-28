@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MeetingWebsite.BLL.Interfaces
+namespace MeetingWebsite.BLL.Services
 {
     public interface IEmailService
     {

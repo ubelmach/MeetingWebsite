@@ -19,3 +19,10 @@ D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\n
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\obj\Debug\netcoreapp2.1\MeetingWebsite.Api.csproj.CopyComplete
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\obj\Debug\netcoreapp2.1\MeetingWebsite.Api.dll
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\obj\Debug\netcoreapp2.1\MeetingWebsite.Api.pdb
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\netcoreapp2.1\MeetingWebsite.BLL.dll
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\netcoreapp2.1\MimeKit.dll
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\netcoreapp2.1\MailKit.dll
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\netcoreapp2.1\MeetingWebsite.BLL.pdb
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\netcoreapp2.1\MeetingWebsite.BLL.dll.config
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\netcoreapp2.1\MimeKit.xml
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.Api\bin\Debug\netcoreapp2.1\MailKit.xml
