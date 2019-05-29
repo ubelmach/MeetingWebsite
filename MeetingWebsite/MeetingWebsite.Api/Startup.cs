@@ -82,6 +82,7 @@ namespace MeetingWebsite.Api
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 
@@ -95,6 +96,11 @@ namespace MeetingWebsite.Api
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
 
             app.UseHttpsRedirection();
             app.UseAuthentication();

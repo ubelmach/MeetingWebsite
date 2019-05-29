@@ -42,27 +42,20 @@ namespace MeetingWebsite.BLL.Services
                 UserName = model.Email
             };
 
-            try
-            {
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (!result.Succeeded)
-                    return null;
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+                return null;
 
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var encode = HttpUtility.UrlEncode(code);
-                var callbackUrl = new StringBuilder("https://")
-                    .AppendFormat(url)
-                    .AppendFormat("/api/account/ConfirmEmail")
-                    .AppendFormat($"?userId={user.Id}&code={encode}");
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var encode = HttpUtility.UrlEncode(code);
+            var callbackUrl = new StringBuilder("https://")
+                .AppendFormat(url)
+                .AppendFormat("/api/account/ConfirmEmail")
+                .AppendFormat($"?userId={user.Id}&code={encode}");
 
-                await _emailService.SendEmailAsync(user.Email, "Confirm your account",
-                    $"Confirm the registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            await _emailService.SendEmailAsync(user.Email, "Confirm your account",
+                $"Confirm the registration by clicking on the link: <a href='{callbackUrl}'>link</a>");
+            return result;
         }
 
         public async Task<OperationDetails> ConfirmEmail(User user, string code)

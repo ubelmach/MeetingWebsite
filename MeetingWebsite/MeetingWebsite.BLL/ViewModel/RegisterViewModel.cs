@@ -21,10 +21,10 @@ namespace MeetingWebsite.BLL.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "Passwords do not match")]
-        [DataType(DataType.Password)]
-        public string PasswordConfirm { get; set; }
+        //[Required]
+        //[Display(Name = "Confirm password")]
+        //[Compare("Password", ErrorMessage = "Passwords do not match")]
+        //[DataType(DataType.Password)]
+        //public string PasswordConfirm { get; set; }
     }
 }

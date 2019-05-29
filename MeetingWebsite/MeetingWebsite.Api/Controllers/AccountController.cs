@@ -17,12 +17,12 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST: /api/account/Register
         [HttpPost, Route("Register")]
-        public async Task<object> Register([FromForm]RegisterViewModel model)
+        public async Task<object> Register(RegisterViewModel model)
         {
             var url = HttpContext.Request.Host.ToString();
             var result = await _accountService.RegisterUser(model, url);
             if (result == null)
-                return BadRequest(new { message = "Error" });
+                return BadRequest(new { message = "User with this email is already registered" });
             return Ok(result);
         }
 
@@ -49,7 +49,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST : /api/account/Login
         [HttpPost, Route("Login")]
-        public async Task<IActionResult> Login([FromForm]LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             var token = await _accountService.LoginUser(model);
             if (token != null)
