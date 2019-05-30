@@ -149,7 +149,6 @@ D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\S
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.EntityFrameworkCore.dll
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.Extensions.Caching.Abstractions.dll
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Remotion.Linq.dll
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\System.Collections.Immutable.dll
@@ -214,3 +213,10 @@ D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\M
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.csproj.CopyComplete
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.dll
 D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.pdb
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.AspNetCore.WebSockets.dll
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.AspNetCore.WebSockets.xml
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.Constants.resources
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.csproj.GenerateResource.cache
+D:\VironIT\Projects\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll

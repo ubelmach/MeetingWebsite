@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.BLL.ViewModel
 {
@@ -13,6 +14,7 @@ namespace MeetingWebsite.BLL.ViewModel
         public string LastName { get; set; }
 
         [Required]
+        [EmailAddress]
         [Display(Name = "Email address")]
         public string Email { get; set; }
 
@@ -21,10 +23,16 @@ namespace MeetingWebsite.BLL.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        //[Required]
-        //[Display(Name = "Confirm password")]
-        //[Compare("Password", ErrorMessage = "Passwords do not match")]
-        //[DataType(DataType.Password)]
-        //public string PasswordConfirm { get; set; }
+        public User CreateUser()
+        {
+            return new User()
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                Email = Email,
+                UserName = Email
+            };
+        }
+
     }
 }

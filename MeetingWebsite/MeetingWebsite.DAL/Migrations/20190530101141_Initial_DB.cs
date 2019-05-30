@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MeetingWebsite.DAL.Migrations
 {
-    public partial class InitialDb : Migration
+    public partial class Initial_DB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,16 +43,14 @@ namespace MeetingWebsite.DAL.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Gender = table.Column<string>(nullable: true),
+                    Birthday = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
                     PurposeOfDating = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
-                    MaritalStatus = table.Column<string>(nullable: true),
                     Height = table.Column<string>(nullable: true),
                     Weight = table.Column<string>(nullable: true),
                     Education = table.Column<string>(nullable: true),
                     Nationality = table.Column<string>(nullable: true),
-                    ZodiacSign = table.Column<string>(nullable: true),
+                    ZodiacSign = table.Column<int>(nullable: false),
                     KnowledgeOfLanguages = table.Column<string>(nullable: true),
                     BadHabits = table.Column<string>(nullable: true),
                     FinancialSituation = table.Column<string>(nullable: true),
@@ -62,6 +60,70 @@ namespace MeetingWebsite.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Files",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: true),
+                    MessageId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Files", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Friendships",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FirstFriendId = table.Column<string>(nullable: true),
+                    SecondFriendId = table.Column<string>(nullable: true),
+                    InviteStatus = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Friendships", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SenderId = table.Column<string>(nullable: true),
+                    ReceiverId = table.Column<string>(nullable: true),
+                    IdFile = table.Column<int>(nullable: false),
+                    IdDialog = table.Column<int>(nullable: false),
+                    Text = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    New = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PhotoAlbums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhotoAlbums", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,107 +232,6 @@ namespace MeetingWebsite.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Friendships",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdFirstFriend = table.Column<string>(nullable: true),
-                    IdSecondFriend = table.Column<string>(nullable: true),
-                    Confirmed = table.Column<bool>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Friendships", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Friendships_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PhotoAlbums",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdUser = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PhotoAlbums", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PhotoAlbums_AspNetUsers_IdUser",
-                        column: x => x.IdUser,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Files",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Path = table.Column<string>(nullable: true),
-                    PhotoAlbumId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Files", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Files_PhotoAlbums_PhotoAlbumId",
-                        column: x => x.PhotoAlbumId,
-                        principalTable: "PhotoAlbums",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Files_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdSender = table.Column<string>(nullable: true),
-                    IdReceiver = table.Column<string>(nullable: true),
-                    IdFile = table.Column<int>(nullable: false),
-                    Text = table.Column<string>(nullable: true),
-                    DateTime = table.Column<DateTime>(nullable: false),
-                    New = table.Column<bool>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Messages_Files_IdFile",
-                        column: x => x.IdFile,
-                        principalTable: "Files",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -307,37 +268,6 @@ namespace MeetingWebsite.DAL.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_PhotoAlbumId",
-                table: "Files",
-                column: "PhotoAlbumId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_UserId",
-                table: "Files",
-                column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Friendships_UserId",
-                table: "Friendships",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_IdFile",
-                table: "Messages",
-                column: "IdFile");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_UserId",
-                table: "Messages",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PhotoAlbums_IdUser",
-                table: "PhotoAlbums",
-                column: "IdUser");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -358,19 +288,19 @@ namespace MeetingWebsite.DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Files");
+
+            migrationBuilder.DropTable(
                 name: "Friendships");
 
             migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Files");
-
-            migrationBuilder.DropTable(
                 name: "PhotoAlbums");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -1,7 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
+using MeetingWebsite.DAL.EF;
+using MeetingWebsite.Models.Entities;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace MeetingWebsite.Api.Controllers
 {
@@ -9,10 +21,26 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private MeetingDbContext _context;
+        private UserManager<User> _userManager;
+        private SignInManager<User> _signInManager;
+        private readonly ApplicationSettings _applicationSettingsOption;
+
         private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+
+        public AccountController(IAccountService accountService,
+            MeetingDbContext context,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IOptions<ApplicationSettings> applicationSettingsOption)
         {
             _accountService = accountService;
+
+            _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _applicationSettingsOption = applicationSettingsOption.Value;
+
         }
 
         //POST: /api/account/Register
@@ -36,11 +64,13 @@ namespace MeetingWebsite.Api.Controllers
                 ModelState.AddModelError("", "User Id and Code are required");
                 return BadRequest(ModelState);
             }
+
             var user = await _accountService.GetUser(userId);
             if (user == null)
             {
                 return BadRequest("Error");
             }
+
             var result = await _accountService.ConfirmEmail(user, code);
             if (result.Succeeded)
                 return Ok();
@@ -55,6 +85,54 @@ namespace MeetingWebsite.Api.Controllers
             if (token != null)
                 return Ok(new { token });
             return BadRequest(new { message = "Username or password is incorrect or not confirm email." });
+        }
+
+        //GET : /api/account/SignInWithGoogle
+        [HttpGet, Route("SignInWithGoogle")]
+        public IActionResult SignInWithGoogle()
+        {
+            var authenticationProperties = 
+                _signInManager.ConfigureExternalAuthenticationProperties("Google", Url.Action(nameof(HandleExternalLogin)));
+            return Challenge(authenticationProperties, "Google");
+        }
+
+        public async Task<object> HandleExternalLogin()
+        {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+
+            if (result.Succeeded)
+                return Redirect("http://localhost:4200");
+
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var newUser = new User
+            {
+                UserName = email,
+                Email = email,
+                EmailConfirmed = true
+            };
+            var createResult = await _userManager.CreateAsync(newUser);
+            if (!createResult.Succeeded)
+                throw new Exception(createResult.Errors.Select(e => e.Description).Aggregate((errors, error) => $"{errors}, {error}"));
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim("UserID", newUser.Id)
+                }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials =
+                    new SigningCredentials(
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_applicationSettingsOption.JWT_secret)),
+                        SecurityAlgorithms.HmacSha256Signature)
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.WriteToken(securityToken);
+            await _signInManager.SignInAsync(newUser, isPersistent: false);
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            return token;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MeetingWebsite.Models.EntityEnums;
 
 namespace MeetingWebsite.Models.Entities
 {
@@ -9,13 +10,17 @@ namespace MeetingWebsite.Models.Entities
         public int Id { get; set; }
 
         [ForeignKey("FirstFriend")]
-        public string IdFirstFriend { get; set; }
+        public string FirstFriendId { get; set; }
+
+        [NotMapped]
+        public virtual User FirstFriend { get; set; }
 
         [ForeignKey("SecondFriend")]
-        public string IdSecondFriend { get; set; }
+        public string SecondFriendId { get; set; }
 
-        public bool Confirmed { get; set; }
+        [NotMapped]
+        public virtual User SecondFriend { get; set; }
 
-        public virtual User User { get; set; }
+        public InviteStatuses InviteStatus { get; set; }
     }
 }

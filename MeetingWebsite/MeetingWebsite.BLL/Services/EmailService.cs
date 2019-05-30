@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MailKit.Net.Smtp;
+using MeetingWebsite.BLL.Builders;
 using Microsoft.AspNetCore.Hosting;
 using MimeKit;
 
@@ -16,22 +17,13 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-            var emailMessage = new MimeMessage();
-
-            emailMessage.From.Add(new MailboxAddress("Site administration", "messendertest@mail.ru"));
-            emailMessage.To.Add(new MailboxAddress("", email));
-            emailMessage.Subject = subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-            {
-                Text = message
-            };
+            var emailMessage = new EmailBuilder().From().To(email).Subject(subject).Body(message).Build();
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.mail.ru", 587, false);
-                await client.AuthenticateAsync("messendertest@mail.ru", "15975310895623Vladimir!");
+                await client.ConnectAsync(Constants.Smtp_Host, int.Parse(Constants.Smtp_Port), false);
+                await client.AuthenticateAsync(Constants.Smtp_UserName, Constants.Smtp_Password);
                 await client.SendAsync(emailMessage);
-
                 await client.DisconnectAsync(true);
             }
         }

@@ -8,6 +8,7 @@ using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -79,6 +80,22 @@ namespace MeetingWebsite.Api
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
+                })
+                //.AddFacebook("Facebook", options =>
+                //{
+                //    options.AppSecret = "bb60ddb9db71cca56972fa6f6b3d8fb5";
+                //    options.AppId = "241399096724373";
+                //})
+                .AddGoogle("Google", options =>
+                {
+                    options.CallbackPath = new PathString("/signin-google");
+                    options.ClientId = "526768688788-7b660hm931dfann35p93pn34cle8h2r6.apps.googleusercontent.com";
+                    options.ClientSecret = "KRVsEMbicD2sfWFLxHri6rjg";
+                });
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();

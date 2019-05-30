@@ -46,4 +46,9 @@ export class UserService {
   getUserProfile(){
     return this.http.get(this.BaseURI + '/user/UserProfile');
   }
+
+  onLoginWithGoogleAccount() {
+    return this.http.get(this.BaseURI + '/account/SignInWithGoogle');
+  }
+
 }

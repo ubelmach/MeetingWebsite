@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingWebsite.DAL.Migrations
 {
     [DbContext(typeof(MeetingDbContext))]
-    [Migration("20190528083447_Initial Db")]
-    partial class InitialDb
+    [Migration("20190530101141_Initial_DB")]
+    partial class Initial_DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,20 +24,15 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("MessageId");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Path");
 
-                    b.Property<int?>("PhotoAlbumId");
-
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PhotoAlbumId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Files");
                 });
@@ -47,17 +42,13 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Confirmed");
+                    b.Property<string>("FirstFriendId");
 
-                    b.Property<string>("IdFirstFriend");
+                    b.Property<int>("InviteStatus");
 
-                    b.Property<string>("IdSecondFriend");
-
-                    b.Property<string>("UserId");
+                    b.Property<string>("SecondFriendId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Friendships");
                 });
@@ -67,25 +58,21 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DateTime");
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("IdDialog");
 
                     b.Property<int>("IdFile");
 
-                    b.Property<string>("IdReceiver");
-
-                    b.Property<string>("IdSender");
-
                     b.Property<bool>("New");
+
+                    b.Property<string>("ReceiverId");
+
+                    b.Property<string>("SenderId");
 
                     b.Property<string>("Text");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("IdFile");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Messages");
                 });
@@ -95,13 +82,11 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("IdUser");
-
                     b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId");
 
-                    b.HasIndex("IdUser");
+                    b.HasKey("Id");
 
                     b.ToTable("PhotoAlbums");
                 });
@@ -117,10 +102,10 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("BadHabits");
 
+                    b.Property<DateTime>("Birthday");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<DateTime>("DateOfBirth");
 
                     b.Property<string>("Education");
 
@@ -133,7 +118,7 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<string>("Gender");
+                    b.Property<int>("Gender");
 
                     b.Property<string>("Height");
 
@@ -146,8 +131,6 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("MaritalStatus");
 
                     b.Property<string>("Nationality");
 
@@ -169,14 +152,12 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("Type");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.Property<string>("Weight");
 
-                    b.Property<string>("ZodiacSign");
+                    b.Property<int>("ZodiacSign");
 
                     b.HasKey("Id");
 
@@ -295,43 +276,6 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("MeetingWebsite.Models.Entities.File", b =>
-                {
-                    b.HasOne("MeetingWebsite.Models.Entities.PhotoAlbum")
-                        .WithMany("File")
-                        .HasForeignKey("PhotoAlbumId");
-
-                    b.HasOne("MeetingWebsite.Models.Entities.User", "User")
-                        .WithOne("File")
-                        .HasForeignKey("MeetingWebsite.Models.Entities.File", "UserId");
-                });
-
-            modelBuilder.Entity("MeetingWebsite.Models.Entities.Friendship", b =>
-                {
-                    b.HasOne("MeetingWebsite.Models.Entities.User", "User")
-                        .WithMany("Friendship")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("MeetingWebsite.Models.Entities.Message", b =>
-                {
-                    b.HasOne("MeetingWebsite.Models.Entities.File", "File")
-                        .WithMany()
-                        .HasForeignKey("IdFile")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MeetingWebsite.Models.Entities.User", "User")
-                        .WithMany("Message")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("MeetingWebsite.Models.Entities.PhotoAlbum", b =>
-                {
-                    b.HasOne("MeetingWebsite.Models.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("IdUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
