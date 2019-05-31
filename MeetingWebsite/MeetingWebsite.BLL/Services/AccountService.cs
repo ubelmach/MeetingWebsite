@@ -22,17 +22,21 @@ namespace MeetingWebsite.BLL.Services
         private readonly UserManager<User> _userManager;
         private readonly ApplicationSettings _applicationSettingsOption;
         private readonly IEmailService _emailService;
+        private readonly IFileService _fileService;
         private const string ConfirmEmailController = "/api/account/ConfirmEmail";
 
         public AccountService(IUnitOfWork uow,
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettingsOption,
-            IEmailService emailService)
+            IEmailService emailService,
+            IFileService fileService
+            )
         {
             Database = uow;
             _userManager = userManager;
             _applicationSettingsOption = applicationSettingsOption.Value;
             _emailService = emailService;
+            _fileService = fileService;
         }
 
         public async Task<object> RegisterUser(RegisterViewModel model, string url)
@@ -41,6 +45,7 @@ namespace MeetingWebsite.BLL.Services
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return null;
+
             await _emailService.SendEmailAsync(user.Email, Constants.ConfirmationEmail_Subject,
                 string.Format(Constants.ConfirmationEmail_Message, CreateCallbackUrl(user, url).GetAwaiter().GetResult()));
             return result;
@@ -67,14 +72,13 @@ namespace MeetingWebsite.BLL.Services
         public async Task<object> LoginUser(LoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user != null
-                && await _userManager.CheckPasswordAsync(user, model.Password)
-                && await _userManager.IsEmailConfirmedAsync(user))
-            {
-                return new JwtSecurityTokenBuilder()
-                    .Subject(user.Id).ExpiresInOneDay().SigningCredentials(_applicationSettingsOption.JWT_secret).Build();
-            }
-            return null;
+            if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password) ||
+                !await _userManager.IsEmailConfirmedAsync(user))
+                return null;
+
+            _fileService.SetUserFolder(user);
+            return new JwtSecurityTokenBuilder()
+                .Subject(user.Id).ExpiresInOneDay().SigningCredentials(_applicationSettingsOption.JWT_secret).Build();
         }
 
         public async Task<User> GetUser(string userId)

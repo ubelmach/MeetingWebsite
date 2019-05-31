@@ -22,7 +22,7 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("CurrentUserId");
 
                     b.Property<string>("WhomId");
 
@@ -51,6 +51,8 @@ namespace MeetingWebsite.DAL.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AlbumId");
 
                     b.Property<int>("MessageId");
 
@@ -94,8 +96,6 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<bool>("New");
 
-                    b.Property<string>("ReceiverId");
-
                     b.Property<string>("SenderId");
 
                     b.Property<string>("Text");
@@ -126,41 +126,27 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<bool>("AnonymityMode");
-
-                    b.Property<string>("BadHabits");
-
                     b.Property<DateTime>("Birthday");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("Education");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FinancialSituation");
-
                     b.Property<string>("FirstName");
 
                     b.Property<int>("Gender");
 
-                    b.Property<string>("Height");
-
-                    b.Property<string>("Interests");
-
-                    b.Property<string>("KnowledgeOfLanguages");
+                    b.Property<string>("HomeDir");
 
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("Nationality");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -174,18 +160,12 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("PurposeOfDating");
-
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Weight");
-
-                    b.Property<int>("ZodiacSign");
 
                     b.HasKey("Id");
 

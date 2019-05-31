@@ -8,12 +8,16 @@ namespace MeetingWebsite.Models.Entities
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("User")]
-        public string UserId { get; set; }
+        [ForeignKey("CurrentUser")]
+        public string CurrentUserId { get; set; }
 
         [NotMapped]
-        public virtual User User { get; set; }
+        public virtual User CurrentUser { get; set; }
 
+        [ForeignKey("Whom")]
         public string WhomId { get; set; }
+
+        [NotMapped]
+        public virtual User Whom { get; set; }
     }
 }

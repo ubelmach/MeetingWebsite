@@ -20,6 +20,13 @@ namespace MeetingWebsite.Models.Entities
         [NotMapped]
         public virtual Message Message { get; set; }
 
+        [ForeignKey("Album")]
+        public int AlbumId { get; set; }
+
+        [NotMapped]
+        public virtual PhotoAlbum Album { get; set; }
+
+
         public string Name { get; set; }
         public string Path { get; set; }
     }

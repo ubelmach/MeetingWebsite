@@ -16,12 +16,15 @@ namespace MeetingWebsite.Api.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
+        private readonly IFileService _fileService;
 
         public UserController(IAccountService accountService,
-            IUserService userService)
+            IUserService userService,
+            IFileService fileService)
         {
             _accountService = accountService;
             _userService = userService;
+            _fileService = fileService;
         }
 
         //GET: /api/user/UserProfile
@@ -42,6 +45,34 @@ namespace MeetingWebsite.Api.Controllers
                 Email = user.Email
             };
             return Ok(userProfile);
+        }
+
+        //PUT : /api/user/EditUserInformation
+        [HttpPut, Route("EditUserInformation")]
+        public async Task<object> EditUserInformation([FromForm] EditUserProfileInformation editUser)
+        {
+            if (editUser == null)
+                return BadRequest();
+
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            editUser.Id = userId;
+
+            await _userService.EditUserInformation(editUser);
+            return Ok(editUser);
+        }
+
+        //PUT : /api/user/EditUserAvatar
+        [HttpPut, Route("EditUserAvatar")]
+        public async Task<object> EditUserAvatar([FromForm] EditUserAvatarViewModel editUserAvatar)
+        {
+            if (editUserAvatar == null)
+                return BadRequest();
+
+            var userId = User.Claims.First(c => c.Type == "UserId").Value;
+            var user = _accountService.GetUser(userId);
+
+            await _fileService.AddUserAvatar(editUserAvatar, user.Result);
+            return Ok(editUserAvatar);
         }
     }
 }

@@ -12889,23 +12889,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Владимир Бельмач\\.nuget\\packages\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VironIT\\Projects\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.Api\\MeetingWebsite.Api.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\FinalTask\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.Api\\MeetingWebsite.Api.csproj",
       "projectName": "MeetingWebsite.Api",
-      "projectPath": "D:\\VironIT\\Projects\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.Api\\MeetingWebsite.Api.csproj",
-      "packagesPath": "C:\\Users\\Владимир Бельмач\\.nuget\\packages\\",
-      "outputPath": "D:\\VironIT\\Projects\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.Api\\obj\\",
+      "projectPath": "C:\\Users\\User\\Desktop\\FinalTask\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.Api\\MeetingWebsite.Api.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\FinalTask\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Владимир Бельмач\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12918,11 +12918,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "D:\\VironIT\\Projects\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.BLL\\MeetingWebsite.BLL.csproj": {
-              "projectPath": "D:\\VironIT\\Projects\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.BLL\\MeetingWebsite.BLL.csproj"
+            "C:\\Users\\User\\Desktop\\FinalTask\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.BLL\\MeetingWebsite.BLL.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\FinalTask\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.BLL\\MeetingWebsite.BLL.csproj"
             },
-            "D:\\VironIT\\Projects\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.DAL\\MeetingWebsite.DAL.csproj": {
-              "projectPath": "D:\\VironIT\\Projects\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.DAL\\MeetingWebsite.DAL.csproj"
+            "C:\\Users\\User\\Desktop\\FinalTask\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.DAL\\MeetingWebsite.DAL.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\FinalTask\\MeetingWebsite\\MeetingWebsite\\MeetingWebsite.DAL\\MeetingWebsite.DAL.csproj"
             }
           }
         }

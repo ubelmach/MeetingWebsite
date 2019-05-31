@@ -36,13 +36,13 @@ namespace MeetingWebsite.Api
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<IdentityOptions>(options =>
-                {
-                    options.Password.RequireDigit = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequiredLength = 4;
-                }
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 4;
+            }
             );
 
             services.AddIdentity<User, IdentityRole>()
@@ -50,9 +50,6 @@ namespace MeetingWebsite.Api
                 .AddDefaultTokenProviders();
 
             services.AddCors();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddMvc().AddJsonOptions(options =>
             {
                 var resolver = options.SerializerSettings.ContractResolver;
@@ -82,9 +79,9 @@ namespace MeetingWebsite.Api
             });
 
             services.AddAuthentication(options =>
-                {
-                    options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
-                })
+            {
+                options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
+            })
                 //.AddFacebook("Facebook", options =>
                 //{
                 //    options.AppSecret = "bb60ddb9db71cca56972fa6f6b3d8fb5";
@@ -100,11 +97,49 @@ namespace MeetingWebsite.Api
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //app.Use(async (ctx, next) =>
+            //{
+            //    await next();
+            //    if (ctx.Response.StatusCode == 204)
+            //    {
+            //        ctx.Response.ContentLength = 0;
+            //    }
+            //});
+
+            //app.Use(async (context, next) =>
+            //{
+            //    await next();
+
+            //    context.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+            //    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
+
+            //    if (!context.Response.Headers.ContainsKey("Access-Control-Allow-Origin"))
+            //    {
+            //        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+            //    }
+
+            //    if (context.Request.Method?.ToUpperInvariant() == "OPTIONS")
+            //    {
+            //        context.Response.StatusCode = 200;
+            //        await context.Response.WriteAsync("");
+            //    }
+            //    else
+            //    if (context.Response.StatusCode == 404 &&
+            //        !Path.HasExtension(context.Request.Path.Value) &&
+            //        !context.Request.Path.Value.StartsWith("/api/"))
+            //    {
+            //        context.Response.StatusCode = 200;
+            //        context.Response.ContentType = "text/html";
+            //        await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
+            //    }
+            //});
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -114,14 +149,15 @@ namespace MeetingWebsite.Api
                 app.UseHsts();
             }
 
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod());
+            app.UseCors(options =>
+            options.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
+
             app.UseStaticFiles();
         }
     }

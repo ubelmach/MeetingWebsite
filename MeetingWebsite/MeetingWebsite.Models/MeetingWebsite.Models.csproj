@@ -189,6 +189,7 @@
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\PhotoAlbum.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="EntityEnums\Genders.cs" />
     <Compile Include="EntityEnums\InviteStatuses.cs" />
     <Compile Include="EntityEnums\ZodiacSigns.cs" />

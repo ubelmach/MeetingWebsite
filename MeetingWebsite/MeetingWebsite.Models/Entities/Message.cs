@@ -17,12 +17,6 @@ namespace MeetingWebsite.Models.Entities
         [NotMapped]
         public virtual User Sender { get; set; }
 
-        [ForeignKey("Receiver")]
-        public string ReceiverId { get; set; }
-
-        [NotMapped]
-        public virtual User Receiver { get; set; }
-
         [ForeignKey("File")]
         public int IdFile { get; set; }
 
