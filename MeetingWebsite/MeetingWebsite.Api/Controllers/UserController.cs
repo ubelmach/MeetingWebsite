@@ -18,6 +18,9 @@ namespace MeetingWebsite.Api.Controllers
         private readonly IUserService _userService;
         private readonly IFileService _fileService;
 
+        private const int LengthMax = 5242880;
+        private const string CorrectType = "image/jpeg";
+
         public UserController(IAccountService accountService,
             IUserService userService,
             IFileService fileService)
@@ -68,10 +71,26 @@ namespace MeetingWebsite.Api.Controllers
             if (editUserAvatar == null)
                 return BadRequest();
 
-            var userId = User.Claims.First(c => c.Type == "UserId").Value;
-            var user = _accountService.GetUser(userId);
+            var type = editUserAvatar.Avatar.ContentType;
+            var length = editUserAvatar.Avatar.Length;
 
-            await _fileService.AddUserAvatar(editUserAvatar, user.Result);
+            if (type != CorrectType)
+            {
+                ModelState.AddModelError("Avatar", "Error, allowed image resolution jpg / jpeg");
+                return BadRequest(ModelState);
+            }
+
+            if (length > LengthMax)
+            {
+                ModelState.AddModelError("Avatar", "Error, permissible image size should not exceed 2 MB");
+                return BadRequest(ModelState);
+            }
+
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = _accountService.GetUser(userId);
+            editUserAvatar.User = user.Result;
+
+            await _fileService.AddUserAvatar(editUserAvatar);
             return Ok(editUserAvatar);
         }
     }

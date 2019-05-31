@@ -21,7 +21,7 @@ namespace MeetingWebsite.Models.Entities
         public int IdFile { get; set; }
 
         [NotMapped]
-        public virtual List<File> Files { get; set; }
+        public virtual List<FileModel> Files { get; set; }
 
         [ForeignKey("Dialog")]
         public int IdDialog { get; set; }

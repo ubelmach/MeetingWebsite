@@ -6,7 +6,7 @@ namespace MeetingWebsite.BLL.Services
 {
     public interface IFileService
     {
-        void SetUserFolder(User user /*string userId*/);
-        Task<User> AddUserAvatar(EditUserAvatarViewModel editAvatar, User user);
+        void SetUserFolder(User user);
+        Task AddUserAvatar(EditUserAvatarViewModel editAvatar);
     }
 }

@@ -14,10 +14,10 @@ namespace MeetingWebsite.BLL.Services
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public FileService(IUnitOfWork uow,
-            IHostingEnvironment appEnvironment)
+            IHostingEnvironment hostingEnvironment)
         {
             Database = uow;
-            _hostingEnvironment = appEnvironment;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public void SetUserFolder(User user)
@@ -32,34 +32,29 @@ namespace MeetingWebsite.BLL.Services
                 Directory.CreateDirectory(path);
         }
 
-        public Task<User> AddUserAvatar(EditUserAvatarViewModel editAvatar, User user)
+        public async Task AddUserAvatar(EditUserAvatarViewModel editAvatar)
         {
-            throw new System.NotImplementedException();
+            var path = editAvatar.User.HomeDir + "\\Avatar\\";
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            using (var fileStream = new FileStream(path + editAvatar.Avatar.FileName, FileMode.Create))
+            {
+                await editAvatar.Avatar.CopyToAsync(fileStream);
+            }
+
+            var avatar = new FileModel
+            {
+                UserId = editAvatar.User.Id,
+                Name = editAvatar.Avatar.FileName,
+                Path = path
+            };
+            Database.FileRepository.Create(avatar);
+            Database.Save();
+
+            editAvatar.User.AvatarId = avatar.Id;
+            Database.UserRepository.Update(editAvatar.User);
+            Database.Save();
         }
-
-        //public Task<User> AddUserAvatar(EditUserAvatarViewModel editAvatar, User user)
-        //{
-        //    var path =
-
-        //}
-
-        //public async Task<User> AddUserAvatar(EditUserAvatarViewModel editAvatar)
-        //{
-
-        //    var path = "/Photos/" + uploadedFile.FileName;
-        //    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-        //    {
-        //        await uploadedFile.CopyToAsync(fileStream);
-        //    }
-        //    var file = new FileModel
-        //    {
-        //        Name = uploadedFile.FileName,
-        //        Path = path,
-        //        IdProduct = idProduct
-        //    };
-        //    Database.FileModels.Create(file);
-        //    Database.Save();
-
-        //}
     }
 }

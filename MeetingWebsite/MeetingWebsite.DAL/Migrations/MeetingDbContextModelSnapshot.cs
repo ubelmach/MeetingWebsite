@@ -47,7 +47,7 @@ namespace MeetingWebsite.DAL.Migrations
                     b.ToTable("Dialogs");
                 });
 
-            modelBuilder.Entity("MeetingWebsite.Models.Entities.File", b =>
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.FileModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -126,6 +126,8 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<int>("AvatarId");
+
                     b.Property<DateTime>("Birthday");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -177,6 +179,44 @@ namespace MeetingWebsite.DAL.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("AnonymityMode");
+
+                    b.Property<string>("BadHabits");
+
+                    b.Property<string>("Education");
+
+                    b.Property<string>("FinancialSituation");
+
+                    b.Property<string>("Height");
+
+                    b.Property<string>("Interests");
+
+                    b.Property<string>("KnowledgeOfLanguages");
+
+                    b.Property<string>("MaritalStatus");
+
+                    b.Property<string>("Nationality");
+
+                    b.Property<string>("PurposeOfDating");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("Weight");
+
+                    b.Property<int>("ZodiacSign");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -284,6 +324,13 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserProfile", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

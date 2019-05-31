@@ -18,6 +18,6 @@ namespace MeetingWebsite.Models.Entities
         public string Name { get; set; }
 
         [NotMapped]
-        public virtual List<File> Files { get; set; }
+        public virtual List<FileModel> Files { get; set; }
     }
 }

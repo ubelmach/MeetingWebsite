@@ -34,8 +34,11 @@ namespace MeetingWebsite.Models.Entities
         [NotMapped]
         public virtual List<BlackList> WhoAddedCurrentUser { get; set; }
 
+        [ForeignKey("Avatar")]
+        public int AvatarId { get; set; }
+
         [NotMapped]
-        public virtual File Avatar { get; set; }
+        public virtual FileModel Avatar { get; set; }
 
         [NotMapped]
         public virtual UserProfile UserProfile { get; set; }

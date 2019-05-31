@@ -246,6 +246,18 @@
     <Compile Include="Migrations\20190531114725_InitialDB.designer.cs">
       <DependentUpon>20190531114725_InitialDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190531115633_AddTableUserProfile.cs" />
+    <Compile Include="Migrations\20190531115633_AddTableUserProfile.designer.cs">
+      <DependentUpon>20190531115633_AddTableUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190531120557_ChangeNameInTableFile.cs" />
+    <Compile Include="Migrations\20190531120557_ChangeNameInTableFile.designer.cs">
+      <DependentUpon>20190531120557_ChangeNameInTableFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190531124823_UpdateTableUser.cs" />
+    <Compile Include="Migrations\20190531124823_UpdateTableUser.designer.cs">
+      <DependentUpon>20190531124823_UpdateTableUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MeetingDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EFUnitOfWork.cs" />
