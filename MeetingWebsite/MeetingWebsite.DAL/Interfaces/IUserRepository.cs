@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace MeetingWebsite.DAL.Interfaces
 {
@@ -7,8 +9,8 @@ namespace MeetingWebsite.DAL.Interfaces
     {
         IEnumerable<T> GetAll();
         T Get(string id);
-        IEnumerable<T> Find(Func<T, bool> predicate);
+        IQueryable<T> Find(Expression<Func<T, bool>> predicate);
         void Update(T item);
-        void Delete(int id);
+        T Delete(int id);
     }
 }

@@ -20,7 +20,7 @@ namespace MeetingWebsite.DAL.Repositories
             _db = new MeetingDbContext(options);
         }
 
-        public IFileRepository<File> FileRepository => 
+        public IFileRepository<FileModel> FileRepository => 
             _fileRepository ?? (_fileRepository = new FileRepository(_db));
 
         public IUserRepository<User> UserRepository =>

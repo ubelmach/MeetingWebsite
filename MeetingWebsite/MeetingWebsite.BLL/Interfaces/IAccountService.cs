@@ -3,7 +3,7 @@ using MeetingWebsite.BLL.Infrastructure;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.Models.Entities;
 
-namespace MeetingWebsite.BLL.Interfaces
+namespace MeetingWebsite.BLL.Services
 {
     public interface IAccountService
     {

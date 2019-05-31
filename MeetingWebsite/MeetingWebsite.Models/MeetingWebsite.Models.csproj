@@ -182,16 +182,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ApplicationSettings.cs" />
-    <Compile Include="Entities\File.cs" />
+    <Compile Include="Entities\BlackList.cs" />
+    <Compile Include="Entities\Dialog.cs" />
+    <Compile Include="Entities\FileModel.cs" />
     <Compile Include="Entities\Friendship.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\PhotoAlbum.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserProfile.cs" />
+    <Compile Include="EntityEnums\Genders.cs" />
+    <Compile Include="EntityEnums\InviteStatuses.cs" />
+    <Compile Include="EntityEnums\ZodiacSigns.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

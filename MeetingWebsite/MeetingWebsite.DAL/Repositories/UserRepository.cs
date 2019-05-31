@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.DAL.Repositories
 {
@@ -17,27 +20,27 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.Users;
         }
 
         public User Get(string id)
         {
-            throw new NotImplementedException();
+            return _db.Users.Find(id);
         }
 
-        public IEnumerable<User> Find(Func<User, bool> predicate)
+        public IQueryable<User> Find(Expression<Func<User, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return  _db.Users.Where(predicate);
         }
 
         public void Update(User item)
         {
-            throw new NotImplementedException();
+            _db.Entry(item).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public User Delete(int id)
         {
-            throw new NotImplementedException();
+            return _db.Users.Find(id);
         }
     }
 }

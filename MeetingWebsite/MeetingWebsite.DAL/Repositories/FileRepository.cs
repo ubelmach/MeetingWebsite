@@ -6,7 +6,7 @@ using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.DAL.Repositories
 {
-    public class FileRepository : IFileRepository<File>
+    public class FileRepository : IFileRepository<FileModel>
     {
         private readonly MeetingDbContext _db;
 
@@ -15,12 +15,12 @@ namespace MeetingWebsite.DAL.Repositories
             _db = context;
         }
 
-        public void Create(File item)
+        public void Create(FileModel item)
         {
-            throw new NotImplementedException();
+            _db.Files.Add(item);
         }
 
-        public IEnumerable<File> Find(Func<File, bool> predicate)
+        public IEnumerable<FileModel> Find(Func<FileModel, bool> predicate)
         {
             throw new NotImplementedException();
         }
