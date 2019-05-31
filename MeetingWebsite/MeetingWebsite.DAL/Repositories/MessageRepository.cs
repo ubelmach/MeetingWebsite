@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
@@ -25,7 +27,7 @@ namespace MeetingWebsite.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Message> Find(Func<Message, bool> predicate)
+        public IQueryable<Message> Find(Expression<Func<Message, bool>> predicate)
         {
             throw new NotImplementedException();
         }

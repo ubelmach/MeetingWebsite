@@ -6,7 +6,7 @@ using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.DAL.Repositories
 {
-    public class FileRepository : IFileRepository<FileModel>
+    public class FileRepository : IFileRepository
     {
         private readonly MeetingDbContext _db;
 

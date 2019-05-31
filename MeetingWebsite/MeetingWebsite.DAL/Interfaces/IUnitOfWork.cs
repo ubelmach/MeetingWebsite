@@ -7,9 +7,9 @@ namespace MeetingWebsite.DAL.Interfaces
     {
         IRepository<Friendship> FriendRepository { get; }
         IRepository<Message> MessageRepository { get; }
-        IRepository<PhotoAlbum> PhotoAlbumRepository { get; }
         IUserRepository<User> UserRepository { get; }
-        IFileRepository<FileModel> FileRepository { get; }
+        IFileRepository FileRepository { get; }
+        IAlbumRepository AlbumRepository { get; }
         void Save();
     }
 }

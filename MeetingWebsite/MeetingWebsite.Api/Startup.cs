@@ -98,6 +98,7 @@ namespace MeetingWebsite.Api
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IAlbumService, AlbumService>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 

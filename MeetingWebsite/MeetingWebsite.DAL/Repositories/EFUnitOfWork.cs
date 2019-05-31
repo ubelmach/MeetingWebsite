@@ -12,7 +12,7 @@ namespace MeetingWebsite.DAL.Repositories
         private FileRepository _fileRepository;
         private FriendshipRepository _friendshipRepository;
         private MessageRepository _messageRepository;
-        private PhotoAlbumRepository _photoAlbumRepository;
+        private AlbumRepository _albumRepository;
         private UserRepository _userRepository;
 
         public EfUnitOfWork(DbContextOptions options)
@@ -20,7 +20,7 @@ namespace MeetingWebsite.DAL.Repositories
             _db = new MeetingDbContext(options);
         }
 
-        public IFileRepository<FileModel> FileRepository => 
+        public IFileRepository FileRepository => 
             _fileRepository ?? (_fileRepository = new FileRepository(_db));
 
         public IUserRepository<User> UserRepository =>
@@ -32,8 +32,8 @@ namespace MeetingWebsite.DAL.Repositories
         public IRepository<Message> MessageRepository =>
             _messageRepository ?? (_messageRepository = new MessageRepository(_db));
 
-        public IRepository<PhotoAlbum> PhotoAlbumRepository =>
-            _photoAlbumRepository ?? (_photoAlbumRepository = new PhotoAlbumRepository(_db));
+        public IAlbumRepository AlbumRepository =>
+            _albumRepository ?? (_albumRepository = new AlbumRepository(_db));
 
         public void Save()
         {
