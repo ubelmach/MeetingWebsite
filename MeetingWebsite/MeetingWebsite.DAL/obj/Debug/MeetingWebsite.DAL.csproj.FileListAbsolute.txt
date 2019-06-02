@@ -427,3 +427,7 @@ C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL\obj\Debug\MeetingWebsite.DAL.csproj.CopyComplete
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL\obj\Debug\MeetingWebsite.DAL.dll
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL\obj\Debug\MeetingWebsite.DAL.pdb
+C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL\bin\Debug\Castle.Core.dll
+C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL\bin\Debug\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL\bin\Debug\Castle.Core.xml
+C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.DAL\bin\Debug\Microsoft.EntityFrameworkCore.Proxies.xml
