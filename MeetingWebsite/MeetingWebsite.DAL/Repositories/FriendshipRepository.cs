@@ -24,12 +24,12 @@ namespace MeetingWebsite.DAL.Repositories
 
         public Friendship Get(int id)
         {
-            throw new NotImplementedException();
+            return _db.Friendships.Find(id);
         }
 
-        public IQueryable<Friendship> Find(Expression<Func<Friendship, bool>> predicate)
+        public IEnumerable<Friendship> Find(Func<Friendship, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _db.Friendships.Where(predicate);
         }
 
         public void Create(Friendship item)

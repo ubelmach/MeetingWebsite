@@ -9,7 +9,7 @@ namespace MeetingWebsite.DAL.Interfaces
     {
         IEnumerable<T> GetAll();
         T Get(int id);
-        IQueryable<T> Find(Expression<Func<T, bool>> predicate);
+        IEnumerable<T> Find(Func<T, bool> predicate);
         void Create(T item);
         void Update(T item);
         void Delete(int id);

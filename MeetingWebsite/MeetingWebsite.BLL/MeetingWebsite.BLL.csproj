@@ -210,6 +210,7 @@
     <Compile Include="Interfaces\IAlbumService.cs" />
     <Compile Include="Interfaces\IBlacklistService.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
+    <Compile Include="Interfaces\IFriendService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Services\BlacklistService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\FriendService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModel\AddPhotoInAlbumViewModel.cs" />
     <Compile Include="ViewModel\AddUserInBlackListViewModel.cs" />
@@ -231,6 +233,8 @@
     <Compile Include="ViewModel\ShowAlbumPhotosViewModel.cs" />
     <Compile Include="ViewModel\ShowBlackListCurrentUserViewModel.cs" />
     <Compile Include="ViewModel\ShowCurrentUserAlbumViewModel.cs" />
+    <Compile Include="ViewModel\ShowFriendCurrentUserViewModel.cs" />
+    <Compile Include="ViewModel\ShowInformationFriendViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

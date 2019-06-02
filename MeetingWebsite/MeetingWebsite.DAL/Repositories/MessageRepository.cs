@@ -27,7 +27,7 @@ namespace MeetingWebsite.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public IQueryable<Message> Find(Expression<Func<Message, bool>> predicate)
+        public IEnumerable<Message> Find(Func<Message, bool> predicate)
         {
             throw new NotImplementedException();
         }

@@ -30,7 +30,7 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IQueryable<User> Find(Expression<Func<User, bool>> predicate)
         {
-            return  _db.Users.Where(predicate);
+            return _db.Users.Where(predicate);
         }
 
         public void Update(User item)

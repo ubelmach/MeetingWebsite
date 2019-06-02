@@ -46,7 +46,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //GET: api/album/AlbumDetails
         [HttpGet, Route("AlbumDetails/{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get([FromForm] int id)
         {
             var album = _albumService.OpenAlbum(id);
             if (album == null)
