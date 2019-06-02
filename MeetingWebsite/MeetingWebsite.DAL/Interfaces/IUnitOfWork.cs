@@ -10,6 +10,7 @@ namespace MeetingWebsite.DAL.Interfaces
         IUserRepository<User> UserRepository { get; }
         IFileRepository FileRepository { get; }
         IAlbumRepository AlbumRepository { get; }
+        IBlacklistRepository BlacklistRepository { get; }
         void Save();
     }
 }

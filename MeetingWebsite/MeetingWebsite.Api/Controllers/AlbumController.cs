@@ -32,7 +32,7 @@ namespace MeetingWebsite.Api.Controllers
         [HttpGet, Route("GetAllAlbum")]
         public IActionResult Get()
         {
-            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var userId = GetUserId();
             var albums = _albumService.FindAllAlbumsCurrentUser(userId);
 
             var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel
@@ -67,7 +67,7 @@ namespace MeetingWebsite.Api.Controllers
             if (createAlbum == null)
                 return BadRequest();
 
-            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var userId = GetUserId();
             var user = _accountService.GetUser(userId);
             createAlbum.UserId = userId;
             createAlbum.HomeDir = user.Result.HomeDir;
@@ -86,7 +86,7 @@ namespace MeetingWebsite.Api.Controllers
                 return BadRequest();
 
             var getAlbum = _albumService.FindAlbum(id);
-            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var userId = GetUserId();
             var user = _accountService.GetUser(userId);
 
             photo.AlbumId = getAlbum.Id;
@@ -122,5 +122,9 @@ namespace MeetingWebsite.Api.Controllers
             return Ok();
         }
 
+        private string GetUserId()
+        {
+            return User.Claims.First(c => c.Type == "UserID").Value;
+        }
     }
 }

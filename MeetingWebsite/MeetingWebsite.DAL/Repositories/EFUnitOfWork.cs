@@ -14,6 +14,7 @@ namespace MeetingWebsite.DAL.Repositories
         private MessageRepository _messageRepository;
         private AlbumRepository _albumRepository;
         private UserRepository _userRepository;
+        private BlacklistRepository _blacklistRepository;
 
         public EfUnitOfWork(DbContextOptions options)
         {
@@ -34,6 +35,9 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IAlbumRepository AlbumRepository =>
             _albumRepository ?? (_albumRepository = new AlbumRepository(_db));
+
+        public IBlacklistRepository BlacklistRepository =>
+            _blacklistRepository ?? (_blacklistRepository = new BlacklistRepository(_db));
 
         public void Save()
         {

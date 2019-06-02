@@ -24,6 +24,8 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("CurrentUserId");
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<string>("WhomId");
 
                     b.HasKey("Id");

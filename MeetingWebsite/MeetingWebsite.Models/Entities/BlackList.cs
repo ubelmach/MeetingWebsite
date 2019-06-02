@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MeetingWebsite.Models.Entities
@@ -19,5 +20,7 @@ namespace MeetingWebsite.Models.Entities
 
         [NotMapped]
         public virtual User Whom { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }
