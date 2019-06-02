@@ -4,6 +4,7 @@ using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace MeetingWebsite.BLL.Services
 {
@@ -54,6 +55,40 @@ namespace MeetingWebsite.BLL.Services
 
             editAvatar.User.AvatarId = avatar.Id;
             Database.UserRepository.Update(editAvatar.User);
+            Database.Save();
+        }
+
+        public async Task AddPhotoInAlbum(AddPhotoInAlbumViewModel photos)
+        {
+            var path = photos.HomeDir + "\\Albums\\" + photos.AlbumName;
+
+            foreach (var photo in photos.Photos)
+            {
+                using (var fileStream = new FileStream(path + photo.FileName, FileMode.Create))
+                {
+                    await photo.CopyToAsync(fileStream);
+                }
+
+                var file = new FileModel
+                {
+                    UserId = photos.UserId,
+                    Name = photo.FileName,
+                    Path = path,
+                    AlbumId = photos.AlbumId
+                };
+                Database.FileRepository.Create(file);
+                Database.Save();
+            }
+        }
+
+        public FileModel FindPhotoInAlbum(int id)
+        {
+            return Database.FileRepository.Get(id);
+        }
+
+        public void DeletePhotoInAlbum(int id)
+        {
+            Database.FileRepository.Delete(id);
             Database.Save();
         }
     }

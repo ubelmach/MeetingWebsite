@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
@@ -21,6 +22,11 @@ namespace MeetingWebsite.BLL.Services
             return _database.AlbumRepository.Find(x => x.UserId == userId);
         }
 
+        public PhotoAlbum FindAlbum(int id)
+        {
+            return _database.AlbumRepository.Get(id);
+        }
+
         public PhotoAlbum OpenAlbum(int id)
         {
             return _database.AlbumRepository.Get(id);
@@ -30,6 +36,10 @@ namespace MeetingWebsite.BLL.Services
         {
             try
             {
+                var path = createAlbum.HomeDir + "\\Albums\\" + createAlbum.Name;
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
                 var newAlbum = new PhotoAlbum
                 {
                     Name = createAlbum.Name,
@@ -44,6 +54,12 @@ namespace MeetingWebsite.BLL.Services
             {
                 throw ex;
             }
+        }
+
+        public void DeleteAlbum(int id)
+        {
+            _database.AlbumRepository.Delete(id);
+            _database.Save();
         }
     }
 }

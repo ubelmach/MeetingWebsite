@@ -218,10 +218,13 @@
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="ViewModel\AddPhotoInAlbumViewModel.cs" />
+    <Compile Include="ViewModel\CreateAlbumViewModel.cs" />
     <Compile Include="ViewModel\EditUserAvatarViewModel.cs" />
     <Compile Include="ViewModel\EditUserProfileInformation.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\ShowAlbumPhotosViewModel.cs" />
     <Compile Include="ViewModel\ShowCurrentUserAlbumViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
   </ItemGroup>

@@ -8,5 +8,7 @@ namespace MeetingWebsite.DAL.Interfaces
     {
         void Create(FileModel item);
         IEnumerable<FileModel> Find(Func<FileModel, bool> predicate);
+        FileModel Get(int id);
+        void Delete(int id);
     }
 }

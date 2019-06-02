@@ -31,5 +31,12 @@ namespace MeetingWebsite.DAL.Repositories
         {
             _db.PhotoAlbums.AddRange(newPhotoAlbum);
         }
+
+        public void Delete(int id)
+        {
+            var album = _db.PhotoAlbums.Find(id);
+            if (album != null)
+                _db.PhotoAlbums.Remove(album);
+        }
     }
 }

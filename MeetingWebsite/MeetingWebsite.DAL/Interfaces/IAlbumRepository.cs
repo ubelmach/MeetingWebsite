@@ -11,5 +11,6 @@ namespace MeetingWebsite.DAL.Interfaces
         IEnumerable<PhotoAlbum> Find(Func<PhotoAlbum, bool> predicate);
         PhotoAlbum Get(int id);
         void Create(PhotoAlbum newPhotoAlbum);
+        void Delete(int id);
     }
 }
