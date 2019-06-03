@@ -101,6 +101,7 @@ namespace MeetingWebsite.Api
             services.AddScoped<IAlbumService, AlbumService>();
             services.AddScoped<IBlacklistService, BlacklistService>();
             services.AddScoped<IFriendService, FriendService>();
+            services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 
