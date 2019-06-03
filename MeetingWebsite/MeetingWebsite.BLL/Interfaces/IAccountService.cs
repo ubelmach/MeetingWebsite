@@ -11,6 +11,7 @@ namespace MeetingWebsite.BLL.Services
         Task<OperationDetails> ConfirmEmail(User user, string code);
         Task<object> LoginUser(LoginViewModel model);
         Task<User> GetUser(string userId);
+        //User GetUser(string userId);
         void Dispose();
     }
 }

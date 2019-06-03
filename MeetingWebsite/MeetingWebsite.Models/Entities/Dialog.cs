@@ -11,14 +11,10 @@ namespace MeetingWebsite.Models.Entities
 
         [ForeignKey("Sender")]
         public string SenderId { get; set; }
-
-        [NotMapped]
         public virtual User Sender { get; set; }
 
         [ForeignKey("Receiver")]
         public string ReceiverId { get; set; }
-
-        [NotMapped]
         public virtual User Receiver { get; set; }
 
         public DateTime Date { get; set; }

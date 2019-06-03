@@ -23,13 +23,15 @@ namespace MeetingWebsite.BLL.Services
         private readonly ApplicationSettings _applicationSettingsOption;
         private readonly IEmailService _emailService;
         private readonly IFileService _fileService;
+        private readonly IUserProfileService _userProfileService;
         private const string ConfirmEmailController = "/api/account/ConfirmEmail";
 
         public AccountService(IUnitOfWork uow,
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettingsOption,
             IEmailService emailService,
-            IFileService fileService
+            IFileService fileService,
+            IUserProfileService userProfileService
             )
         {
             Database = uow;
@@ -37,14 +39,30 @@ namespace MeetingWebsite.BLL.Services
             _applicationSettingsOption = applicationSettingsOption.Value;
             _emailService = emailService;
             _fileService = fileService;
+            _userProfileService = userProfileService;
         }
 
         public async Task<object> RegisterUser(RegisterViewModel model, string url)
         {
-            var user = model.CreateUser();
+            //var user = model.CreateUser();
+
+            var user = new User
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                UserName = model.Email,
+                Gender = model.Genders,
+                Birthday = model.Birthday,
+                AnonymityMode = false
+            };
+
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return null;
+
+            var userProfile = new UserProfile { UserId = user.Id };
+            _userProfileService.CreateUserProfile(userProfile);
 
             await _emailService.SendEmailAsync(user.Email, Constants.ConfirmationEmail_Subject,
                 string.Format(Constants.ConfirmationEmail_Message, CreateCallbackUrl(user, url).GetAwaiter().GetResult()));

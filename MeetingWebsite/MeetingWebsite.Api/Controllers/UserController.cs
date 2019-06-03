@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
+using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,23 +38,18 @@ namespace MeetingWebsite.Api.Controllers
         public async Task<object> GetUserProfile()
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = await _accountService.GetUser(userId);
 
-            if (user == null)
+            Mapper.Initialize(cfg => cfg.CreateMap<User, UserProfileViewModel>());
+            var userProfile = Mapper.Map<User, UserProfileViewModel>(await _accountService.GetUser(userId));
+
+            if (userProfile == null)
                 return NotFound();
-
-            var userProfile = new UserProfileViewModel()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email
-            };
             return Ok(userProfile);
         }
 
         //PUT : /api/user/EditUserInformation
         [HttpPut, Route("EditUserInformation")]
-        public async Task<object> EditUserInformation([FromForm] EditUserProfileInformation editUser)
+        public object EditUserInformation([FromForm] EditUserProfileInformation editUser)
         {
             if (editUser == null)
                 return BadRequest();
@@ -60,7 +57,7 @@ namespace MeetingWebsite.Api.Controllers
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
             editUser.Id = userId;
 
-            await _userService.EditUserInformation(editUser);
+            _userService.EditUserInformation(editUser);
             return Ok(editUser);
         }
 

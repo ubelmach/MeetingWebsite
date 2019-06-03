@@ -11,14 +11,10 @@ namespace MeetingWebsite.Models.Entities
 
         [ForeignKey("FirstFriend")]
         public string FirstFriendId { get; set; }
-
-        [NotMapped]
         public virtual User FirstFriend { get; set; }
 
         [ForeignKey("SecondFriend")]
         public string SecondFriendId { get; set; }
-
-        [NotMapped]
         public virtual User SecondFriend { get; set; }
 
         public InviteStatuses InviteStatus { get; set; }

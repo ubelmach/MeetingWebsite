@@ -11,14 +11,10 @@ namespace MeetingWebsite.Models.Entities
 
         [ForeignKey("CurrentUser")]
         public string CurrentUserId { get; set; }
-
-        [NotMapped]
         public virtual User CurrentUser { get; set; }
 
         [ForeignKey("Whom")]
         public string WhomId { get; set; }
-
-        [NotMapped]
         public virtual User Whom { get; set; }
 
         public DateTime Date { get; set; }

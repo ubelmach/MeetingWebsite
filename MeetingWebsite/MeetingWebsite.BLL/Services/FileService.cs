@@ -24,13 +24,13 @@ namespace MeetingWebsite.BLL.Services
         public void SetUserFolder(User user)
         {
             user.HomeDir = _hostingEnvironment.WebRootPath + "\\File\\" + user.Id;
-            var path = this._hostingEnvironment.WebRootPath + "\\File\\" + user.Id;
+           // var path = this._hostingEnvironment.WebRootPath + "\\File\\" + user.Id;
 
             Database.UserRepository.Update(user);
             Database.Save();
 
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+            if (!Directory.Exists(user.HomeDir))
+                Directory.CreateDirectory(user.HomeDir);
         }
 
         public async Task AddUserAvatar(EditUserAvatarViewModel editAvatar)
@@ -53,7 +53,7 @@ namespace MeetingWebsite.BLL.Services
             Database.FileRepository.Create(avatar);
             Database.Save();
 
-            editAvatar.User.AvatarId = avatar.Id;
+            //editAvatar.User.AvatarId = avatar.Id;
             Database.UserRepository.Update(editAvatar.User);
             Database.Save();
         }

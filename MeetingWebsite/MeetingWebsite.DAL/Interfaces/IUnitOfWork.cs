@@ -8,6 +8,7 @@ namespace MeetingWebsite.DAL.Interfaces
         IRepository<Friendship> FriendRepository { get; }
         IRepository<Message> MessageRepository { get; }
         IUserRepository<User> UserRepository { get; }
+        IRepository<UserProfile> UserProfileRepository { get; }
         IFileRepository FileRepository { get; }
         IAlbumRepository AlbumRepository { get; }
         IBlacklistRepository BlacklistRepository { get; }

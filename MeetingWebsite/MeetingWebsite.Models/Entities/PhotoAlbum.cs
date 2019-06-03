@@ -11,13 +11,10 @@ namespace MeetingWebsite.Models.Entities
 
         [ForeignKey("User")]
         public string UserId { get; set; }
-
-        [NotMapped]
         public virtual User User { get; set; }
 
         public string Name { get; set; }
 
-        [NotMapped]
         public virtual List<FileModel> Files { get; set; }
     }
 }

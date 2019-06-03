@@ -13,20 +13,14 @@ namespace MeetingWebsite.Models.Entities
 
         [ForeignKey("Sender")]
         public string SenderId { get; set; }
-
-        [NotMapped]
         public virtual User Sender { get; set; }
 
         [ForeignKey("File")]
         public int IdFile { get; set; }
-
-        [NotMapped]
         public virtual List<FileModel> Files { get; set; }
 
         [ForeignKey("Dialog")]
         public int IdDialog { get; set; }
-
-        [NotMapped]
         public virtual Dialog Dialog { get; set; }
 
         public string Text { get; set; }

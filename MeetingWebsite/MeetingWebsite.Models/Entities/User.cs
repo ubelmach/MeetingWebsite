@@ -13,37 +13,36 @@ namespace MeetingWebsite.Models.Entities
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
         public Genders Gender { get; set; }
-
+        public bool AnonymityMode { get; set; }
         public string HomeDir { get; set; }
 
-        [NotMapped]
-        public virtual List<Friendship> IncomingFriendships { get; set; }
-
-        [NotMapped]
-        public virtual List<Friendship> OutgoingFriendships { get; set; }
-
-        [NotMapped]
-        public virtual List<Message> IncomingMessages { get; set; }
-
-        [NotMapped]
-        public virtual List<Message> OutgoingMessages { get; set; }
-
-        [NotMapped]
-        public virtual List<BlackList> WhomTheUserAdded { get; set; }
-
-        [NotMapped]
-        public virtual List<BlackList> WhoAddedCurrentUser { get; set; }
-
         [ForeignKey("Avatar")]
-        public int AvatarId { get; set; }
-
-        [NotMapped]
+        public int? AvatarId { get; set; }
         public virtual FileModel Avatar { get; set; }
 
-        [NotMapped]
         public virtual UserProfile UserProfile { get; set; }
 
-        [NotMapped]
         public virtual List<PhotoAlbum> PhotoAlbums { get; set; }
+
+        public virtual List<Friendship> IncomingFriendships { get; set; }
+        public virtual List<Friendship> OutgoingFriendships { get; set; }
+
+        public virtual List<Dialog> IncomingMessages { get; set; }
+        public virtual List<Dialog> OutgoingMessages { get; set; }
+
+        public virtual List<BlackList> WhomTheUserAdded { get; set; }
+        public virtual List<BlackList> WhoAddedCurrentUser { get; set; }
+
+        //public User()
+        //{
+        //    IncomingFriendships = new List<Friendship>();
+        //    OutgoingFriendships = new List<Friendship>();
+
+        //    IncomingMessages = new List<Dialog>();
+        //    OutgoingMessages = new List<Dialog>();
+
+        //    WhomTheUserAdded = new List<BlackList>();
+        //    WhoAddedCurrentUser = new List<BlackList>();
+        //}
     }
 }

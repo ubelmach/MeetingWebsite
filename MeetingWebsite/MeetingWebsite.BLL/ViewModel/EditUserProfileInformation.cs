@@ -17,7 +17,7 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Weight { get; set; }
         public string Education { get; set; }
         public string Nationality { get; set; }
-        public ZodiacSigns ZodiacSign { get; set; }
+        public string ZodiacSign { get; set; }
         public string KnowledgeOfLanguages { get; set; }
         public string BadHabits { get; set; }
         public string FinancialSituation { get; set; }

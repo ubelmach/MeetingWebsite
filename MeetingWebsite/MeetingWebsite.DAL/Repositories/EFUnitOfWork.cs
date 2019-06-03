@@ -14,12 +14,16 @@ namespace MeetingWebsite.DAL.Repositories
         private MessageRepository _messageRepository;
         private AlbumRepository _albumRepository;
         private UserRepository _userRepository;
+        private UserProfileRepository _userProfileRepository;
         private BlacklistRepository _blacklistRepository;
 
         public EfUnitOfWork(DbContextOptions options)
         {
             _db = new MeetingDbContext(options);
         }
+
+        public IRepository<UserProfile> UserProfileRepository =>
+            _userProfileRepository ?? (_userProfileRepository = new UserProfileRepository(_db));
 
         public IFileRepository FileRepository => 
             _fileRepository ?? (_fileRepository = new FileRepository(_db));

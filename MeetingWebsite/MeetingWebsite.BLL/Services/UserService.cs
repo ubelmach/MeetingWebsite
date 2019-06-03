@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
@@ -10,87 +11,110 @@ namespace MeetingWebsite.BLL.Services
     {
         private IUnitOfWork _database { get; set; }
         private readonly IAccountService _accountService;
+        private readonly IUserProfileService _userProfileService;
 
         public UserService(IUnitOfWork database,
             IAccountService accountService,
-            IFileService fileService)
+            IUserProfileService userProfileService)
         {
             _database = _database;
             _accountService = accountService;
+            _userProfileService = userProfileService;
         }
 
-        public async Task<User> EditUserInformation(EditUserProfileInformation editUser)
+        public async Task<object> EditUserInformation(EditUserProfileInformation editUser)
         {
             var user = await _accountService.GetUser(editUser.Id);
 
             try
             {
-                user.FirstName = editUser.Firstname;
-                user.LastName = editUser.Lastname;
-                user.Birthday = editUser.Birthday;
-                user.Gender = editUser.Gender;
-                user.UserProfile.ZodiacSign = editUser.ZodiacSign;
+                if (!string.IsNullOrEmpty(editUser.Firstname))
+                {
+                    user.FirstName = editUser.Firstname;
+                }
 
-                if (editUser.PurposeOfDating != null)
+                if (!string.IsNullOrEmpty(editUser.Lastname))
+                {
+                    user.LastName = editUser.Lastname;
+                }
+
+                if (!string.IsNullOrEmpty(editUser.Gender.ToString()))
+                {
+                    user.Gender = editUser.Gender;
+                }
+
+                if (!string.IsNullOrEmpty(editUser.ZodiacSign))
+                {
+                    user.UserProfile.ZodiacSign = editUser.ZodiacSign;
+                }
+
+                if (!string.IsNullOrEmpty(editUser.Birthday.ToString(CultureInfo.InvariantCulture)))
+                {
+                    user.Birthday = editUser.Birthday;
+                }
+
+                if (!string.IsNullOrEmpty(editUser.PurposeOfDating))
                 {
                     user.UserProfile.PurposeOfDating = editUser.PurposeOfDating;
                 }
 
-                if (editUser.MaritalStatus != null)
+                if (!string.IsNullOrEmpty(editUser.MaritalStatus))
                 {
                     user.UserProfile.MaritalStatus = editUser.MaritalStatus;
                 }
 
-                if (editUser.Height != null)
+                if (!string.IsNullOrEmpty(editUser.Height))
                 {
                     user.UserProfile.Height = editUser.Height;
                 }
 
-                if (editUser.Weight != null)
+                if (!string.IsNullOrEmpty(editUser.Weight))
                 {
                     user.UserProfile.Weight = editUser.Weight;
                 }
 
-                if (editUser.Education != null)
+                if (!string.IsNullOrEmpty(editUser.Education))
                 {
                     user.UserProfile.Education = editUser.Education;
                 }
 
-                if (editUser.Nationality != null)
+                if (!string.IsNullOrEmpty(editUser.Nationality))
                 {
                     user.UserProfile.Nationality = editUser.Nationality;
                 }
 
-                if (editUser.KnowledgeOfLanguages != null)
+                if (!string.IsNullOrEmpty(editUser.KnowledgeOfLanguages))
                 {
                     user.UserProfile.KnowledgeOfLanguages = editUser.KnowledgeOfLanguages;
                 }
 
-                if (editUser.BadHabits != null)
+                if (!string.IsNullOrEmpty(editUser.BadHabits))
                 {
                     user.UserProfile.BadHabits = editUser.BadHabits;
                 }
 
-                if (editUser.FinancialSituation != null)
+                if (!string.IsNullOrEmpty(editUser.FinancialSituation))
                 {
                     user.UserProfile.FinancialSituation = editUser.FinancialSituation;
                 }
 
-                if (editUser.Interests != null)
+                if (!string.IsNullOrEmpty(editUser.Interests))
                 {
                     user.UserProfile.Interests = editUser.Interests;
                 }
 
-                user.UserProfile.AnonymityMode = editUser.AnonymityMode;
+                user.AnonymityMode = editUser.AnonymityMode;
 
                 _database.UserRepository.Update(user);
+                _database.UserProfileRepository.Update(user.UserProfile);
                 _database.Save();
                 return user;
             }
 
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                return ex.Message;
             }
         }
     }

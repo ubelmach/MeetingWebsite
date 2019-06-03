@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using MeetingWebsite.Models.Entities;
+using MeetingWebsite.Models.EntityEnums;
 
 namespace MeetingWebsite.BLL.ViewModel
 {
@@ -23,6 +25,10 @@ namespace MeetingWebsite.BLL.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        public DateTime Birthday { get; set; }
+
+        public Genders Genders { get; set; }
+
         public User CreateUser()
         {
             return new User()
@@ -30,7 +36,10 @@ namespace MeetingWebsite.BLL.ViewModel
                 FirstName = FirstName,
                 LastName = LastName,
                 Email = Email,
-                UserName = Email
+                UserName = Email,
+                Gender = Genders,
+                Birthday = Birthday,
+                AnonymityMode = false
             };
         }
 

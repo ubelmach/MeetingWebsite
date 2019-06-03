@@ -55,9 +55,9 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult Get([FromForm] string id)
         {
             var friend = _accountService.GetUser(id);
-            var showInfoFriend = _friendService.ShowInformationFriend(friend);
+            //var showInfoFriend = _friendService.ShowInformationFriend(friend);
 
-            return Ok(showInfoFriend);
+            return Ok(/*showInfoFriend*/);
         }
 
         //POST: api/friend/SendFriendRequest/{id}

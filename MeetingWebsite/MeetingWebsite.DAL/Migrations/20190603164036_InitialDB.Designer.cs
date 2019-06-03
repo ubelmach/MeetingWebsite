@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingWebsite.DAL.Migrations
 {
     [DbContext(typeof(MeetingDbContext))]
-    [Migration("20190531115633_AddTableUserProfile")]
-    partial class AddTableUserProfile
+    [Migration("20190603164036_InitialDB")]
+    partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,9 +26,15 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("CurrentUserId");
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<string>("WhomId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CurrentUserId");
+
+                    b.HasIndex("WhomId");
 
                     b.ToTable("BlackLists");
                 });
@@ -46,10 +52,14 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
                     b.ToTable("Dialogs");
                 });
 
-            modelBuilder.Entity("MeetingWebsite.Models.Entities.File", b =>
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.FileModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -66,6 +76,13 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AlbumId");
+
+                    b.HasIndex("MessageId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Files");
                 });
 
@@ -81,6 +98,10 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<string>("SecondFriendId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FirstFriendId");
+
+                    b.HasIndex("SecondFriendId");
 
                     b.ToTable("Friendships");
                 });
@@ -104,6 +125,10 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdDialog");
+
+                    b.HasIndex("SenderId");
+
                     b.ToTable("Messages");
                 });
 
@@ -118,6 +143,8 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("PhotoAlbums");
                 });
 
@@ -127,6 +154,8 @@ namespace MeetingWebsite.DAL.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<bool>("AnonymityMode");
 
                     b.Property<DateTime>("Birthday");
 
@@ -186,8 +215,6 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("AnonymityMode");
-
                     b.Property<string>("BadHabits");
 
                     b.Property<string>("Education");
@@ -210,11 +237,12 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("Weight");
 
-                    b.Property<int>("ZodiacSign");
+                    b.Property<string>("ZodiacSign");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserProfiles");
                 });
@@ -326,11 +354,80 @@ namespace MeetingWebsite.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.BlackList", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "CurrentUser")
+                        .WithMany("WhoAddedCurrentUser")
+                        .HasForeignKey("CurrentUserId");
+
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "Whom")
+                        .WithMany("WhomTheUserAdded")
+                        .HasForeignKey("WhomId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Dialog", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "Receiver")
+                        .WithMany("IncomingMessages")
+                        .HasForeignKey("ReceiverId");
+
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "Sender")
+                        .WithMany("OutgoingMessages")
+                        .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.FileModel", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.PhotoAlbum", "Album")
+                        .WithMany("Files")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingWebsite.Models.Entities.Message", "Message")
+                        .WithMany("Files")
+                        .HasForeignKey("MessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "User")
+                        .WithOne("Avatar")
+                        .HasForeignKey("MeetingWebsite.Models.Entities.FileModel", "UserId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Friendship", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "FirstFriend")
+                        .WithMany("OutgoingFriendships")
+                        .HasForeignKey("FirstFriendId");
+
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "SecondFriend")
+                        .WithMany("IncomingFriendships")
+                        .HasForeignKey("SecondFriendId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Message", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.Dialog", "Dialog")
+                        .WithMany()
+                        .HasForeignKey("IdDialog")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.PhotoAlbum", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.User", "User")
+                        .WithMany("PhotoAlbums")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserProfile", b =>
                 {
                     b.HasOne("MeetingWebsite.Models.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithOne("UserProfile")
+                        .HasForeignKey("MeetingWebsite.Models.Entities.UserProfile", "UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

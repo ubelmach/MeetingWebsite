@@ -235,6 +235,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\BlacklistConfiguration.cs" />
+    <Compile Include="Configuration\DialogConfiguration.cs" />
+    <Compile Include="Configuration\FriendshipConfiguration.cs" />
     <Compile Include="EF\MeetingDbContext.cs" />
     <Compile Include="Interfaces\IAlbumRepository.cs" />
     <Compile Include="Interfaces\IBlacklistRepository.cs" />
@@ -242,33 +245,9 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Migrations\20190530101141_Initial_DB.cs" />
-    <Compile Include="Migrations\20190530101141_Initial_DB.designer.cs">
-      <DependentUpon>20190530101141_Initial_DB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190530101603_Update_DB.cs" />
-    <Compile Include="Migrations\20190530101603_Update_DB.designer.cs">
-      <DependentUpon>20190530101603_Update_DB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190531114725_InitialDB.cs" />
-    <Compile Include="Migrations\20190531114725_InitialDB.designer.cs">
-      <DependentUpon>20190531114725_InitialDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190531115633_AddTableUserProfile.cs" />
-    <Compile Include="Migrations\20190531115633_AddTableUserProfile.designer.cs">
-      <DependentUpon>20190531115633_AddTableUserProfile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190531120557_ChangeNameInTableFile.cs" />
-    <Compile Include="Migrations\20190531120557_ChangeNameInTableFile.designer.cs">
-      <DependentUpon>20190531120557_ChangeNameInTableFile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190531124823_UpdateTableUser.cs" />
-    <Compile Include="Migrations\20190531124823_UpdateTableUser.designer.cs">
-      <DependentUpon>20190531124823_UpdateTableUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190602120906_Add_column_Date_in_BlackList.cs" />
-    <Compile Include="Migrations\20190602120906_Add_column_Date_in_BlackList.designer.cs">
-      <DependentUpon>20190602120906_Add_column_Date_in_BlackList.cs</DependentUpon>
+    <Compile Include="Migrations\20190603164036_InitialDB.cs" />
+    <Compile Include="Migrations\20190603164036_InitialDB.designer.cs">
+      <DependentUpon>20190603164036_InitialDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MeetingDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -278,6 +257,7 @@
     <Compile Include="Repositories\FriendshipRepository.cs" />
     <Compile Include="Repositories\AlbumRepository.cs" />
     <Compile Include="Repositories\MessageRepository.cs" />
+    <Compile Include="Repositories\UserProfileRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
