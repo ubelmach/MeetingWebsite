@@ -230,11 +230,13 @@
     <Compile Include="ViewModel\EditUserProfileInformation.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\SendFriendRequestViewModel.cs" />
     <Compile Include="ViewModel\ShowAlbumPhotosViewModel.cs" />
     <Compile Include="ViewModel\ShowBlackListCurrentUserViewModel.cs" />
     <Compile Include="ViewModel\ShowCurrentUserAlbumViewModel.cs" />
     <Compile Include="ViewModel\ShowFriendCurrentUserViewModel.cs" />
     <Compile Include="ViewModel\ShowInformationFriendViewModel.cs" />
+    <Compile Include="ViewModel\ShowNewRequestsViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

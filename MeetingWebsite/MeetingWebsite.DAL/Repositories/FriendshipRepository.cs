@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.DAL.Repositories
 {
@@ -34,12 +35,12 @@ namespace MeetingWebsite.DAL.Repositories
 
         public void Create(Friendship item)
         {
-            throw new NotImplementedException();
+            _db.Friendships.Add(item);
         }
 
         public void Update(Friendship item)
         {
-            throw new NotImplementedException();
+            _db.Entry(item).State = EntityState.Modified;
         }
 
         public void Delete(int id)

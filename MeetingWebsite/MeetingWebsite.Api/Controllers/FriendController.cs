@@ -13,12 +13,14 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class FriendController : ControllerBase
     {
-        public IFriendService _FriendService;
-        public IAccountService _AccountService;
+        public IFriendService _friendService;
+        public IAccountService _accountService;
 
-        public FriendController(IFriendService friendService)
+        public FriendController(IFriendService friendService,
+            IAccountService accountService)
         {
-            _FriendService = friendService;
+            _friendService = friendService;
+            _accountService = accountService;
         }
 
         //GET: api/friend/GetCurrentUserFriend
@@ -26,7 +28,7 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult GetAll()
         {
             var userId = GetUserId();
-            var friend = _FriendService.FindFriendCurrentUser(userId).ToList();
+            var friend = _friendService.FindFriendCurrentUser(userId).ToList();
 
             if (friend.GetEnumerator().Current.FirstFriendId == userId)
             {
@@ -52,10 +54,58 @@ namespace MeetingWebsite.Api.Controllers
         [HttpGet, Route("DetailsFriendInformation/{id}")]
         public IActionResult Get([FromForm] string id)
         {
-            var friend = _AccountService.GetUser(id);
-            var showInfoFriend = _FriendService.ShowInformationFriend(friend);
+            var friend = _accountService.GetUser(id);
+            var showInfoFriend = _friendService.ShowInformationFriend(friend);
 
             return Ok(showInfoFriend);
+        }
+
+        //POST: api/friend/SendFriendRequest/{id}
+        [HttpPost, Route("SendFriendRequest/{id}")]
+        public IActionResult Post(string userId)
+        {
+            var currentUserId = GetUserId();
+
+            var request = new SendFriendRequestViewModel
+            {
+                WhoSendsRequest = currentUserId,
+                WhoReceivesRequest = userId
+            };
+
+            var sendRequest = _friendService.SendRequest(request);
+            return Ok();
+        }
+
+        //GET: api/friend/GetListFriendRequests
+        [HttpGet, Route("GetListFriendRequests")]
+        public IActionResult GetListFriendRequests()
+        {
+            var currentUserId = GetUserId();
+            var friendRequests = _friendService.FindNewRequests(currentUserId);
+
+            var showNewRequests = friendRequests.Select(item => new ShowNewRequestsViewModel
+            {
+                FirstName = item.FirstFriend.FirstName,
+                LastName = item.FirstFriend.LastName
+            }).ToList();
+
+            return Ok(showNewRequests);
+        }
+
+        //PUT: api/friend/AcceptNewRequest/id
+        [HttpPut, Route("AcceptNewRequest/{id}")]
+        public IActionResult AcceptNewRequest(int id)
+        {
+            _friendService.Accepted(id);
+            return Ok();
+        }
+
+        //PUT: api/friend/RejectNewRequest/id
+        [HttpPut, Route("RejectNewRequest/{id}")]
+        public IActionResult RejectNewRequest(int id)
+        {
+            _friendService.Rejected(id);
+            return Ok();
         }
 
         private string GetUserId()
