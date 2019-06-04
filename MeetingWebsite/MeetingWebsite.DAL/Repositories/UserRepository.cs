@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.DAL.Repositories
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository : IUserRepository
     {
         private readonly MeetingDbContext _db;
 

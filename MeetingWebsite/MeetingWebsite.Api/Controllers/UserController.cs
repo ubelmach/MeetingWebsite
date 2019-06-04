@@ -43,53 +43,31 @@ namespace MeetingWebsite.Api.Controllers
             if (user == null)
                 return BadRequest();
 
-            var userProfile = new UserProfileViewModel
-            {
-                Id = userId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Gender = user.Gender,
-                Email = user.Email,
-                Birthday = user.Birthday,
-                PurposeOfDating = user.UserProfile.PurposeOfDating,
-                MaritalStatus = user.UserProfile.MaritalStatus,
-                Height = user.UserProfile.Height,
-                Weight = user.UserProfile.Weight,
-                Education = user.UserProfile.Education,
-                Nationality = user.UserProfile.Nationality,
-                ZodiacSign = user.UserProfile.ZodiacSign,
-                KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages,
-                BadHabits = user.UserProfile.BadHabits,
-                FinancialSituation = user.UserProfile.FinancialSituation,
-                Interests = user.UserProfile.Interests,
-                AnonymityMode = user.AnonymityMode,
-                Avatar = user.Avatar.Path
-            };
+            var userProfile = new UserProfileViewModel(user);
 
             return Ok(userProfile);
         }
 
         //PUT : /api/user/EditUserInformation
         [HttpPut, Route("EditUserInformation")]
-        public object EditUserInformation([FromForm] EditUserProfileInformation editUser)
+        public async Task<IActionResult> EditUserInformation([FromForm] EditUserProfileInformation editUser)
         {
             if (editUser == null)
                 return BadRequest();
 
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = _accountService.GetUser(userId);
             editUser.Id = userId;
 
-            var result = _userService.EditUserInformation(editUser);
-            if (!result.IsFaulted)
-                return Ok();
-            if (result.Exception != null)
-                return BadRequest(result.Exception.Message);
-            return Ok();
+            var result = await _userService.EditUserInformation(editUser);
+            if (result == null)
+                return BadRequest(new {message = "Error edit user information"});
+            return Ok(result);
         }
 
         //PUT : /api/user/EditUserAvatar
         [HttpPut, Route("EditUserAvatar")]
-        public async Task<object> EditUserAvatar([FromForm] EditUserAvatarViewModel editUserAvatar)
+        public async Task<IActionResult> EditUserAvatar([FromForm] EditUserAvatarViewModel editUserAvatar)
         {
             if (editUserAvatar == null)
                 return BadRequest();

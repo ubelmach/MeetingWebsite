@@ -26,11 +26,11 @@ namespace MeetingWebsite.DAL.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.ApplyConfiguration(new FriendshipConfiguration());
             modelBuilder.ApplyConfiguration(new BlacklistConfiguration());
             modelBuilder.ApplyConfiguration(new DialogConfiguration());
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

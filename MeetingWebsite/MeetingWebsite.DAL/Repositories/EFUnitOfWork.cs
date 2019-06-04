@@ -28,7 +28,7 @@ namespace MeetingWebsite.DAL.Repositories
         public IFileRepository FileRepository => 
             _fileRepository ?? (_fileRepository = new FileRepository(_db));
 
-        public IUserRepository<User> UserRepository =>
+        public IUserRepository UserRepository =>
             _userRepository ?? (_userRepository = new UserRepository(_db));
 
         public IRepository<Friendship> FriendRepository =>

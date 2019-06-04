@@ -21,27 +21,11 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        //private MeetingDbContext _context;
-        //private UserManager<User> _userManager;
-        //private SignInManager<User> _signInManager;
-        //private readonly ApplicationSettings _applicationSettingsOption;
-
         private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService accountService//,
-            //MeetingDbContext context,
-            //UserManager<User> userManager,
-            //SignInManager<User> signInManager,
-            //IOptions<ApplicationSettings> applicationSettingsOption
-            )
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
-
-            //_context = context;
-            //_userManager = userManager;
-            //_signInManager = signInManager;
-            //_applicationSettingsOption = applicationSettingsOption.Value;
-
         }
 
         //POST: /api/account/Register

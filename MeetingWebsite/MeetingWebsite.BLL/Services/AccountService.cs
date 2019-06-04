@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,7 +10,6 @@ using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace MeetingWebsite.BLL.Services
 {
@@ -44,18 +41,7 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task<object> RegisterUser(RegisterViewModel model, string url)
         {
-            //var user = model.CreateUser();
-
-            var user = new User
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                UserName = model.Email,
-                Gender = model.Genders,
-                Birthday = model.Birthday,
-                AnonymityMode = false
-            };
+            var user = model.CreateUser();
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -101,7 +87,14 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task<User> GetUser(string userId)
         {
-            return await _userManager.FindByIdAsync(userId);
+            try
+            {
+                return await _userManager.FindByIdAsync(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Dispose()

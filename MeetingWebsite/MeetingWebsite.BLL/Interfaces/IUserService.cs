@@ -6,6 +6,8 @@ namespace MeetingWebsite.BLL.Services
 {
     public interface IUserService
     {
-        Task EditUserInformation(EditUserProfileInformation editUser);
+
+        Task<EditUserProfileInformation> EditUserInformation(EditUserProfileInformation editUser);
+        void Dispose();
     }
 }

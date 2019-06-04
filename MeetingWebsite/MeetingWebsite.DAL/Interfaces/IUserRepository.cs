@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.DAL.Interfaces
 {
-    public interface IUserRepository<T> where T : class
+    public interface IUserRepository
     {
-        IEnumerable<T> GetAll();
-        T Get(string id);
-        IQueryable<T> Find(Expression<Func<T, bool>> predicate);
-        void Update(T item);
-        T Delete(int id);
+        IEnumerable<User> GetAll();
+        User Get(string id);
+        IQueryable<User> Find(Expression<Func<User, bool>> predicate);
+        void Update(User item);
+        User Delete(int id);
     }
 }
