@@ -4,7 +4,6 @@ using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Hosting;
-using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace MeetingWebsite.BLL.Services
 {
@@ -23,24 +22,25 @@ namespace MeetingWebsite.BLL.Services
 
         public void SetUserFolder(User user)
         {
-            user.HomeDir = _hostingEnvironment.WebRootPath + "/File/" + user.Id;
+            var createFolder = _hostingEnvironment.WebRootPath + "/File/" + user.Id;
 
+            user.HomeDir = "/File/" + user.Id;
             Database.UserRepository.Update(user);
             Database.Save();
 
-            if (!Directory.Exists(user.HomeDir))
-                Directory.CreateDirectory(user.HomeDir);
+            if (!Directory.Exists(createFolder))
+                Directory.CreateDirectory(createFolder);
         }
 
         public async Task AddUserAvatar(EditUserAvatarViewModel editAvatar)
         {
-            var createFolder = editAvatar.User.HomeDir + "/Avatar/";
+            var createFolder = _hostingEnvironment.WebRootPath + editAvatar.User.HomeDir + "/Avatar/";
             var path = "/Avatar/" + editAvatar.Avatar.FileName;
 
             if (!Directory.Exists(createFolder))
                 Directory.CreateDirectory(createFolder);
 
-            using (var fileStream = new FileStream(editAvatar.User.HomeDir + path, FileMode.Create))
+            using (var fileStream = new FileStream(createFolder + editAvatar.Avatar.FileName, FileMode.Create))
             {
                 await editAvatar.Avatar.CopyToAsync(fileStream);
             }
@@ -61,11 +61,12 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task AddPhotoInAlbum(AddPhotoInAlbumViewModel photos)
         {
-            var path = photos.HomeDir + "\\Albums\\" + photos.AlbumName;
+            var album =_hostingEnvironment.WebRootPath + photos.HomeDir + photos.AlbumDir + '/';
 
             foreach (var photo in photos.Photos)
             {
-                using (var fileStream = new FileStream(path + photo.FileName, FileMode.Create))
+                var path = photos.AlbumDir + photo.FileName;
+                using (var fileStream = new FileStream(album + photo.FileName, FileMode.Create))
                 {
                     await photo.CopyToAsync(fileStream);
                 }
@@ -73,13 +74,13 @@ namespace MeetingWebsite.BLL.Services
                 var file = new FileModel
                 {
                     UserId = photos.UserId,
+                    AlbumId = photos.AlbumId,
                     Name = photo.FileName,
-                    Path = path,
-                    AlbumId = photos.AlbumId
+                    Path = path
                 };
                 Database.FileRepository.Create(file);
-                Database.Save();
             }
+            Database.Save();
         }
 
         public FileModel FindPhotoInAlbum(int id)

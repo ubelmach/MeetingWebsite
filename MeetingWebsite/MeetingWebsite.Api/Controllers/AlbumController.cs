@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
-using MeetingWebsite.Models.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Api.Controllers
@@ -28,12 +23,15 @@ namespace MeetingWebsite.Api.Controllers
             _fileService = fileService;
         }
 
-        //GET: api/album/GetAllAlbumCurrentUser
+        //GET: api/album/GetAllAlbum
         [HttpGet, Route("GetAllAlbum")]
         public IActionResult Get()
         {
             var userId = GetUserId();
-            var albums = _albumService.FindAllAlbumsCurrentUser(userId);
+            var albums = _albumService.FindAllAlbumsCurrentUser(userId).ToList();
+
+            if (!albums.Any())
+                return BadRequest(new {message = "Error, current user has no albums"});
 
             var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel
             {
@@ -46,7 +44,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //GET: api/album/AlbumDetails
         [HttpGet, Route("AlbumDetails/{id}")]
-        public IActionResult Get([FromForm] int id)
+        public IActionResult Get(int id)
         {
             var album = _albumService.OpenAlbum(id);
             if (album == null)
@@ -54,6 +52,7 @@ namespace MeetingWebsite.Api.Controllers
 
             var showAlbumPhotos = new ShowAlbumPhotosViewModel()
             {
+                IdPhoto = album.Files.Where(x => x.AlbumId == id).Select(x => x.Id),
                 PathPhoto = album.Files.Where(x => x.AlbumId == id).Select(x => x.Path)
             };
 
@@ -80,29 +79,28 @@ namespace MeetingWebsite.Api.Controllers
 
         //PUT: api/album/AddPhotoInAlbum/id
         [HttpPut, Route("AddPhotoInAlbum/{id}")]
-        public IActionResult AddPhoto([FromForm] int id, AddPhotoInAlbumViewModel photo)
+        public async Task<IActionResult> AddPhoto(int id, [FromForm] AddPhotoInAlbumViewModel addPhoto)
         {
-            if (photo == null)
-                return BadRequest();
-
             var getAlbum = _albumService.FindAlbum(id);
+            if (getAlbum == null)
+                return NotFound();
+
             var userId = GetUserId();
             var user = _accountService.GetUser(userId);
 
-            photo.AlbumId = getAlbum.Id;
-            photo.AlbumName = getAlbum.Name;
-            photo.HomeDir = user.Result.HomeDir;
-            photo.UserId = userId;
+            addPhoto.AlbumId = getAlbum.Id;
+            addPhoto.AlbumName = getAlbum.Name;
+            addPhoto.HomeDir = user.Result.HomeDir;
+            addPhoto.AlbumDir = getAlbum.Path;
+            addPhoto.UserId = userId;
 
-            var addPhoto = _fileService.AddPhotoInAlbum(photo);
-            if (addPhoto == null)
-                return BadRequest(new {message = "Error adding photo"});
+            await _fileService.AddPhotoInAlbum(addPhoto);
             return Ok(addPhoto);
         }
 
         //DELETE: api/album/DeleteAlbum/id
         [HttpDelete, Route("DeleteAlbum/{id}")]
-        public IActionResult DeleteAlbum([FromForm] int id)
+        public IActionResult DeleteAlbum(int id)
         {
             var album = _albumService.FindAlbum(id);
             if (album == null)
@@ -113,7 +111,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //DELETE: api/album/DeletePhotoInAlbum
         [HttpDelete, Route("DeletePhotoInAlbum/{id}")]
-        public IActionResult DeletePhotoInAlbum([FromForm] int id)
+        public IActionResult DeletePhotoInAlbum(int id)
         {
             var photo = _fileService.FindPhotoInAlbum(id);
             if (photo == null)

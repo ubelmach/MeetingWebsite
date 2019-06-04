@@ -7,9 +7,12 @@ namespace MeetingWebsite.BLL.ViewModel
     public class AddPhotoInAlbumViewModel
     {
         public string UserId { get; set; }
+
         public int AlbumId { get; set; }
         public string AlbumName { get; set; }
         public string HomeDir { get; set; }
+        public string AlbumDir { get; set; }
+
         public List<IFormFile> Photos { get; set; }
     }
 }

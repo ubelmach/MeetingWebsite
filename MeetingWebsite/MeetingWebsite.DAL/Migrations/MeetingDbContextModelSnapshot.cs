@@ -136,6 +136,8 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Path");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");

@@ -14,6 +14,7 @@ namespace MeetingWebsite.Models.Entities
         public virtual User User { get; set; }
 
         public string Name { get; set; }
+        public string Path { get; set; }
 
         public virtual List<FileModel> Files { get; set; }
     }
