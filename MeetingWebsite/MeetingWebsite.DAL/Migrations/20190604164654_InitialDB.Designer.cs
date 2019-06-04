@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingWebsite.DAL.Migrations
 {
     [DbContext(typeof(MeetingDbContext))]
-    [Migration("20190604151213_InitialDB")]
+    [Migration("20190604164654_InitialDB")]
     partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,6 +137,8 @@ namespace MeetingWebsite.DAL.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Path");
 
                     b.Property<string>("UserId");
 

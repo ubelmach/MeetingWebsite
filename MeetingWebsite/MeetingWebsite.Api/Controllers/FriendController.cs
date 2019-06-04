@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Net.NetworkInformation;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Api.Controllers
@@ -28,26 +25,34 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult GetAll()
         {
             var userId = GetUserId();
-            var friend = _friendService.FindFriendCurrentUser(userId).ToList();
+            var friends = _friendService.FindFriendCurrentUser(userId).ToList();
 
-            if (friend.GetEnumerator().Current.FirstFriendId == userId)
+            if (!friends.Any())
+                return BadRequest(new { message = "Error, you have no friends yet" });
+
+            foreach (var friend in friends)
             {
-                var showFriendCurrentUser = friend.Select(item => new ShowFriendCurrentUserViewModel
+                if (friend.FirstFriendId == userId)
                 {
-                    FirstName = item.SecondFriend.FirstName,
-                    LastName = item.SecondFriend.LastName
-                }).ToList();
-                return Ok(showFriendCurrentUser);
-            }
-            else
-            {
-                var showFriendCurrentUser = friend.Select(item => new ShowFriendCurrentUserViewModel
+                    var showFriendCurrentUser = new ShowFriendCurrentUserViewModel
+                    {
+                        FirstName = friend.SecondFriend.FirstName,
+                        LastName = friend.SecondFriend.LastName
+                    };
+                    return Ok(showFriendCurrentUser);
+                }
+                else
                 {
-                    FirstName = item.FirstFriend.FirstName,
-                    LastName = item.FirstFriend.LastName
-                }).ToList();
-                return Ok(showFriendCurrentUser);
+                    var showFriendCurrentUser = new ShowFriendCurrentUserViewModel
+                    {
+                        FirstName = friend.FirstFriend.FirstName,
+                        LastName = friend.FirstFriend.LastName
+                    };
+                    return Ok(showFriendCurrentUser);
+                }
             }
+
+            return Ok();
         }
 
         //GET: api/friend/DetailsFriendInformation/id
@@ -61,7 +66,7 @@ namespace MeetingWebsite.Api.Controllers
         }
 
         //POST: api/friend/SendFriendRequest/{id}
-        [HttpPost, Route("SendFriendRequest/{id}")]
+        [HttpPost, Route("SendFriendRequest/{userId}")]
         public IActionResult Post(string userId)
         {
             var currentUserId = GetUserId();
@@ -112,6 +117,5 @@ namespace MeetingWebsite.Api.Controllers
         {
             return User.Claims.First(c => c.Type == "UserID").Value;
         }
-
     }
 }

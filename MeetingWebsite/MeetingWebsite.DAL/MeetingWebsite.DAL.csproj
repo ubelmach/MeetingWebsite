@@ -245,13 +245,9 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Migrations\20190604151213_InitialDB.cs" />
-    <Compile Include="Migrations\20190604151213_InitialDB.designer.cs">
-      <DependentUpon>20190604151213_InitialDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190604153906_AddPathInPhotoAlbum.cs" />
-    <Compile Include="Migrations\20190604153906_AddPathInPhotoAlbum.designer.cs">
-      <DependentUpon>20190604153906_AddPathInPhotoAlbum.cs</DependentUpon>
+    <Compile Include="Migrations\20190604164654_InitialDB.cs" />
+    <Compile Include="Migrations\20190604164654_InitialDB.designer.cs">
+      <DependentUpon>20190604164654_InitialDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MeetingDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
