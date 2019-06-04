@@ -35,15 +35,37 @@ namespace MeetingWebsite.Api.Controllers
         //GET: /api/user/UserProfile
         [Authorize]
         [HttpGet, Route("UserProfile")]
-        public async Task<object> GetUserProfile()
+        public async Task<IActionResult> GetUserProfile()
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _accountService.GetUser(userId);
 
-            Mapper.Initialize(cfg => cfg.CreateMap<User, UserProfileViewModel>());
-            var userProfile = Mapper.Map<User, UserProfileViewModel>(await _accountService.GetUser(userId));
+            if (user == null)
+                return BadRequest();
 
-            if (userProfile == null)
-                return NotFound();
+            var userProfile = new UserProfileViewModel
+            {
+                Id = userId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                PurposeOfDating = user.UserProfile.PurposeOfDating,
+                MaritalStatus = user.UserProfile.MaritalStatus,
+                Height = user.UserProfile.Height,
+                Weight = user.UserProfile.Weight,
+                Education = user.UserProfile.Education,
+                Nationality = user.UserProfile.Nationality,
+                ZodiacSign = user.UserProfile.ZodiacSign,
+                KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages,
+                BadHabits = user.UserProfile.BadHabits,
+                FinancialSituation = user.UserProfile.FinancialSituation,
+                Interests = user.UserProfile.Interests,
+                AnonymityMode = user.AnonymityMode,
+                Avatar = user.Avatar.Path
+            };
+
             return Ok(userProfile);
         }
 
@@ -57,8 +79,12 @@ namespace MeetingWebsite.Api.Controllers
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
             editUser.Id = userId;
 
-            _userService.EditUserInformation(editUser);
-            return Ok(editUser);
+            var result = _userService.EditUserInformation(editUser);
+            if (!result.IsFaulted)
+                return Ok();
+            if (result.Exception != null)
+                return BadRequest(result.Exception.Message);
+            return Ok();
         }
 
         //PUT : /api/user/EditUserAvatar

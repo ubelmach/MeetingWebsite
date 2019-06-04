@@ -33,16 +33,16 @@ namespace MeetingWebsite.Models.Entities
         public virtual List<BlackList> WhomTheUserAdded { get; set; }
         public virtual List<BlackList> WhoAddedCurrentUser { get; set; }
 
-        //public User()
-        //{
-        //    IncomingFriendships = new List<Friendship>();
-        //    OutgoingFriendships = new List<Friendship>();
+        public User()
+        {
+            IncomingFriendships = new List<Friendship>();
+            OutgoingFriendships = new List<Friendship>();
 
-        //    IncomingMessages = new List<Dialog>();
-        //    OutgoingMessages = new List<Dialog>();
+            IncomingMessages = new List<Dialog>();
+            OutgoingMessages = new List<Dialog>();
 
-        //    WhomTheUserAdded = new List<BlackList>();
-        //    WhoAddedCurrentUser = new List<BlackList>();
-        //}
+            WhomTheUserAdded = new List<BlackList>();
+            WhoAddedCurrentUser = new List<BlackList>();
+        }
     }
 }

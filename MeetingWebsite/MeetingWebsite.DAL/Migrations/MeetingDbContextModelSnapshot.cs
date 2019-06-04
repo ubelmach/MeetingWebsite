@@ -62,9 +62,9 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AlbumId");
+                    b.Property<int?>("AlbumId");
 
-                    b.Property<int>("MessageId");
+                    b.Property<int?>("MessageId");
 
                     b.Property<string>("Name");
 
@@ -78,8 +78,7 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Files");
                 });
@@ -111,9 +110,9 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int>("IdDialog");
+                    b.Property<int?>("IdDialog");
 
-                    b.Property<int>("IdFile");
+                    b.Property<int?>("IdFile");
 
                     b.Property<bool>("New");
 
@@ -154,6 +153,8 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("AccessFailedCount");
 
                     b.Property<bool>("AnonymityMode");
+
+                    b.Property<int?>("AvatarId");
 
                     b.Property<DateTime>("Birthday");
 
@@ -197,6 +198,8 @@ namespace MeetingWebsite.DAL.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AvatarId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -378,17 +381,15 @@ namespace MeetingWebsite.DAL.Migrations
                 {
                     b.HasOne("MeetingWebsite.Models.Entities.PhotoAlbum", "Album")
                         .WithMany("Files")
-                        .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AlbumId");
 
                     b.HasOne("MeetingWebsite.Models.Entities.Message", "Message")
                         .WithMany("Files")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MessageId");
 
                     b.HasOne("MeetingWebsite.Models.Entities.User", "User")
-                        .WithOne("Avatar")
-                        .HasForeignKey("MeetingWebsite.Models.Entities.FileModel", "UserId");
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.Friendship", b =>
@@ -406,8 +407,7 @@ namespace MeetingWebsite.DAL.Migrations
                 {
                     b.HasOne("MeetingWebsite.Models.Entities.Dialog", "Dialog")
                         .WithMany()
-                        .HasForeignKey("IdDialog")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("IdDialog");
 
                     b.HasOne("MeetingWebsite.Models.Entities.User", "Sender")
                         .WithMany()
@@ -419,6 +419,13 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasOne("MeetingWebsite.Models.Entities.User", "User")
                         .WithMany("PhotoAlbums")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.User", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.FileModel", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserProfile", b =>

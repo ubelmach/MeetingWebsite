@@ -28,9 +28,9 @@ namespace MeetingWebsite.DAL.EF
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new FriendshipConfiguration());
             modelBuilder.ApplyConfiguration(new BlacklistConfiguration());
             modelBuilder.ApplyConfiguration(new DialogConfiguration());
-            modelBuilder.ApplyConfiguration(new FriendshipConfiguration());
         }
     }
 }

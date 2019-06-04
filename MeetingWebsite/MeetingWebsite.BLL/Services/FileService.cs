@@ -53,7 +53,7 @@ namespace MeetingWebsite.BLL.Services
             Database.FileRepository.Create(avatar);
             Database.Save();
 
-            //editAvatar.User.AvatarId = avatar.Id;
+            editAvatar.User.AvatarId = avatar.Id;
             Database.UserRepository.Update(editAvatar.User);
             Database.Save();
         }

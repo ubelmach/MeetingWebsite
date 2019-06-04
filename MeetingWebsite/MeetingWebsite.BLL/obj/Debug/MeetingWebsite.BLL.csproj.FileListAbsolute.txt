@@ -445,7 +445,7 @@ C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Castle.Core.dll
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Microsoft.EntityFrameworkCore.Proxies.xml
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Castle.Core.xml
-C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\AutoMapper.dll
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\AutoMapper.pdb
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\AutoMapper.xml
+C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll

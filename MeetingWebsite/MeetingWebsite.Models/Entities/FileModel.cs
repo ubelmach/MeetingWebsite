@@ -13,11 +13,11 @@ namespace MeetingWebsite.Models.Entities
         public virtual User User { get; set; }
 
         [ForeignKey("Message")]
-        public int MessageId { get; set; }
+        public int? MessageId { get; set; }
         public virtual Message Message { get; set; }
 
         [ForeignKey("Album")]
-        public int AlbumId { get; set; }
+        public int? AlbumId { get; set; }
         public virtual PhotoAlbum Album { get; set; }
         
         public string Name { get; set; }
