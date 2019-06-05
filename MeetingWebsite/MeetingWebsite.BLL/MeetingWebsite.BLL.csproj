@@ -229,24 +229,24 @@
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserProfileService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="ViewModel\AddPhotoInAlbumViewModel.cs" />
-    <Compile Include="ViewModel\AddUserInBlackListViewModel.cs" />
-    <Compile Include="ViewModel\CreateAlbumViewModel.cs" />
-    <Compile Include="ViewModel\DeleteUserFromBlackListViewModel.cs" />
-    <Compile Include="ViewModel\EditUserAvatarViewModel.cs" />
-    <Compile Include="ViewModel\EditUserProfileInformation.cs" />
-    <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\RegisterViewModel.cs" />
-    <Compile Include="ViewModel\ResultSearchByCriteriaViewModel.cs" />
-    <Compile Include="ViewModel\SearchByCriteriaViewModel.cs" />
-    <Compile Include="ViewModel\SendFriendRequestViewModel.cs" />
-    <Compile Include="ViewModel\ShowAlbumPhotosViewModel.cs" />
-    <Compile Include="ViewModel\ShowBlackListCurrentUserViewModel.cs" />
-    <Compile Include="ViewModel\ShowCurrentUserAlbumViewModel.cs" />
-    <Compile Include="ViewModel\ShowFriendCurrentUserViewModel.cs" />
-    <Compile Include="ViewModel\ShowInformationFriendViewModel.cs" />
-    <Compile Include="ViewModel\ShowNewRequestsViewModel.cs" />
-    <Compile Include="ViewModel\UserProfileViewModel.cs" />
+    <Compile Include="ViewModel\Album\AddPhotoInAlbumViewModel.cs" />
+    <Compile Include="ViewModel\Blacklist\AddUserInBlackListViewModel.cs" />
+    <Compile Include="ViewModel\Album\CreateAlbumViewModel.cs" />
+    <Compile Include="ViewModel\Blacklist\DeleteUserFromBlackListViewModel.cs" />
+    <Compile Include="ViewModel\User\EditUserAvatarViewModel.cs" />
+    <Compile Include="ViewModel\User\EditUserProfileInformation.cs" />
+    <Compile Include="ViewModel\Account\LoginViewModel.cs" />
+    <Compile Include="ViewModel\Account\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\Search\ResultSearchByCriteriaViewModel.cs" />
+    <Compile Include="ViewModel\Search\SearchByCriteriaViewModel.cs" />
+    <Compile Include="ViewModel\Friend\SendFriendRequestViewModel.cs" />
+    <Compile Include="ViewModel\Album\ShowAlbumPhotosViewModel.cs" />
+    <Compile Include="ViewModel\Blacklist\ShowBlackListCurrentUserViewModel.cs" />
+    <Compile Include="ViewModel\Album\ShowCurrentUserAlbumViewModel.cs" />
+    <Compile Include="ViewModel\Friend\ShowFriendCurrentUserViewModel.cs" />
+    <Compile Include="ViewModel\Friend\ShowInformationFriendViewModel.cs" />
+    <Compile Include="ViewModel\Friend\ShowNewRequestsViewModel.cs" />
+    <Compile Include="ViewModel\User\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -268,5 +268,6 @@
       <LastGenOutput>Constants.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

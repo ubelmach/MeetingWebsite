@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using AutoMapper;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
-using Microsoft.AspNet.Identity;
 
 namespace MeetingWebsite.BLL.Services
 {

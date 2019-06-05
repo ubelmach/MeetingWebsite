@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.Models.Entities;
 

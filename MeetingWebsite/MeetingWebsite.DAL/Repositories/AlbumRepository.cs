@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;

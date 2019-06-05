@@ -9,19 +9,12 @@ import { UserService } from '../shared/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  userDetails;
-
   constructor(private router: Router, private service: UserService) { }
 
-  ngOnInit() {
-    this.service.getUserProfile().subscribe(
-      res => {
-        this.userDetails = res;
-      },
-      err => {
-        console.log(err);
-      }
-    )
+   ngOnInit() {  }
+
+   onProfile() {
+    this.router.navigate(['/home/profile']);
   }
 
   onLogout() {

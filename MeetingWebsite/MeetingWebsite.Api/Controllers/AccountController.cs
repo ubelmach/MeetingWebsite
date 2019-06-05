@@ -18,7 +18,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST: /api/account/Register
         [HttpPost, Route("Register")]
-        public async Task<object> Register([FromForm] RegisterViewModel model)
+        public async Task<object> Register([FromBody] RegisterViewModel model)
         {
             var url = HttpContext.Request.Host.ToString();
             var result = await _accountService.RegisterUser(model, url);
@@ -47,13 +47,13 @@ namespace MeetingWebsite.Api.Controllers
 
             var result = await _accountService.ConfirmEmail(user, code);
             if (result.Succeeded)
-                return Ok();
+                return Redirect("http://localhost:4200/user/login");
             return BadRequest(result.Message);
         }
 
         //POST : /api/account/Login
         [HttpPost, Route("Login")]
-        public async Task<IActionResult> Login([FromForm] LoginViewModel model)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             var token = await _accountService.LoginUser(model);
             if (token != null)

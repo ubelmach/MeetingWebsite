@@ -2,7 +2,6 @@
 using MailKit.Net.Smtp;
 using MeetingWebsite.BLL.Builders;
 using Microsoft.AspNetCore.Hosting;
-using MimeKit;
 
 namespace MeetingWebsite.BLL.Services
 {

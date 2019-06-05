@@ -39,18 +39,18 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  onGoogleLogin() {
-    this.service.onLoginWithGoogleAccount().subscribe(
-      (res: any) => {
-        localStorage.setItem('token', res.token);
-        this.router.navigateByUrl('/home');
-      },
-      err => {
-        if(err.status == 400)
-        this.toastr.error('Username or password is incorrect or not confirm email.', "Authentication failed.");
-        else
-        console.log(err);
-       }
-    );
-  }
+  // onGoogleLogin() {
+  //   this.service.onLoginWithGoogleAccount().subscribe(
+  //     (res: any) => {
+  //       localStorage.setItem('token', res.token);
+  //       this.router.navigateByUrl('/home');
+  //     },
+  //     err => {
+  //       if(err.status == 400)
+  //       this.toastr.error('Username or password is incorrect or not confirm email.', "Authentication failed.");
+  //       else
+  //       console.log(err);
+  //      }
+  //   );
+  // }
 }

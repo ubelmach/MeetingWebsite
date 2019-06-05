@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MeetingWebsite.Models.EntityEnums;
 
 namespace MeetingWebsite.Models.Entities
 {

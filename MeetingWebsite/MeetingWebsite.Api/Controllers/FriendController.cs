@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using Castle.Components.DictionaryAdapter;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -63,9 +61,8 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult Get(string id)
         {
             var friend = _accountService.GetUser(id);
-            //var showInfoFriend = _friendService.ShowInformationFriend(friend);
 
-            var showInfoFriend = new UserProfileViewModel(friend.Result);
+            var showInfoFriend = new ShowInformationFriendViewModel(friend.Result);
 
             return Ok(showInfoFriend);
         }
@@ -116,6 +113,13 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult RejectNewRequest(int id)
         {
             _friendService.Rejected(id);
+            return Ok();
+        }
+
+        //PUT: api/friend/DeleteFriendship/id
+        [HttpPut, Route("DeleteFriendship/{id}")]
+        public IActionResult DeleteFriendship(int id)
+        {
             return Ok();
         }
 

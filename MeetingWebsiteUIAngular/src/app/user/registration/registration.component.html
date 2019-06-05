@@ -6,6 +6,7 @@
       *ngIf="service.formModel.get('FirstName').touched && service.formModel.get('FirstName').errors?.required">This
       field is mandatory.</label>
   </div>
+
   <div class="form-group required">
     <label>LastName</label>
     <input class="form-control" formControlName="LastName">
@@ -13,6 +14,7 @@
       *ngIf="service.formModel.get('LastName').touched && service.formModel.get('LastName').errors?.required">This field
       is mandatory.</label>
   </div>
+
   <div class="form-group required">
     <label>Email</label>
     <input class="form-control" formControlName="Email">
@@ -20,6 +22,21 @@
       *ngIf="service.formModel.get('Email').touched && service.formModel.get('Email').errors?.email">Invalid email
       address.</label>
   </div>
+
+  <div class="form-group required">
+    <label>Date of birthday</label>
+    <input class="form-control" formControlName="Birthday" type="date">
+  </div>
+
+<div class="form-group required">
+  <label>Gender</label>
+  <div class="form-control">
+    <input type="radio" value="Male" formControlName="Genders"> Male
+    <input type="radio" value="Female" formControlName="Genders"> Female
+    <input type="radio" value="Other" formControlName="Genders"> Other
+  </div>
+</div>
+
   <div formGroupName="Passwords">
     <div class="form-group required">
       <label>Password</label>
@@ -31,6 +48,7 @@
         *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.minlength">Minimum
         4 characters required.</label>
     </div>
+
     <div class="form-group required">
       <label>Password Confirm</label>
       <input type="password" class="form-control" formControlName="PasswordConfirm">
@@ -41,6 +59,7 @@
         *ngIf="service.formModel.get('Passwords.PasswordConfirm').touched && service.formModel.get('Passwords.PasswordConfirm').errors?.passwordMismatch">Confirm
         Password does not match.</label>
     </div>
+
   </div>
   <div class="form-row">
     <div class="form-group col-md-8 offset-md-2">

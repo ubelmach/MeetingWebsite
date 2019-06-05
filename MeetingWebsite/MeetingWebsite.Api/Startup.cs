@@ -49,7 +49,17 @@ namespace MeetingWebsite.Api
                 .AddEntityFrameworkStores<MeetingDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyAllowSpecificOrigins",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             services.AddMvc().AddJsonOptions(options =>
             {
                 var resolver = options.SerializerSettings.ContractResolver;
@@ -82,11 +92,6 @@ namespace MeetingWebsite.Api
             {
                 options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
             })
-                //.AddFacebook("Facebook", options =>
-                //{
-                //    options.AppSecret = "bb60ddb9db71cca56972fa6f6b3d8fb5";
-                //    options.AppId = "241399096724373";
-                //})
                 .AddGoogle("Google", options =>
                 {
                     options.CallbackPath = new PathString("/signin-google");
@@ -117,34 +122,6 @@ namespace MeetingWebsite.Api
             //    }
             //});
 
-            //app.Use(async (context, next) =>
-            //{
-            //    await next();
-
-            //    context.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-            //    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
-
-            //    if (!context.Response.Headers.ContainsKey("Access-Control-Allow-Origin"))
-            //    {
-            //        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
-            //    }
-
-            //    if (context.Request.Method?.ToUpperInvariant() == "OPTIONS")
-            //    {
-            //        context.Response.StatusCode = 200;
-            //        await context.Response.WriteAsync("");
-            //    }
-            //    else
-            //    if (context.Response.StatusCode == 404 &&
-            //        !Path.HasExtension(context.Request.Path.Value) &&
-            //        !context.Request.Path.Value.StartsWith("/api/"))
-            //    {
-            //        context.Response.StatusCode = 200;
-            //        context.Response.ContentType = "text/html";
-            //        await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
-            //    }
-            //});
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -154,15 +131,11 @@ namespace MeetingWebsite.Api
                 app.UseHsts();
             }
 
-            app.UseCors(options =>
-            options.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+            app.UseCors("MyAllowSpecificOrigins");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-
             app.UseStaticFiles();
         }
     }

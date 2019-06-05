@@ -1,12 +1,24 @@
-<nav class="navbar navbar-light" style="background-color: #ffffff;">
-  <a class="navbar-brand text-dark">Jigglypuff dating site</a>
-  <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 1%">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a class="navbar-brand" href="#">Jigglypuff dating site</a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Chats</a>
+      </li>
+    </ul>
+    <div class="btn-group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Settings
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" (click)="onProfile()">Profile</button>
+          <button class="dropdown-item" (click)="onLogout()">Logout</button>
+        </div>
+      </div>
+  </div>
 </nav>
 
-<div class="card m-5" style="width:18rem" *ngIf="userDetails">
-  <ul class="list-group">
-    <li class="list-group-item"><strong>FirstName: </strong>{{userDetails.FirstName}}</li>
-    <li class="list-group-item"><strong>LastName: </strong>{{userDetails.LastName}}</li>
-    <li class="list-group-item"><strong>E-mail: </strong>{{userDetails.Email}}</li>
-  </ul>
-</div>
+<router-outlet></router-outlet>
