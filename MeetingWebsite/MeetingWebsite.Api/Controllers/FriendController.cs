@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
+using Castle.Components.DictionaryAdapter;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -30,39 +32,42 @@ namespace MeetingWebsite.Api.Controllers
             if (!friends.Any())
                 return BadRequest(new { message = "Error, you have no friends yet" });
 
+            var showFriendCurrentUser = new List<ShowFriendCurrentUserViewModel>();
+
             foreach (var friend in friends)
             {
                 if (friend.FirstFriendId == userId)
                 {
-                    var showFriendCurrentUser = new ShowFriendCurrentUserViewModel
+                    showFriendCurrentUser.Add(new ShowFriendCurrentUserViewModel
                     {
                         FirstName = friend.SecondFriend.FirstName,
                         LastName = friend.SecondFriend.LastName
-                    };
-                    return Ok(showFriendCurrentUser);
+                    });
                 }
+
                 else
                 {
-                    var showFriendCurrentUser = new ShowFriendCurrentUserViewModel
+                    showFriendCurrentUser.Add(new ShowFriendCurrentUserViewModel
                     {
                         FirstName = friend.FirstFriend.FirstName,
                         LastName = friend.FirstFriend.LastName
-                    };
-                    return Ok(showFriendCurrentUser);
+                    });
                 }
             }
-
-            return Ok();
+            
+            return Ok(showFriendCurrentUser);
         }
 
         //GET: api/friend/DetailsFriendInformation/id
         [HttpGet, Route("DetailsFriendInformation/{id}")]
-        public IActionResult Get([FromForm] string id)
+        public IActionResult Get(string id)
         {
             var friend = _accountService.GetUser(id);
             //var showInfoFriend = _friendService.ShowInformationFriend(friend);
 
-            return Ok(/*showInfoFriend*/);
+            var showInfoFriend = new UserProfileViewModel(friend.Result);
+
+            return Ok(showInfoFriend);
         }
 
         //POST: api/friend/SendFriendRequest/{id}
@@ -90,6 +95,7 @@ namespace MeetingWebsite.Api.Controllers
 
             var showNewRequests = friendRequests.Select(item => new ShowNewRequestsViewModel
             {
+                Id = item.Id,
                 FirstName = item.FirstFriend.FirstName,
                 LastName = item.FirstFriend.LastName
             }).ToList();

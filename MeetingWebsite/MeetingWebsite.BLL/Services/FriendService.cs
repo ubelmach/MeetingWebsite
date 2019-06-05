@@ -30,27 +30,27 @@ namespace MeetingWebsite.BLL.Services
 
         public ShowInformationFriendViewModel ShowInformationFriend(Task<User> friend)
         {
-            var showInfoFriend = new ShowInformationFriendViewModel
-            {
-                FirstName = friend.Result.FirstName,
-                LastName = friend.Result.LastName,
-                Birthday = friend.Result.Birthday,
-                Gender = friend.Result.FirstName,
-                PurposeOfDating = friend.Result.UserProfile.PurposeOfDating,
-                MaritalStatus = friend.Result.UserProfile.MaritalStatus,
-                Height = friend.Result.UserProfile.Height,
-                Weight = friend.Result.UserProfile.Education,
-                Education = friend.Result.UserProfile.Education,
-                Nationality = friend.Result.UserProfile.Nationality,
-                ZodiacSign = friend.Result.UserProfile.ZodiacSign.ToString(),
-                KnowledgeOfLanguages = friend.Result.UserProfile.KnowledgeOfLanguages,
-                BadHabits = friend.Result.UserProfile.BadHabits,
-                FinancialSituation = friend.Result.UserProfile.FinancialSituation,
-                Interests = friend.Result.UserProfile.Interests,
-                Avatar = friend.Result.Avatar.Path
-            };
+            //var showInfoFriend = new ShowInformationFriendViewModel
+            //{
+            //    FirstName = friend.Result.FirstName,
+            //    LastName = friend.Result.LastName,
+            //    Birthday = friend.Result.Birthday,
+            //    Gender = friend.Result.FirstName,
+            //    PurposeOfDating = friend.Result.UserProfile.PurposeOfDating,
+            //    MaritalStatus = friend.Result.UserProfile.MaritalStatus,
+            //    Height = friend.Result.UserProfile.Height,
+            //    Weight = friend.Result.UserProfile.Education,
+            //    Education = friend.Result.UserProfile.Education,
+            //    Nationality = friend.Result.UserProfile.Nationality,
+            //    ZodiacSign = friend.Result.UserProfile.ZodiacSign.ToString(),
+            //    KnowledgeOfLanguages = friend.Result.UserProfile.KnowledgeOfLanguages,
+            //    BadHabits = friend.Result.UserProfile.BadHabits,
+            //    FinancialSituation = friend.Result.UserProfile.FinancialSituation,
+            //    Interests = friend.Result.UserProfile.Interests,
+            //    Avatar = friend.Result.Avatar.Path
+            //};
 
-            return showInfoFriend;
+            return null;
         }
 
         public Friendship SendRequest(SendFriendRequestViewModel request)
