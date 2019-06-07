@@ -4,6 +4,10 @@ using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Web;
+using System.Net.Http;
+using System.Web.Http;
 
 namespace MeetingWebsite.Api.Controllers
 {
@@ -57,15 +61,20 @@ namespace MeetingWebsite.Api.Controllers
             var result = await _userService.EditUserInformation(editUser);
             if (result == null)
                 return BadRequest(new {message = "Error edit user information"});
-            return Ok(result);
+            return Ok();
         }
 
         //PUT : /api/user/EditUserAvatar
         [HttpPut, Route("EditUserAvatar")]
-        public async Task<IActionResult> EditUserAvatar([FromForm] EditUserAvatarViewModel editUserAvatar)
+        public async Task<IActionResult> EditUserAvatar()
         {
-            if (editUserAvatar == null)
-                return BadRequest();
+
+            var editUserAvatar = new EditUserAvatarViewModel();
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _accountService.GetUser(userId);
+            var file = HttpContext.Request.Form.Files[0];
+            editUserAvatar.User = user;
+            editUserAvatar.Avatar = file;
 
             var type = editUserAvatar.Avatar.ContentType;
             var length = editUserAvatar.Avatar.Length;
@@ -82,12 +91,9 @@ namespace MeetingWebsite.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = _accountService.GetUser(userId);
-            editUserAvatar.User = user.Result;
-
             await _fileService.AddUserAvatar(editUserAvatar);
             return Ok(editUserAvatar);
+
         }
     }
 }

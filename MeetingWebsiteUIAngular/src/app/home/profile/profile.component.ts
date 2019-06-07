@@ -11,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 export class ProfileComponent implements OnInit {
 
   userDetails;
-  visible = true;
+  visibleDetailsUser = true;
+  visiblePhotoUser = true;
 
   constructor(public service: UserService, private toastr: ToastrService, private router: Router) { }
 
@@ -26,17 +27,47 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  imageUrl: string = "/assets/img/add.jpg";
+  fileToUpload: File = null;
+
+  handleFileInput(file: FileList) {
+    this.fileToUpload = file.item(0);
+
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageUrl = event.target.result;
+    }
+    reader.readAsDataURL(this.fileToUpload);
+  }
+
+  onChangeImage(Image){
+    this.service.postFile(this.fileToUpload).subscribe(
+      (res: any ) => {
+        console.log('done');
+        Image.value = null;
+        this.router.navigateByUrl('/home/profile');
+        this.toastr.success('Update!', 'Edit user infrormation successful.');
+      },
+      err =>{
+        console.log(err);
+      }
+    );
+  }
+
   onEditUser() {
-    this.visible = !this.visible;
+    this.visibleDetailsUser = !this.visibleDetailsUser;
+  }
+
+  onEditPicture() {
+    this.visiblePhotoUser = !this.visiblePhotoUser;
   }
 
   onSubmit() {
     this.service.updateUserProfile().subscribe(
       (res: any) => {
-        if (res.status == 200)  
-          this.router.navigate(['/home/profile']);    
-        //   this.toastr.success('Update!', 'Edit user infrormation successful.');
-        // }
+          this.toastr.success('Update!', 'Edit user infrormation successful.');
+          this.router.navigateByUrl('/home/profile');
+          console.log('update');
       },
       err => {
         if (err.status == 400)

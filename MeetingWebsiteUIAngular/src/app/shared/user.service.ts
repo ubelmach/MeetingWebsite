@@ -93,6 +93,12 @@ export class UserService {
     return this.http.put(this.BaseURI + '/user/EditUserInformation', body)
   }
 
+  postFile(fileToUpload: File){
+    const formData: FormData = new FormData();
+    formData.append('Image', fileToUpload);
+    return this.http.put(this.BaseURI +  '/user/EditUserAvatar', formData);
+  }
+
   // onLoginWithGoogleAccount() {
   //   return this.http.get(this.BaseURI + '/account/SignInWithGoogle');
   // }
