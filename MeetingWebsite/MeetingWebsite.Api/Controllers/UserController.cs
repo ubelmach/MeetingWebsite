@@ -45,7 +45,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //PUT : /api/user/EditUserInformation
         [HttpPut, Route("EditUserInformation")]
-        public async Task<IActionResult> EditUserInformation([FromForm] EditUserProfileInformation editUser)
+        public async Task<IActionResult> EditUserInformation([FromBody] EditUserProfileInformation editUser)
         {
             if (editUser == null)
                 return BadRequest();

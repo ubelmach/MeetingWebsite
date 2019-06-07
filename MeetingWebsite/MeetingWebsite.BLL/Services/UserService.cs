@@ -33,15 +33,15 @@ namespace MeetingWebsite.BLL.Services
 
             try
             {
-                if (!string.IsNullOrEmpty(editUser.Firstname))
-                { user.FirstName = editUser.Firstname; }
-                if (!string.IsNullOrEmpty(editUser.Lastname))
-                { user.LastName = editUser.Lastname; }
-                if (!string.IsNullOrEmpty(editUser.Gender.ToString()))
-                { user.Gender = editUser.Gender; }
+                if (!string.IsNullOrEmpty(editUser.FirstName))
+                { user.FirstName = editUser.FirstName; }
+                if (!string.IsNullOrEmpty(editUser.LastName))
+                { user.LastName = editUser.LastName; }
+                if (!string.IsNullOrEmpty(editUser.Genders.ToString()))
+                { user.Gender = editUser.Genders; }
                 if (!string.IsNullOrEmpty(editUser.Birthday.ToString(CultureInfo.InvariantCulture)))
                 { user.Birthday = editUser.Birthday; }
-                if (!string.IsNullOrEmpty(editUser.ZodiacSign))
+                if (!string.IsNullOrEmpty(editUser.ZodiacSign.ToString()))
                 { userProfile.ZodiacSign = editUser.ZodiacSign; }
                 if (!string.IsNullOrEmpty(editUser.PurposeOfDating))
                 { userProfile.PurposeOfDating = editUser.PurposeOfDating; }

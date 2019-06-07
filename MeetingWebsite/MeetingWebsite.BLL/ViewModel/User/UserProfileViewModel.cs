@@ -13,7 +13,7 @@ namespace MeetingWebsite.BLL.ViewModel
         public string LastName { get; set; }
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
-        public Genders Gender { get; set; }
+        public string Gender { get; set; }
         public bool AnonymityMode { get; set; }
 
         public string PurposeOfDating { get; set; }
@@ -29,6 +29,7 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Interests { get; set; }
 
         public string Avatar { get; set; }
+        public string HomeDir { get; set; }
 
         public UserProfileViewModel(User user)
         {
@@ -38,12 +39,16 @@ namespace MeetingWebsite.BLL.ViewModel
             { FirstName = user.FirstName; }
             if (!string.IsNullOrEmpty(user.LastName))
             { LastName = user.LastName; }
+
             if (!string.IsNullOrEmpty(user.Gender.ToString()))
-            { Gender = user.Gender; }
+            { Gender = user.Gender.ToString(); }
+
             if (!string.IsNullOrEmpty(user.Birthday.ToString(CultureInfo.InvariantCulture)))
             { Birthday = user.Birthday; }
-            if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign))
-            { ZodiacSign = user.UserProfile.ZodiacSign; }
+
+            if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
+            { ZodiacSign = user.UserProfile.ZodiacSign.ToString(); }
+
             if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
             { PurposeOfDating = user.UserProfile.PurposeOfDating; }
             if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))
@@ -66,8 +71,20 @@ namespace MeetingWebsite.BLL.ViewModel
             { Interests = user.UserProfile.Interests; }
             AnonymityMode = user.AnonymityMode;
 
-            if(user.Avatar != null)
-                Avatar = user.Avatar.Path;
+            if (!string.IsNullOrEmpty(user.HomeDir))
+            {
+                HomeDir = user.HomeDir;
+            }
+
+            if (user.Avatar != null)
+            {
+                Avatar = user.HomeDir + user.Avatar.Path;
+            }
+            else
+            {
+                Avatar = "/File/Nophoto.jpg";
+            }
+
         }
     }
 }

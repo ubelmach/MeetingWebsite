@@ -62,7 +62,7 @@ namespace MeetingWebsite.DAL.Repositories
         }
 
         public void Dispose()
-        {
+         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }

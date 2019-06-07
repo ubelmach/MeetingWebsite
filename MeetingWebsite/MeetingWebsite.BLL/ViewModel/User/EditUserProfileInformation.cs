@@ -9,17 +9,17 @@ namespace MeetingWebsite.BLL.ViewModel
     {
         public string Id { get; set; }
 
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public DateTime Birthday { get; set; }
-        public Genders Gender { get; set; }
+        public Genders Genders { get; set; }
         public string PurposeOfDating { get; set; }
         public string MaritalStatus { get; set; }
         public string Height { get; set; }
         public string Weight { get; set; }
         public string Education { get; set; }
         public string Nationality { get; set; }
-        public string ZodiacSign { get; set; }
+        public ZodiacSigns ZodiacSign { get; set; }
         public string KnowledgeOfLanguages { get; set; }
         public string BadHabits { get; set; }
         public string FinancialSituation { get; set; }
@@ -34,14 +34,14 @@ namespace MeetingWebsite.BLL.ViewModel
             Id = user.Id;
 
             if (!string.IsNullOrEmpty(user.FirstName))
-            { Firstname = user.FirstName; }
+            { FirstName = user.FirstName; }
             if (!string.IsNullOrEmpty(user.LastName))
-            { Lastname = user.LastName; }
+            { LastName = user.LastName; }
             if (!string.IsNullOrEmpty(user.Gender.ToString()))
-            { Gender = user.Gender; }
+            { Genders = user.Gender; }
             if (!string.IsNullOrEmpty(user.Birthday.ToString(CultureInfo.InvariantCulture)))
             { Birthday = user.Birthday; }
-            if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign))
+            if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
             { ZodiacSign = user.UserProfile.ZodiacSign; }
             if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
             { PurposeOfDating = user.UserProfile.PurposeOfDating; }

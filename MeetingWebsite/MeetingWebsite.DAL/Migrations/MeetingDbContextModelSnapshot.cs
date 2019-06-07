@@ -240,7 +240,7 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("Weight");
 
-                    b.Property<string>("ZodiacSign");
+                    b.Property<int>("ZodiacSign");
 
                     b.HasKey("Id");
 

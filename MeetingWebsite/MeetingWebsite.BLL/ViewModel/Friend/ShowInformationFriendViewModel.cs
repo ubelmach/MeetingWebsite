@@ -37,8 +37,8 @@ namespace MeetingWebsite.BLL.ViewModel
             { Gender = user.Gender.ToString(); }
             if (!string.IsNullOrEmpty(user.Birthday.ToString(CultureInfo.InvariantCulture)))
             { Birthday = user.Birthday; }
-            if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign))
-            { ZodiacSign = user.UserProfile.ZodiacSign; }
+            if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
+            { ZodiacSign = user.UserProfile.ZodiacSign.ToString(); }
             if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
             { PurposeOfDating = user.UserProfile.PurposeOfDating; }
             if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))

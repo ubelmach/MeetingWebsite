@@ -7,8 +7,8 @@ body{
 /* #9475756b */
 
 input.form-control,input.form-control:focus{
-    background-color: #636b7b;
-    color: #fff;
+    /* background-color: #636b7b;
+    color: #fff; */
     border: 1px solid #636b7b;
 
 }
@@ -99,8 +99,10 @@ div.form-group.required>label:first-child:after{
  }
 
  .user-profile-main{
-    width:30rem;
-    margin-top: 5%;
-    margin-left: 50%;
+    width:23rem;
+ }
+
+.user-profile-picture{
+    text-align: center;
 }
 

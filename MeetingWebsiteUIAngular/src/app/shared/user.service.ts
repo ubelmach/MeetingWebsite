@@ -9,6 +9,7 @@ export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = 'https://localhost:44333/api';
+
   formModel = this.fb.group({
     FirstName: ['', Validators.required],
     LastName: ['', Validators.required],
@@ -19,6 +20,25 @@ export class UserService {
       Password: ['', [Validators.required, Validators.minLength(4)]],
       PasswordConfirm: ['', Validators.required],
     }, { validator: this.comparePasswords })
+  })
+
+  editModel = this.fb.group({
+    FirstName: [''],
+    LastName: [''],
+    Birthday: [''],
+    Genders: [''],
+    PurposeOfDating: [''],
+    MaritalStatus: [''],
+    Height: [''],
+    Weight: [''],
+    Education: [''],
+    Nationality: [''],
+    ZodiacSign: [''],
+    KnowledgeOfLanguages: [''],
+    BadHabits: [''],
+    FinancialSituation: [''],
+    Interests: [''],
+    AnonymityMode: ['']
   })
 
   comparePasswords(fb: FormGroup) {
@@ -43,16 +63,38 @@ export class UserService {
     return this.http.post(this.BaseURI + '/account/Register', body);
   }
 
-  login(formData){
+  login(formData) {
     return this.http.post(this.BaseURI + '/account/Login', formData);
   }
 
-  getUserProfile(){
+  getUserProfile() {
     return this.http.get(this.BaseURI + '/user/UserProfile');
   }
 
-  onLoginWithGoogleAccount() {
-    return this.http.get(this.BaseURI + '/account/SignInWithGoogle');
+  updateUserProfile() {
+    var body = {
+      Firstname: this.editModel.value.FirstName,
+      Lastname: this.editModel.value.LastName,
+      Birthday: this.editModel.value.Birthday,
+      Genders: this.editModel.value.Genders,
+      PurposeOfDating: this.editModel.value.PurposeOfDating,
+      MaritalStatus: this.editModel.value.MaritalStatus,
+      Height: this.editModel.value.Height,
+      Weight: this.editModel.value.Weight,
+      Education: this.editModel.value.Education,
+      Nationality: this.editModel.value.Nationality,
+      ZodiacSign: this.editModel.value.ZodiacSign,
+      KnowledgeOfLanguages: this.editModel.value.KnowledgeOfLanguages,
+      BadHabits: this.editModel.value.BadHabits,
+      FinancialSituation: this.editModel.value.FinancialSituation,
+      Interests: this.editModel.value.Interests,
+      AnonymityMode: this.editModel.value.AnonymityMode
+    };
+    return this.http.put(this.BaseURI + '/user/EditUserInformation', body)
   }
+
+  // onLoginWithGoogleAccount() {
+  //   return this.http.get(this.BaseURI + '/account/SignInWithGoogle');
+  // }
 
 }
