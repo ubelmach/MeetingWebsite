@@ -45,7 +45,8 @@ export class ProfileComponent implements OnInit {
       (res: any ) => {
         console.log('done');
         Image.value = null;
-        this.router.navigateByUrl('/home/profile');
+        this.ngOnInit();
+        this.onEditPicture();
         this.toastr.success('Update!', 'Edit user infrormation successful.');
       },
       err =>{
@@ -66,7 +67,8 @@ export class ProfileComponent implements OnInit {
     this.service.updateUserProfile().subscribe(
       (res: any) => {
           this.toastr.success('Update!', 'Edit user infrormation successful.');
-          this.router.navigateByUrl('/home/profile');
+          this.ngOnInit();
+          this.onEditUser();
           console.log('update');
       },
       err => {

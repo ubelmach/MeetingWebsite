@@ -1,4 +1,4 @@
-<div class="form-row" style="margin-top: 5%; margin-left: 15%; margin-right: 0">
+<div class="form-row" style="margin-top: 3%; margin-left: 20%; margin-right: 0">
   <div class="col-md-4">
     <div *ngIf="visiblePhotoUser">
       <div class="user-profile-picture" *ngIf="userDetails">
@@ -66,8 +66,13 @@
         </ul>
         <div>
           <div style="text-align: center">
-            <button type="button" class="btn btn-outline-info" (click)="onEditUser()" style="margin-top: 2%;">Change
-              information</button>
+            <div>
+                <button type="button" class="btn btn-outline-info" (click)="onEditUser()" style="margin-top: 2%;">Change
+                    information</button>
+            </div>
+
+              <button type="button" class="btn btn-outline-primary" style="margin-top: 2%;">View albums
+              </button>
           </div>
         </div>
       </div>
