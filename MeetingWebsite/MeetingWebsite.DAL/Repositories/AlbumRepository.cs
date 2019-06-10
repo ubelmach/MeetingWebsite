@@ -7,7 +7,7 @@ using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.DAL.Repositories
 {
-    public class AlbumRepository : IAlbumRepository
+    public class AlbumRepository : IRepository<PhotoAlbum>
     {
         private MeetingDbContext _db;
 
@@ -36,6 +36,16 @@ namespace MeetingWebsite.DAL.Repositories
             var album = _db.PhotoAlbums.Find(id);
             if (album != null)
                 _db.PhotoAlbums.Remove(album);
+        }
+
+        public IEnumerable<PhotoAlbum> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(PhotoAlbum item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

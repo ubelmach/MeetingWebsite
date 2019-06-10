@@ -13,7 +13,6 @@ namespace MeetingWebsite.DAL.Repositories
         private FriendshipRepository _friendshipRepository;
         private MessageRepository _messageRepository;
         private AlbumRepository _albumRepository;
-        private UserRepository _userRepository;
         private UserProfileRepository _userProfileRepository;
         private BlacklistRepository _blacklistRepository;
         private PurposeRepository _purposeRepository;
@@ -33,11 +32,8 @@ namespace MeetingWebsite.DAL.Repositories
         public IRepository<Languages> LanguageRepository =>
             _languageRepository ?? (_languageRepository = new LanguageRepository(_db));
 
-        public IFileRepository FileRepository => 
+        public IRepository<FileModel> FileRepository => 
             _fileRepository ?? (_fileRepository = new FileRepository(_db));
-
-        public IUserRepository UserRepository =>
-            _userRepository ?? (_userRepository = new UserRepository(_db));
 
         public IRepository<Friendship> FriendRepository =>
             _friendshipRepository ?? (_friendshipRepository = new FriendshipRepository(_db));
@@ -45,10 +41,10 @@ namespace MeetingWebsite.DAL.Repositories
         public IRepository<Message> MessageRepository =>
             _messageRepository ?? (_messageRepository = new MessageRepository(_db));
 
-        public IAlbumRepository AlbumRepository =>
+        public IRepository<PhotoAlbum> AlbumRepository =>
             _albumRepository ?? (_albumRepository = new AlbumRepository(_db));
 
-        public IBlacklistRepository BlacklistRepository =>
+        public IRepository<BlackList> BlacklistRepository =>
             _blacklistRepository ?? (_blacklistRepository = new BlacklistRepository(_db));
 
         public void Save()

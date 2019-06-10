@@ -6,7 +6,7 @@ using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.DAL.Repositories
 {
-    public class FileRepository : IFileRepository
+    public class FileRepository : IRepository<FileModel>
     {
         private readonly MeetingDbContext _db;
 
@@ -35,6 +35,16 @@ namespace MeetingWebsite.DAL.Repositories
             var photo = _db.Files.Find(id);
             if (photo != null)
                 _db.Files.Remove(photo);
+        }
+
+        public IEnumerable<FileModel> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(FileModel item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

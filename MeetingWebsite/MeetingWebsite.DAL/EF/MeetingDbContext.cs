@@ -1,5 +1,4 @@
-﻿using System;
-using MeetingWebsite.DAL.Configuration;
+﻿using MeetingWebsite.DAL.Configuration;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,6 @@ namespace MeetingWebsite.DAL.EF
         public DbSet<Message> Messages { get; set; }
         public DbSet<PhotoAlbum> PhotoAlbums { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-
         public DbSet<PurposeOfDating> PurposeOfDatings { get; set; }
         public DbSet<Languages> Languageses { get; set; }
 

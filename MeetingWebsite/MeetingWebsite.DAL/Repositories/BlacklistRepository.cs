@@ -7,7 +7,7 @@ using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.DAL.Repositories
 {
-    public class BlacklistRepository : IBlacklistRepository
+    public class BlacklistRepository : IRepository<BlackList>
     {
         private MeetingDbContext _db;
 
@@ -31,6 +31,21 @@ namespace MeetingWebsite.DAL.Repositories
             var delete = _db.BlackLists.Find(id);
             if (delete != null)
                 _db.BlackLists.Remove(delete);
+        }
+
+        public IEnumerable<BlackList> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public BlackList Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(BlackList item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

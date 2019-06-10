@@ -6,5 +6,6 @@ namespace MeetingWebsite.BLL.Services
     public interface IPurposeService
     {
         IEnumerable<PurposeOfDating> GetAll();
+        void Update(UserPurpose purpose);
     }
 }

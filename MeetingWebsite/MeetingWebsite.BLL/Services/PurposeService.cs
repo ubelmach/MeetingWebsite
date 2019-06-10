@@ -18,6 +18,11 @@ namespace MeetingWebsite.BLL.Services
             return _database.PurposeRepository.GetAll();
         }
 
+        public void Update(UserPurpose item)
+        {
+            _database.PurposeRepository.Update(item);
+        }
+
 
     }
 }

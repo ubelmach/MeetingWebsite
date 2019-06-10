@@ -73,7 +73,6 @@ namespace MeetingWebsite.Api.Controllers
         [HttpPut, Route("EditUserAvatar")]
         public async Task<IActionResult> EditUserAvatar()
         {
-
             var editUserAvatar = new EditUserAvatarViewModel();
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _accountService.GetUser(userId);

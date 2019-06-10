@@ -7,11 +7,10 @@ namespace MeetingWebsite.DAL.Interfaces
     {
         IRepository<Friendship> FriendRepository { get; }
         IRepository<Message> MessageRepository { get; }
-        IUserRepository UserRepository { get; }
         IRepository<UserProfile> UserProfileRepository { get; }
-        IFileRepository FileRepository { get; }
-        IAlbumRepository AlbumRepository { get; }
-        IBlacklistRepository BlacklistRepository { get; }
+        IRepository<FileModel> FileRepository { get; }
+        IRepository<PhotoAlbum> AlbumRepository { get; }
+        IRepository<BlackList> BlacklistRepository { get; }
         IRepository<PurposeOfDating> PurposeRepository { get; }
         IRepository<Languages> LanguageRepository { get; }
         void Save();

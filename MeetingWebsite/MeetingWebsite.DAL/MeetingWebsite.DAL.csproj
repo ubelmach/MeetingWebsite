@@ -240,12 +240,8 @@
     <Compile Include="Configuration\FriendshipConfiguration.cs" />
     <Compile Include="EF\MeetingDbContext.cs" />
     <Compile Include="Initializer\DbInitializer.cs" />
-    <Compile Include="Interfaces\IAlbumRepository.cs" />
-    <Compile Include="Interfaces\IBlacklistRepository.cs" />
-    <Compile Include="Interfaces\IFileRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Migrations\20190610135014_InitialDatabase.cs" />
     <Compile Include="Migrations\20190610135014_InitialDatabase.designer.cs">
       <DependentUpon>20190610135014_InitialDatabase.cs</DependentUpon>
@@ -261,7 +257,6 @@
     <Compile Include="Repositories\MessageRepository.cs" />
     <Compile Include="Repositories\PurposeRepository.cs" />
     <Compile Include="Repositories\UserProfileRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MeetingWebsite.Models\MeetingWebsite.Models.csproj">

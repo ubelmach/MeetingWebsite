@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MeetingWebsite.Models.Entities
@@ -9,9 +8,7 @@ namespace MeetingWebsite.Models.Entities
         [Key]
         public int Id { get; set; }
         public string Value { get; set; }
-
         public virtual List<UserPurpose> UserPurposes { get; set; }
-
         public PurposeOfDating()
         {
             UserPurposes = new List<UserPurpose>();
