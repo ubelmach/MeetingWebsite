@@ -1,13 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
+using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Web;
-using System.Net.Http;
-using System.Web.Http;
+using MeetingWebsite.Models.EntityEnums;
 
 namespace MeetingWebsite.Api.Controllers
 {
@@ -18,17 +18,23 @@ namespace MeetingWebsite.Api.Controllers
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
         private readonly IFileService _fileService;
+        private readonly IPurposeService _purposeService;
+        private readonly ILanguageService _languageService;
 
         private const int LengthMax = 5242880;
         private const string CorrectType = "image/jpeg";
 
         public UserController(IAccountService accountService,
             IUserService userService,
-            IFileService fileService)
+            IFileService fileService,
+            IPurposeService purposeService,
+            ILanguageService languageService)
         {
             _accountService = accountService;
             _userService = userService;
             _fileService = fileService;
+            _purposeService = purposeService;
+            _languageService = languageService;
         }
 
         //GET: /api/user/UserProfile
@@ -55,7 +61,6 @@ namespace MeetingWebsite.Api.Controllers
                 return BadRequest();
 
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = _accountService.GetUser(userId);
             editUser.Id = userId;
 
             var result = await _userService.EditUserInformation(editUser);
@@ -93,7 +98,34 @@ namespace MeetingWebsite.Api.Controllers
 
             await _fileService.AddUserAvatar(editUserAvatar);
             return Ok(editUserAvatar);
+        }
 
+        //GET: /api/user/ZodiacSigns
+        [HttpGet, Route("ZodiacSigns")]
+        public List<string> GetZodiacSigns()
+        {
+            return Enum.GetNames(typeof(ZodiacSigns)).ToList();
+        }
+
+        //GET: /api/user/Genders
+        [HttpGet, Route("Genders")]
+        public List<string> GetGenders()
+        {
+            return Enum.GetNames(typeof(Genders)).ToList();
+        }
+
+        //GET: /api/user/Purpose
+        [HttpGet, Route("Purpose")]
+        public IEnumerable<PurposeOfDating> GetPurpose()
+        {
+            return _purposeService.GetAll().ToList();
+        }
+
+        //GET: /api/user/Languages
+        [HttpGet, Route("Languages")]
+        public IEnumerable<Languages> GetLanguages()
+        {
+            return _languageService.GetAll().ToList();
         }
     }
 }

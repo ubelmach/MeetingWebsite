@@ -16,6 +16,8 @@ namespace MeetingWebsite.DAL.Repositories
         private UserRepository _userRepository;
         private UserProfileRepository _userProfileRepository;
         private BlacklistRepository _blacklistRepository;
+        private PurposeRepository _purposeRepository;
+        private LanguageRepository _languageRepository;
 
         public EfUnitOfWork(DbContextOptions options)
         {
@@ -24,6 +26,12 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IRepository<UserProfile> UserProfileRepository =>
             _userProfileRepository ?? (_userProfileRepository = new UserProfileRepository(_db));
+
+        public IRepository<PurposeOfDating> PurposeRepository =>
+            _purposeRepository ?? (_purposeRepository = new PurposeRepository(_db));
+
+        public IRepository<Languages> LanguageRepository =>
+            _languageRepository ?? (_languageRepository = new LanguageRepository(_db));
 
         public IFileRepository FileRepository => 
             _fileRepository ?? (_fileRepository = new FileRepository(_db));

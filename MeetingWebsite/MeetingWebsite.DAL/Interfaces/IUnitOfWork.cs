@@ -12,6 +12,8 @@ namespace MeetingWebsite.DAL.Interfaces
         IFileRepository FileRepository { get; }
         IAlbumRepository AlbumRepository { get; }
         IBlacklistRepository BlacklistRepository { get; }
+        IRepository<PurposeOfDating> PurposeRepository { get; }
+        IRepository<Languages> LanguageRepository { get; }
         void Save();
     }
 }

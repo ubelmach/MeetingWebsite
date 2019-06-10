@@ -214,6 +214,8 @@
     <Compile Include="Interfaces\IBlacklistService.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
     <Compile Include="Interfaces\IFriendService.cs" />
+    <Compile Include="Interfaces\ILanguageService.cs" />
+    <Compile Include="Interfaces\IPurposeService.cs" />
     <Compile Include="Interfaces\ISearchService.cs" />
     <Compile Include="Interfaces\IUserProfileService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
@@ -226,6 +228,8 @@
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\FriendService.cs" />
+    <Compile Include="Services\LanguageService.cs" />
+    <Compile Include="Services\PurposeService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserProfileService.cs" />
     <Compile Include="Services\UserService.cs" />

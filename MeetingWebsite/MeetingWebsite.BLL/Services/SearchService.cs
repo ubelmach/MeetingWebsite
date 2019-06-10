@@ -31,9 +31,9 @@ namespace MeetingWebsite.BLL.Services
             if (!string.IsNullOrEmpty(criteria.Gender))
                 result = _database.UserRepository.Find(x => x.Gender.ToString().Contains(criteria.Gender));
 
-            if (!string.IsNullOrEmpty(criteria.PurposeOfDating))
-                result = _database.UserRepository.Find(x =>
-                    x.UserProfile.PurposeOfDating.Contains(criteria.PurposeOfDating));
+            //if (!string.IsNullOrEmpty(criteria.PurposeOfDating))
+            //    result = _database.UserRepository.Find(x =>
+            //        x.UserProfile.PurposeOfDating.Contains(criteria.PurposeOfDating));
 
             if (!string.IsNullOrEmpty(criteria.MaritalStatus))
                 result = _database.UserRepository.Find(x =>
@@ -58,9 +58,9 @@ namespace MeetingWebsite.BLL.Services
             if (!string.IsNullOrEmpty(criteria.ZodiacSign))
                 result = _database.UserRepository.Find(x => x.UserProfile.ZodiacSign.ToString().Contains(criteria.ZodiacSign));
 
-            if (!string.IsNullOrEmpty(criteria.KnowledgeOfLanguages))
-                result = _database.UserRepository.Find(x =>
-                    x.UserProfile.KnowledgeOfLanguages.Contains(criteria.KnowledgeOfLanguages));
+            //if (!string.IsNullOrEmpty(criteria.KnowledgeOfLanguages))
+            //    result = _database.UserRepository.Find(x =>
+            //        x.UserProfile.KnowledgeOfLanguages.Contains(criteria.KnowledgeOfLanguages));
 
             if (!string.IsNullOrEmpty(criteria.FinancialSituation))
                 result = _database.UserRepository.Find(x =>

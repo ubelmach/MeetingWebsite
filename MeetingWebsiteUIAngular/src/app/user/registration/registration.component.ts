@@ -9,10 +9,19 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegistrationComponent implements OnInit {
 
+  genders;
+
   constructor(public service: UserService, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.service.formModel.reset();
+    this.service.getGenders().subscribe(
+      res => {
+        this.genders = res;
+      },
+      err => {
+        console.log(err);
+      }
+    )
   }
 
   onSubmit() {

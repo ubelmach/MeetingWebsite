@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace MeetingWebsite.BLL.Services
 {
@@ -11,15 +12,18 @@ namespace MeetingWebsite.BLL.Services
     {
         private IUnitOfWork _database { get; set; }
         private IAccountService _accountService { get; set; }
-        private readonly Microsoft.AspNetCore.Identity.UserManager<User> _userManager;
+        private IPurposeService _purposeService { get; set; }
+        private readonly UserManager<User> _userManager;
 
         public UserService(IUnitOfWork database,
-            Microsoft.AspNetCore.Identity.UserManager<User> userManager,
-            IAccountService accountService)
+            UserManager<User> userManager,
+            IAccountService accountService,
+            IPurposeService purposeService)
         {
-            _database = _database;
+            _database = database;
             _userManager = userManager;
             _accountService = accountService;
+            _purposeService = purposeService;
         }
 
         public async Task<EditUserProfileInformation> EditUserInformation(EditUserProfileInformation editUser)
@@ -43,8 +47,6 @@ namespace MeetingWebsite.BLL.Services
                 { user.Birthday = editUser.Birthday; }
                 if (!string.IsNullOrEmpty(editUser.ZodiacSign.ToString()))
                 { userProfile.ZodiacSign = editUser.ZodiacSign; }
-                if (!string.IsNullOrEmpty(editUser.PurposeOfDating))
-                { userProfile.PurposeOfDating = editUser.PurposeOfDating; }
                 if (!string.IsNullOrEmpty(editUser.MaritalStatus))
                 { userProfile.MaritalStatus = editUser.MaritalStatus; }
                 if (!string.IsNullOrEmpty(editUser.Height))
@@ -55,8 +57,6 @@ namespace MeetingWebsite.BLL.Services
                 { userProfile.Education = editUser.Education; }
                 if (!string.IsNullOrEmpty(editUser.Nationality))
                 { userProfile.Nationality = editUser.Nationality; }
-                if (!string.IsNullOrEmpty(editUser.KnowledgeOfLanguages))
-                { userProfile.KnowledgeOfLanguages = editUser.KnowledgeOfLanguages; }
                 if (!string.IsNullOrEmpty(editUser.BadHabits))
                 { userProfile.BadHabits = editUser.BadHabits; }
                 if (!string.IsNullOrEmpty(editUser.FinancialSituation))
@@ -65,6 +65,25 @@ namespace MeetingWebsite.BLL.Services
                 { userProfile.Interests = editUser.Interests; }
                 user.AnonymityMode = editUser.AnonymityMode;
 
+                //if (!string.IsNullOrEmpty(editUser.PurposeOfDating))
+                //{ userProfile.PurposeOfDating = editUser.PurposeOfDating; }
+                //if (!string.IsNullOrEmpty(editUser.KnowledgeOfLanguages))
+                //{ userProfile.KnowledgeOfLanguages = editUser.KnowledgeOfLanguages; }
+
+
+                if (editUser.PurposeOfDating != null)
+                {
+                    foreach (var purpose in editUser.PurposeOfDating)
+                    {
+                        var newUserPurpose = new UserPurpose
+                        {
+                            UserProfileId = user.UserProfile.Id,
+                            PurposeId = purpose
+                        };
+                        _purposeService.Update(newUserPurpose);
+                    }
+                    _database.Save();
+                }
                 await _userManager.UpdateAsync(user);
 
                 var result = new EditUserProfileInformation(user);

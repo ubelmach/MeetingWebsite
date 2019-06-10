@@ -39,8 +39,8 @@ namespace MeetingWebsite.BLL.ViewModel
             { Birthday = user.Birthday; }
             if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
             { ZodiacSign = user.UserProfile.ZodiacSign.ToString(); }
-            if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
-            { PurposeOfDating = user.UserProfile.PurposeOfDating; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
+            //{ PurposeOfDating = user.UserProfile.PurposeOfDating; }
             if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))
             { MaritalStatus = user.UserProfile.MaritalStatus; }
             if (!string.IsNullOrEmpty(user.UserProfile.Height))
@@ -51,8 +51,8 @@ namespace MeetingWebsite.BLL.ViewModel
             { Education = user.UserProfile.Education; }
             if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
             { Nationality = user.UserProfile.Nationality; }
-            if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
-            { KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
+            //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
             if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
             { BadHabits = user.UserProfile.BadHabits; }
             if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))

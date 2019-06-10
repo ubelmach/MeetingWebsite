@@ -71,6 +71,22 @@ export class UserService {
     return this.http.get(this.BaseURI + '/user/UserProfile');
   }
 
+  getZodiacSigns() {
+    return this.http.get(this.BaseURI + '/user/ZodiacSigns');
+  }
+
+  getGenders() {
+    return this.http.get(this.BaseURI + '/user/Genders');
+  }
+
+  getPurposes(){
+    return this.http.get(this.BaseURI + '/user/Purpose');
+  }
+
+  getLanguages(){
+    return this.http.get(this.BaseURI + '/user/Languages')
+  }
+
   updateUserProfile() {
     var body = {
       Firstname: this.editModel.value.FirstName,
@@ -93,10 +109,10 @@ export class UserService {
     return this.http.put(this.BaseURI + '/user/EditUserInformation', body)
   }
 
-  postFile(fileToUpload: File){
+  postFile(fileToUpload: File) {
     const formData: FormData = new FormData();
     formData.append('Image', fileToUpload);
-    return this.http.put(this.BaseURI +  '/user/EditUserAvatar', formData);
+    return this.http.put(this.BaseURI + '/user/EditUserAvatar', formData);
   }
 
   // onLoginWithGoogleAccount() {

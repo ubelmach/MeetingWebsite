@@ -239,15 +239,16 @@
     <Compile Include="Configuration\DialogConfiguration.cs" />
     <Compile Include="Configuration\FriendshipConfiguration.cs" />
     <Compile Include="EF\MeetingDbContext.cs" />
+    <Compile Include="Initializer\DbInitializer.cs" />
     <Compile Include="Interfaces\IAlbumRepository.cs" />
     <Compile Include="Interfaces\IBlacklistRepository.cs" />
     <Compile Include="Interfaces\IFileRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Migrations\20190607082149_InitialDB.cs" />
-    <Compile Include="Migrations\20190607082149_InitialDB.designer.cs">
-      <DependentUpon>20190607082149_InitialDB.cs</DependentUpon>
+    <Compile Include="Migrations\20190610135014_InitialDatabase.cs" />
+    <Compile Include="Migrations\20190610135014_InitialDatabase.designer.cs">
+      <DependentUpon>20190610135014_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MeetingDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,7 +257,9 @@
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\FriendshipRepository.cs" />
     <Compile Include="Repositories\AlbumRepository.cs" />
+    <Compile Include="Repositories\LanguageRepository.cs" />
     <Compile Include="Repositories\MessageRepository.cs" />
+    <Compile Include="Repositories\PurposeRepository.cs" />
     <Compile Include="Repositories\UserProfileRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>

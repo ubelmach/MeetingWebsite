@@ -16,6 +16,9 @@ namespace MeetingWebsite.DAL.EF
         public DbSet<PhotoAlbum> PhotoAlbums { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
 
+        public DbSet<PurposeOfDating> PurposeOfDatings { get; set; }
+        public DbSet<Languages> Languageses { get; set; }
+
         public MeetingDbContext(DbContextOptions options)
             : base(options) { }
 

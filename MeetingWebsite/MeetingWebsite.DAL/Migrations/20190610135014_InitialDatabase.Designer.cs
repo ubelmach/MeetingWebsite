@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingWebsite.DAL.Migrations
 {
     [DbContext(typeof(MeetingDbContext))]
-    [Migration("20190607082149_InitialDB")]
-    partial class InitialDB
+    [Migration("20190610135014_InitialDatabase")]
+    partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,6 +105,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.ToTable("Friendships");
                 });
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Languages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languageses");
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -147,6 +159,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PhotoAlbums");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.PurposeOfDating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PurposeOfDatings");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.User", b =>
@@ -215,6 +239,24 @@ namespace MeetingWebsite.DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserLanguages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("LanguageId");
+
+                    b.Property<int>("UserProfileId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("UserLanguages");
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserProfile", b =>
                 {
                     b.Property<int>("Id")
@@ -230,13 +272,9 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("Interests");
 
-                    b.Property<string>("KnowledgeOfLanguages");
-
                     b.Property<string>("MaritalStatus");
 
                     b.Property<string>("Nationality");
-
-                    b.Property<string>("PurposeOfDating");
 
                     b.Property<string>("UserId");
 
@@ -250,6 +288,24 @@ namespace MeetingWebsite.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("UserProfiles");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserPurpose", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PurposeId");
+
+                    b.Property<int>("UserProfileId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurposeId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("UserPurpose");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -432,11 +488,37 @@ namespace MeetingWebsite.DAL.Migrations
                         .HasForeignKey("AvatarId");
                 });
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserLanguages", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.Languages", "Languages")
+                        .WithMany("UserLanguages")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingWebsite.Models.Entities.UserProfile", "UserProfile")
+                        .WithMany("UserLanguages")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserProfile", b =>
                 {
                     b.HasOne("MeetingWebsite.Models.Entities.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("MeetingWebsite.Models.Entities.UserProfile", "UserId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserPurpose", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.PurposeOfDating", "PurposeOfDating")
+                        .WithMany("UserPurposes")
+                        .HasForeignKey("PurposeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingWebsite.Models.Entities.UserProfile", "UserProfile")
+                        .WithMany("UserPurposes")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

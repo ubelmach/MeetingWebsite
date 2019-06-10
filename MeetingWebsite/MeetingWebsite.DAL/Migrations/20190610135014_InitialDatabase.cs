@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MeetingWebsite.DAL.Migrations
 {
-    public partial class InitialDB : Migration
+    public partial class InitialDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,32 @@ namespace MeetingWebsite.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Languageses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Languageses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurposeOfDatings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurposeOfDatings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -274,14 +300,12 @@ namespace MeetingWebsite.DAL.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: true),
-                    PurposeOfDating = table.Column<string>(nullable: true),
+                    ZodiacSign = table.Column<int>(nullable: false),
                     MaritalStatus = table.Column<string>(nullable: true),
                     Height = table.Column<string>(nullable: true),
                     Weight = table.Column<string>(nullable: true),
                     Education = table.Column<string>(nullable: true),
                     Nationality = table.Column<string>(nullable: true),
-                    ZodiacSign = table.Column<int>(nullable: false),
-                    KnowledgeOfLanguages = table.Column<string>(nullable: true),
                     BadHabits = table.Column<string>(nullable: true),
                     FinancialSituation = table.Column<string>(nullable: true),
                     Interests = table.Column<string>(nullable: true)
@@ -295,6 +319,58 @@ namespace MeetingWebsite.DAL.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserLanguages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserProfileId = table.Column<int>(nullable: false),
+                    LanguageId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLanguages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserLanguages_Languageses_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languageses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserLanguages_UserProfiles_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPurpose",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserProfileId = table.Column<int>(nullable: false),
+                    PurposeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPurpose", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPurpose_PurposeOfDatings_PurposeId",
+                        column: x => x.PurposeId,
+                        principalTable: "PurposeOfDatings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserPurpose_UserProfiles_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -400,10 +476,30 @@ namespace MeetingWebsite.DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserLanguages_LanguageId",
+                table: "UserLanguages",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLanguages_UserProfileId",
+                table: "UserLanguages",
+                column: "UserProfileId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_UserId",
                 table: "UserProfiles",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPurpose_PurposeId",
+                table: "UserPurpose",
+                column: "PurposeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPurpose_UserProfileId",
+                table: "UserPurpose",
+                column: "UserProfileId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserRoles_AspNetUsers_UserId",
@@ -538,10 +634,22 @@ namespace MeetingWebsite.DAL.Migrations
                 name: "Friendships");
 
             migrationBuilder.DropTable(
-                name: "UserProfiles");
+                name: "UserLanguages");
+
+            migrationBuilder.DropTable(
+                name: "UserPurpose");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Languageses");
+
+            migrationBuilder.DropTable(
+                name: "PurposeOfDatings");
+
+            migrationBuilder.DropTable(
+                name: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
