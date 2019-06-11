@@ -12,18 +12,21 @@ namespace MeetingWebsite.BLL.Services
     {
         private IUnitOfWork _database { get; set; }
         private IAccountService _accountService { get; set; }
-        private IPurposeService _purposeService { get; set; }
+        private IUserPurposeService _userPurposeService { get; set; }
+        private IUserLanguagesService _userLanguagesService { get; set; }
         private readonly UserManager<User> _userManager;
 
         public UserService(IUnitOfWork database,
             UserManager<User> userManager,
             IAccountService accountService,
-            IPurposeService purposeService)
+            IUserPurposeService userPurposeService,
+            IUserLanguagesService userLanguagesService)
         {
             _database = database;
             _userManager = userManager;
             _accountService = accountService;
-            _purposeService = purposeService;
+            _userPurposeService = userPurposeService;
+            _userLanguagesService = userLanguagesService;
         }
 
         public async Task<EditUserProfileInformation> EditUserInformation(EditUserProfileInformation editUser)
@@ -65,14 +68,9 @@ namespace MeetingWebsite.BLL.Services
                 { userProfile.Interests = editUser.Interests; }
                 user.AnonymityMode = editUser.AnonymityMode;
 
-                //if (!string.IsNullOrEmpty(editUser.PurposeOfDating))
-                //{ userProfile.PurposeOfDating = editUser.PurposeOfDating; }
-                //if (!string.IsNullOrEmpty(editUser.KnowledgeOfLanguages))
-                //{ userProfile.KnowledgeOfLanguages = editUser.KnowledgeOfLanguages; }
-
-
                 if (editUser.PurposeOfDating != null)
                 {
+                    _userPurposeService.DeletePurpose(user.UserProfile.Id);
                     foreach (var purpose in editUser.PurposeOfDating)
                     {
                         var newUserPurpose = new UserPurpose
@@ -80,10 +78,26 @@ namespace MeetingWebsite.BLL.Services
                             UserProfileId = user.UserProfile.Id,
                             PurposeId = purpose
                         };
-                        _purposeService.Update(newUserPurpose);
+                        _userPurposeService.AddPurpose(newUserPurpose);
                     }
                     _database.Save();
                 }
+
+                if (editUser.KnowledgeOfLanguages != null)
+                {
+                    _userLanguagesService.DeleteLanguage(user.UserProfile.Id);
+                    foreach (var language in editUser.KnowledgeOfLanguages)
+                    {
+                        var newUserLanguages = new UserLanguages
+                        {
+                            UserProfileId = user.UserProfile.Id,
+                            LanguageId = language
+                        };
+                        _userLanguagesService.AddLanguages(newUserLanguages);
+                    }
+                    _database.Save();
+                }
+
                 await _userManager.UpdateAsync(user);
 
                 var result = new EditUserProfileInformation(user);

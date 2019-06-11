@@ -17,6 +17,10 @@ namespace MeetingWebsite.DAL.Repositories
         private BlacklistRepository _blacklistRepository;
         private PurposeRepository _purposeRepository;
         private LanguageRepository _languageRepository;
+        private UserPurposeRepository _userPurposeRepository;
+        private UserLanguagesRepository _userLanguagesRepository;
+
+        private UserRepository _userRepository;
 
         public EfUnitOfWork(DbContextOptions options)
         {
@@ -46,6 +50,15 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IRepository<BlackList> BlacklistRepository =>
             _blacklistRepository ?? (_blacklistRepository = new BlacklistRepository(_db));
+
+        public IRepository<UserPurpose> UserPurposeRepository =>
+            _userPurposeRepository ?? (_userPurposeRepository = new UserPurposeRepository(_db));
+
+        public IRepository<UserLanguages> UserLanguagesRepository =>
+            _userLanguagesRepository ?? (_userLanguagesRepository = new UserLanguagesRepository(_db));
+
+        public IUserRepository UserRepository =>
+            _userRepository ?? (_userRepository = new UserRepository(_db));
 
         public void Save()
         {

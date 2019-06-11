@@ -37,7 +37,7 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IEnumerable<Languages> GetAll()
         {
-            return _db.Languageses;
+            return _db.Languages;
         }
 
         public void Update(Languages item)

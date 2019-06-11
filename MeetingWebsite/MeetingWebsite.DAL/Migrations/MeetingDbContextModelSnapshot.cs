@@ -112,7 +112,7 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languageses");
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.Message", b =>
@@ -303,7 +303,7 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("UserPurpose");
+                    b.ToTable("UserPurposes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

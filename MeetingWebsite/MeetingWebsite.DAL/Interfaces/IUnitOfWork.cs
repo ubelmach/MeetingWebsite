@@ -13,6 +13,11 @@ namespace MeetingWebsite.DAL.Interfaces
         IRepository<BlackList> BlacklistRepository { get; }
         IRepository<PurposeOfDating> PurposeRepository { get; }
         IRepository<Languages> LanguageRepository { get; }
+        IRepository<UserLanguages> UserLanguagesRepository { get; }
+        IRepository<UserPurpose> UserPurposeRepository { get; }
+
+        IUserRepository UserRepository { get; }
+
         void Save();
     }
 }

@@ -110,6 +110,8 @@ namespace MeetingWebsite.Api
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IPurposeService, PurposeService>();
             services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IUserPurposeService, UserPurposeService>();
+            services.AddScoped<IUserLanguagesService, UserLanguagesService>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 

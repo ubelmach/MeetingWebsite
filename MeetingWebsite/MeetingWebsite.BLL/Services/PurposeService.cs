@@ -20,7 +20,7 @@ namespace MeetingWebsite.BLL.Services
 
         public void Update(UserPurpose item)
         {
-            _database.PurposeRepository.Update(item);
+            //_database.PurposeRepository.Update(item);
         }
 
 

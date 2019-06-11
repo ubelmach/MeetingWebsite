@@ -217,7 +217,9 @@
     <Compile Include="Interfaces\ILanguageService.cs" />
     <Compile Include="Interfaces\IPurposeService.cs" />
     <Compile Include="Interfaces\ISearchService.cs" />
+    <Compile Include="Interfaces\IUserLanguagesService.cs" />
     <Compile Include="Interfaces\IUserProfileService.cs" />
+    <Compile Include="Interfaces\IUserPurposeService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
@@ -231,7 +233,9 @@
     <Compile Include="Services\LanguageService.cs" />
     <Compile Include="Services\PurposeService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\UserLanguagesService.cs" />
     <Compile Include="Services\UserProfileService.cs" />
+    <Compile Include="Services\UserPurposeService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModel\Album\AddPhotoInAlbumViewModel.cs" />
     <Compile Include="ViewModel\Blacklist\AddUserInBlackListViewModel.cs" />
