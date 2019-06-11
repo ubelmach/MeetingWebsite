@@ -1,7 +1,9 @@
 ﻿using MeetingWebsite.Models.EntityEnums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.BLL.ViewModel
@@ -16,20 +18,21 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Gender { get; set; }
         public bool AnonymityMode { get; set; }
 
-        //public string PurposeOfDating { get; set; }
         public string MaritalStatus { get; set; }
         public string Height { get; set; }
         public string Weight { get; set; }
         public string Education { get; set; }
         public string Nationality { get; set; }
         public string ZodiacSign { get; set; }
-        //public string KnowledgeOfLanguages { get; set; }
         public string BadHabits { get; set; }
         public string FinancialSituation { get; set; }
         public string Interests { get; set; }
 
         public string Avatar { get; set; }
         public string HomeDir { get; set; }
+
+        public List<string> PurposeOfDating { get; set; }
+        public List<string> KnowledgeOfLanguages { get; set; }
 
         public UserProfileViewModel(User user)
         {
@@ -50,9 +53,6 @@ namespace MeetingWebsite.BLL.ViewModel
             if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
             { ZodiacSign = user.UserProfile.ZodiacSign.ToString(); }
 
-            //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
-            //{ PurposeOfDating = user.UserProfile.PurposeOfDating; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))
             { MaritalStatus = user.UserProfile.MaritalStatus; }
 
@@ -68,9 +68,6 @@ namespace MeetingWebsite.BLL.ViewModel
             if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
             { Nationality = user.UserProfile.Nationality; }
 
-            //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
-            //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
             { BadHabits = user.UserProfile.BadHabits; }
 
@@ -83,19 +80,33 @@ namespace MeetingWebsite.BLL.ViewModel
             AnonymityMode = user.AnonymityMode;
 
             if (!string.IsNullOrEmpty(user.HomeDir))
-            {
-                HomeDir = user.HomeDir;
-            }
+            { HomeDir = user.HomeDir; }
 
             if (user.Avatar != null)
-            {
-                Avatar = user.HomeDir + user.Avatar.Path;
-            }
+            { Avatar = user.HomeDir + user.Avatar.Path; }
             else
-            {
-                Avatar = "/File/Nophoto.jpg";
-            }
+            { Avatar = "/File/Nophoto.jpg"; }
 
+            var languages = new List<string>();
+            if (user.UserProfile.UserLanguages != null)
+            {
+                foreach (var language in user.UserProfile.UserLanguages)
+                {
+                    languages.Add(language.Languages.Value);
+                }
+
+                KnowledgeOfLanguages = languages;
+            }
+            var purposes = new List<string>();
+            if (user.UserProfile.UserPurposes != null)
+            {
+                foreach (var purpose in user.UserProfile.UserPurposes)
+                {
+                    purposes.Add(purpose.PurposeOfDating.Value);
+                }
+
+                PurposeOfDating = purposes;
+            }
         }
     }
 }

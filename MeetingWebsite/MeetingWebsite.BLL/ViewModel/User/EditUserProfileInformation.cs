@@ -25,12 +25,8 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Interests { get; set; }
         public bool AnonymityMode { get; set; }
 
-        //public string PurposeOfDating { get; set; }
-        //public string KnowledgeOfLanguages { get; set; }
-
         public List<int> PurposeOfDating { get; set; }
         public List<int> KnowledgeOfLanguages { get; set; }
-
 
         public EditUserProfileInformation() { }
 
@@ -65,21 +61,7 @@ namespace MeetingWebsite.BLL.ViewModel
             if (!string.IsNullOrEmpty(user.UserProfile.Interests))
             { Interests = user.UserProfile.Interests; }
             AnonymityMode = user.AnonymityMode;
-
-            //if (PurposeOfDating != null)
-            //{
-            //    PurposeOfDating = user.UserProfile.UserPurposes
-            //    foreach (var purpose in PurposeOfDating)
-            //    {
-                    
-            //    }
-            //}
             
-            //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
-            //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
-            //{ PurposeOfDating = user.UserProfile.PurposeOfDating; }
-
             //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
             //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
             //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
