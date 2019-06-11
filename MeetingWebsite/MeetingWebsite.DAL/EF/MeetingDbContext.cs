@@ -14,10 +14,15 @@ namespace MeetingWebsite.DAL.EF
         public DbSet<Message> Messages { get; set; }
         public DbSet<PhotoAlbum> PhotoAlbums { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+
         public DbSet<PurposeOfDating> PurposeOfDatings { get; set; }
+        public DbSet<UserPurpose> UserPurposes { get; set; }
         public DbSet<Languages> Languages { get; set; }
         public DbSet<UserLanguages> UserLanguages { get; set; }
-        public DbSet<UserPurpose> UserPurposes { get; set; }
+        public DbSet<BadHabits> BadHabits { get; set; }
+        public DbSet<UserBadHabits> UserBadHabits { get; set; }
+        public DbSet<Interests> IteInterests { get; set; }
+        public DbSet<UserInterests> UserInterests { get; set; }
 
         public MeetingDbContext(DbContextOptions options)
             : base(options) { }

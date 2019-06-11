@@ -53,12 +53,12 @@ namespace MeetingWebsite.BLL.ViewModel
             { Nationality = user.UserProfile.Nationality; }
             //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
             //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
-            if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
-            { BadHabits = user.UserProfile.BadHabits; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
+            //{ BadHabits = user.UserProfile.BadHabits; }
             if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
             { FinancialSituation = user.UserProfile.FinancialSituation; }
-            if (!string.IsNullOrEmpty(user.UserProfile.Interests))
-            { Interests = user.UserProfile.Interests; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.Interests))
+            //{ Interests = user.UserProfile.Interests; }
 
             if (user.Avatar != null)
                 Avatar = user.Avatar.Path;

@@ -20,6 +20,8 @@ namespace MeetingWebsite.Api.Controllers
         private readonly IFileService _fileService;
         private readonly IPurposeService _purposeService;
         private readonly ILanguageService _languageService;
+        private readonly IBadHabitsService _badHabitsService;
+        private readonly IInterestsService _interestsService;
 
         private const int LengthMax = 5242880;
         private const string CorrectType = "image/jpeg";
@@ -28,13 +30,17 @@ namespace MeetingWebsite.Api.Controllers
             IUserService userService,
             IFileService fileService,
             IPurposeService purposeService,
-            ILanguageService languageService)
+            ILanguageService languageService,
+            IBadHabitsService badHabitsService,
+            IInterestsService interestsService)
         {
             _accountService = accountService;
             _userService = userService;
             _fileService = fileService;
             _purposeService = purposeService;
             _languageService = languageService;
+            _badHabitsService = badHabitsService;
+            _interestsService = interestsService;
         }
 
         //GET: /api/user/UserProfile
@@ -98,7 +104,7 @@ namespace MeetingWebsite.Api.Controllers
             await _fileService.AddUserAvatar(editUserAvatar);
             return Ok(editUserAvatar);
         }
-
+        
         //GET: /api/user/ZodiacSigns
         [HttpGet, Route("ZodiacSigns")]
         public List<string> GetZodiacSigns()
@@ -125,6 +131,20 @@ namespace MeetingWebsite.Api.Controllers
         public IEnumerable<Languages> GetLanguages()
         {
             return _languageService.GetAll().ToList();
+        }
+
+        //GET: /api/user/BadHabits
+        [HttpGet, Route("BadHabits")]
+        public IEnumerable<BadHabits> GetBadHabits()
+        {
+            return _badHabitsService.GetAll().ToList();
+        }
+
+        //GET: /api/user/Interests
+        [HttpGet, Route("Interests")]
+        public IEnumerable<Interests> GetInterests()
+        {
+            return _interestsService.GetAll().ToList();
         }
     }
 }

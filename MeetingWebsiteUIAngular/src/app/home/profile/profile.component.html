@@ -3,17 +3,23 @@
     <div *ngIf="visiblePhotoUser">
       <div class="user-profile-picture" *ngIf="userDetails">
         <div>
-          <img src="https://localhost:44333{{userDetails.Avatar}}" style="max-height: 220px; max-width: 331px">
+          <img src="https://localhost:44333{{userDetails.Avatar}}" style="max-height: 320px; max-width: 431px">
         </div>
-        <button type="button" class="btn btn-outline-info" (click)="onEditPicture()" style="margin-top: 2%;">Change
-          picture</button>
+        <div>
+          <button type="button" class="btn btn-outline-info" (click)="onEditPicture()" style="margin-top: 2%;">Change
+            picture</button>
+        </div>
+        <div>
+          <button type="button" class="btn btn-outline-primary" style="margin-top: 2%;">View albums
+          </button>
+        </div>
       </div>
     </div>
     <div *ngIf="!visiblePhotoUser">
       <div class="user-profile-picture">
         <form #imageForm=ngForm (ngSubmit)="onChangeImage(Image)">
           <div>
-            <img [src]="imageUrl" style="max-height: 220px; max-width: 331px">
+            <img [src]="imageUrl" style="max-height: 320px; max-width: 431px">
             <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
           </div>
           <button type="submit" class="btn btn-outline-success" [disabled]="Image.value==''"
@@ -71,9 +77,6 @@
               <button type="button" class="btn btn-outline-info" (click)="onEditUser()" style="margin-top: 2%;">Change
                 information</button>
             </div>
-
-            <button type="button" class="btn btn-outline-primary" style="margin-top: 2%;">View albums
-            </button>
           </div>
         </div>
       </div>
@@ -81,15 +84,18 @@
 
     <div *ngIf="!visibleDetailsUser">
       <form [formGroup]="service.editModel" autocomplete="off" *ngIf="userDetails" (submit)="onSubmit()">
+
         <div class="form-group required">
           <label>FirstName</label>
           <input class="form-control" style="display: initial" formControlName="FirstName"
             value="{{userDetails.FirstName}}">
         </div>
+
         <div class="form-group required">
           <label>LastName</label>
           <input class="form-control" formControlName="LastName" value="{{userDetails.LastName}}">
         </div>
+
         <div class="form-group required">
           <label>Date of birthday</label>
           <input class="form-control" formControlName="Birthday" type="date" value="{{userDetails.Birthday}}">
@@ -97,7 +103,7 @@
 
         <div class="form-group required">
           <label>Gender</label>
-          <select class="form-control" formControlName="Genders" >
+          <select class="form-control" formControlName="Genders">
             <option *ngFor="let gender of genders" [value]="gender">
               {{gender}}
             </option>
@@ -117,18 +123,22 @@
           <label>Marital status</label>
           <input class="form-control" formControlName="MaritalStatus" value="{{userDetails.MaritalStatus}}">
         </div>
+
         <div class="form-group">
           <label>Height</label>
           <input class="form-control" formControlName="Height" value="{{userDetails.Height}}">
         </div>
+
         <div class="form-group">
           <label>Weight</label>
           <input class="form-control" formControlName="Weight" value="{{userDetails.Weight}}">
         </div>
+
         <div class="form-group">
           <label>Education</label>
           <input class="form-control" formControlName="Education" value="{{userDetails.Education}}">
         </div>
+
         <div class="form-group">
           <label>Nationality</label>
           <input class="form-control" formControlName="Nationality" value="{{userDetails.Nationality}}">
@@ -143,12 +153,6 @@
           </select>
         </div>
 
-        <!-- <div class="form-group">
-          <label>KnowledgeOfLanguages</label>
-          <input class="form-control" formControlName="KnowledgeOfLanguages"
-            value="{{userDetails.KnowledgeOfLanguages}}">
-        </div> -->
-
         <div class="form-group required">
           <label>Knowledge of languages</label>
           <select class="form-control" formControlName="KnowledgeOfLanguages" multiple>
@@ -158,19 +162,29 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label>BadHabits</label>
-          <input class="form-control" formControlName="BadHabits" value="{{userDetails.BadHabits}}">
+        <div class="form-group required">
+          <label>Bad Habits</label>
+          <select class="form-control" formControlName="BadHabits" multiple>
+            <option *ngFor="let badHabit of badHabits" [value]="badHabit.Id">
+              {{badHabit.Value}}
+            </option>
+          </select>
         </div>
+
         <div class="form-group">
           <label>FinancialSituation</label>
           <input class="form-control" formControlName="FinancialSituation" value="{{userDetails.FinancialSituation}}">
         </div>
-        <div class="form-group">
+
+        <div class="form-group required">
           <label>Interests</label>
-          <input class="form-control" formControlName="Interests" value="{{userDetails.Interests}}">
+          <select class="form-control" formControlName="Interests" multiple>
+            <option *ngFor="let interest of interests" [value]="interest.Id">
+              {{interest.Value}}
+            </option>
+          </select>
         </div>
-        
+
         <div class="form-group required">
           <label>Anonymity mode</label>
           <div class="form-control">

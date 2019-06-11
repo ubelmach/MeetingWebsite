@@ -20,13 +20,13 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Education { get; set; }
         public string Nationality { get; set; }
         public ZodiacSigns ZodiacSign { get; set; }
-        public string BadHabits { get; set; }
         public string FinancialSituation { get; set; }
-        public string Interests { get; set; }
         public bool AnonymityMode { get; set; }
 
         public List<int> PurposeOfDating { get; set; }
         public List<int> KnowledgeOfLanguages { get; set; }
+        public List<int> BadHabits { get; set; }
+        public List<int> Interests { get; set; }
 
         public EditUserProfileInformation() { }
 
@@ -54,12 +54,12 @@ namespace MeetingWebsite.BLL.ViewModel
             { Education = user.UserProfile.Education; }
             if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
             { Nationality = user.UserProfile.Nationality; }
-            if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
-            { BadHabits = user.UserProfile.BadHabits; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
+            //{ BadHabits = user.UserProfile.BadHabits; }
             if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
             { FinancialSituation = user.UserProfile.FinancialSituation; }
-            if (!string.IsNullOrEmpty(user.UserProfile.Interests))
-            { Interests = user.UserProfile.Interests; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.Interests))
+            //{ Interests = user.UserProfile.Interests; }
             AnonymityMode = user.AnonymityMode;
             
             //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))

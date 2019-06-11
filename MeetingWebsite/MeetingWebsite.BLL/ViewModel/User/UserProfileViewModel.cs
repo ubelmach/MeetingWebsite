@@ -24,71 +24,59 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Education { get; set; }
         public string Nationality { get; set; }
         public string ZodiacSign { get; set; }
-        public string BadHabits { get; set; }
         public string FinancialSituation { get; set; }
-        public string Interests { get; set; }
 
         public string Avatar { get; set; }
         public string HomeDir { get; set; }
 
         public List<string> PurposeOfDating { get; set; }
         public List<string> KnowledgeOfLanguages { get; set; }
+        public List<string> BadHabits { get; set; }
+        public List<string> Interests { get; set; }
 
         public UserProfileViewModel(User user)
         {
             Id = user.Id;
-
             if (!string.IsNullOrEmpty(user.FirstName))
             { FirstName = user.FirstName; }
-
             if (!string.IsNullOrEmpty(user.LastName))
             { LastName = user.LastName; }
-
             if (!string.IsNullOrEmpty(user.Gender.ToString()))
             { Gender = user.Gender.ToString(); }
-
             if (!string.IsNullOrEmpty(user.Birthday.ToString(CultureInfo.InvariantCulture)))
             { Birthday = user.Birthday; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
             { ZodiacSign = user.UserProfile.ZodiacSign.ToString(); }
-
             if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))
             { MaritalStatus = user.UserProfile.MaritalStatus; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.Height))
             { Height = user.UserProfile.Height; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.Weight))
             { Weight = user.UserProfile.Weight; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.Education))
             { Education = user.UserProfile.Education; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
             { Nationality = user.UserProfile.Nationality; }
-
-            if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
-            { BadHabits = user.UserProfile.BadHabits; }
-
             if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
             { FinancialSituation = user.UserProfile.FinancialSituation; }
-
-            if (!string.IsNullOrEmpty(user.UserProfile.Interests))
-            { Interests = user.UserProfile.Interests; }
-
             AnonymityMode = user.AnonymityMode;
 
             if (!string.IsNullOrEmpty(user.HomeDir))
-            { HomeDir = user.HomeDir; }
+            {
+                HomeDir = user.HomeDir;
+            }
 
             if (user.Avatar != null)
-            { Avatar = user.HomeDir + user.Avatar.Path; }
+            {
+                Avatar = user.HomeDir + user.Avatar.Path;
+            }
             else
-            { Avatar = "/File/Nophoto.jpg"; }
+            {
+                Avatar = "/File/Nophoto.jpg";
+            }
 
             var languages = new List<string>();
-            if (user.UserProfile.UserLanguages != null)
+            if (user.UserProfile.UserLanguages.Any())
             {
                 foreach (var language in user.UserProfile.UserLanguages)
                 {
@@ -97,8 +85,9 @@ namespace MeetingWebsite.BLL.ViewModel
 
                 KnowledgeOfLanguages = languages;
             }
+
             var purposes = new List<string>();
-            if (user.UserProfile.UserPurposes != null)
+            if (user.UserProfile.UserPurposes.Any())
             {
                 foreach (var purpose in user.UserProfile.UserPurposes)
                 {
@@ -106,6 +95,28 @@ namespace MeetingWebsite.BLL.ViewModel
                 }
 
                 PurposeOfDating = purposes;
+            }
+
+            var badHabits = new List<string>();
+            if (user.UserProfile.UserBadHabits.Any())
+            {
+                foreach (var badHabit in user.UserProfile.UserBadHabits)
+                {
+                    badHabits.Add(badHabit.BadHabits.Value);
+                }
+
+                BadHabits = badHabits;
+            }
+
+            var interests = new List<string>();
+            if (user.UserProfile.UserInterests.Any())
+            {
+                foreach (var interest in user.UserProfile.UserInterests)
+                {
+                    interests.Add(interest.Interests.Value);
+                }
+
+                Interests = interests;
             }
         }
     }

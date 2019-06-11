@@ -1,4 +1,4 @@
-export class Purpose{
+export class Info{
     constructor(
         public id?: number,
         public value?: string

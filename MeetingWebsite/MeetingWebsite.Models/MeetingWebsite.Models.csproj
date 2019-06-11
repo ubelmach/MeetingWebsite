@@ -181,15 +181,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Auxiliary entities\ApplicationSettings.cs" />
-    <Compile Include="Entities\Auxiliary entities\UserLanguages.cs" />
-    <Compile Include="Entities\Auxiliary entities\UserPurpose.cs" />
+    <Compile Include="Entities\Additional entities\ApplicationSettings.cs" />
+    <Compile Include="Entities\Additional entities\BadHabits.cs" />
+    <Compile Include="Entities\Additional entities\Interests.cs" />
+    <Compile Include="Entities\Intermediate entities\UserBadHabits.cs" />
+    <Compile Include="Entities\Intermediate entities\UserInterests.cs" />
+    <Compile Include="Entities\Intermediate entities\UserLanguages.cs" />
+    <Compile Include="Entities\Intermediate entities\UserPurpose.cs" />
     <Compile Include="Entities\BlackList.cs" />
     <Compile Include="Entities\Dialog.cs" />
-    <Compile Include="Entities\Auxiliary entities\PurposeOfDatings.cs" />
+    <Compile Include="Entities\Additional entities\PurposeOfDatings.cs" />
     <Compile Include="Entities\FileModel.cs" />
     <Compile Include="Entities\Friendship.cs" />
-    <Compile Include="Entities\Auxiliary entities\Languages.cs" />
+    <Compile Include="Entities\Additional entities\Languages.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\PhotoAlbum.cs" />
     <Compile Include="Entities\User.cs" />

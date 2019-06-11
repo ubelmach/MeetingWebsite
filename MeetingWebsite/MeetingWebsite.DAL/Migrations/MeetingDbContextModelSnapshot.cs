@@ -17,6 +17,18 @@ namespace MeetingWebsite.DAL.Migrations
                 .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.BadHabits", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BadHabits");
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.BlackList", b =>
                 {
                     b.Property<int>("Id")
@@ -101,6 +113,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasIndex("SecondFriendId");
 
                     b.ToTable("Friendships");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Interests", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IteInterests");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.Languages", b =>
@@ -237,6 +261,42 @@ namespace MeetingWebsite.DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserBadHabits", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BadHabitsId");
+
+                    b.Property<int>("UserProfileId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BadHabitsId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("UserBadHabits");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserInterests", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("InterestsId");
+
+                    b.Property<int>("UserProfileId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InterestsId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("UserInterests");
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserLanguages", b =>
                 {
                     b.Property<int>("Id")
@@ -260,15 +320,11 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("BadHabits");
-
                     b.Property<string>("Education");
 
                     b.Property<string>("FinancialSituation");
 
                     b.Property<string>("Height");
-
-                    b.Property<string>("Interests");
 
                     b.Property<string>("MaritalStatus");
 
@@ -484,6 +540,32 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasOne("MeetingWebsite.Models.Entities.FileModel", "Avatar")
                         .WithMany()
                         .HasForeignKey("AvatarId");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserBadHabits", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.BadHabits", "BadHabits")
+                        .WithMany("UserBadHabits")
+                        .HasForeignKey("BadHabitsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingWebsite.Models.Entities.UserProfile", "UserProfile")
+                        .WithMany("UserBadHabits")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.UserInterests", b =>
+                {
+                    b.HasOne("MeetingWebsite.Models.Entities.Interests", "Interests")
+                        .WithMany("UserInterests")
+                        .HasForeignKey("InterestsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingWebsite.Models.Entities.UserProfile", "UserProfile")
+                        .WithMany("UserInterests")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserLanguages", b =>

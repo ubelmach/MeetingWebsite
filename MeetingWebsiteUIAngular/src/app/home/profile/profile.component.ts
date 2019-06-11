@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Purpose } from 'src/app/models/purpose';
-import { Language } from 'src/app/models/Language';
+import { Info } from 'src/app/models/Info';
 
 @Component({
   selector: 'app-profile',
@@ -16,13 +15,15 @@ export class ProfileComponent implements OnInit {
   zodiacSigns;
   genders;
 
-  purposes: Purpose[];
-  languages: Language[];
+  purposes: Info[];
+  languages: Info[];
+  badHabits: Info[];
+  interests: Info[];
 
   visibleDetailsUser = true;
   visiblePhotoUser = true;
 
-  constructor(public service: UserService, private toastr: ToastrService, private router: Router) { 
+  constructor(public service: UserService, private toastr: ToastrService, private router: Router) {
 
   }
 
@@ -52,11 +53,22 @@ export class ProfileComponent implements OnInit {
       }
     )
 
+
+    this.service.getInfo().subscribe(
+      
+    )
+
     this.service.getPurposes()
-    .subscribe((data: Purpose[]) => this.purposes = data);
+      .subscribe((data: Info[]) => this.purposes = data);
 
     this.service.getLanguages()
-    .subscribe((data: Language[]) => this.languages = data);
+      .subscribe((data: Info[]) => this.languages = data);
+
+    this.service.getBadHabits()
+      .subscribe((data: Info[]) => this.badHabits = data);
+
+    this.service.getInterests()
+      .subscribe((data: Info[]) => this.interests = data);
   }
 
   imageUrl: string = "/assets/img/add.jpg";

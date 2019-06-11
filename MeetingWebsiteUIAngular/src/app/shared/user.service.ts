@@ -84,7 +84,19 @@ export class UserService {
   }
 
   getLanguages(){
-    return this.http.get(this.BaseURI + '/user/Languages')
+    return this.http.get(this.BaseURI + '/user/Languages');
+  }
+
+  getBadHabits(){
+    return this.http.get(this.BaseURI + '/user/BadHabits');
+  }
+
+  getInterests(){
+    return this.http.get(this.BaseURI + '/user/Interests')
+  }
+
+  getInfo(){
+    return this.http.get(this.BaseURI + '/information/GetInfo')
   }
 
   updateUserProfile() {
@@ -114,9 +126,4 @@ export class UserService {
     formData.append('Image', fileToUpload);
     return this.http.put(this.BaseURI + '/user/EditUserAvatar', formData);
   }
-
-  // onLoginWithGoogleAccount() {
-  //   return this.http.get(this.BaseURI + '/account/SignInWithGoogle');
-  // }
-
 }

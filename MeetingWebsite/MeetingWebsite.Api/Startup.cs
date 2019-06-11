@@ -108,10 +108,19 @@ namespace MeetingWebsite.Api
             services.AddScoped<IBlacklistService, BlacklistService>();
             services.AddScoped<IFriendService, FriendService>();
             services.AddScoped<ISearchService, SearchService>();
+
             services.AddScoped<IPurposeService, PurposeService>();
-            services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IUserPurposeService, UserPurposeService>();
+
+            services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IUserLanguagesService, UserLanguagesService>();
+
+            services.AddScoped<IBadHabitsService, BadHabitsService>();
+            services.AddScoped<IUserBadHabitsService, UserBadHabitsService>();
+
+            services.AddScoped<IInterestsService, InterestsService>();
+            services.AddScoped<IUserInterestsService, UserInterestsService>();
+
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 

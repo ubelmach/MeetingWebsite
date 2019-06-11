@@ -3,9 +3,8 @@ using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.BLL.Services
 {
-    public interface IPurposeService
+    public interface IBadHabitsService
     {
-        IEnumerable<PurposeOfDating> GetAll();
-        void Update(UserPurpose purpose);
+        IEnumerable<BadHabits> GetAll();
     }
 }

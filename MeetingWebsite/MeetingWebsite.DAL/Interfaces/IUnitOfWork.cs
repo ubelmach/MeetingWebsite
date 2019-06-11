@@ -11,13 +11,19 @@ namespace MeetingWebsite.DAL.Interfaces
         IRepository<FileModel> FileRepository { get; }
         IRepository<PhotoAlbum> AlbumRepository { get; }
         IRepository<BlackList> BlacklistRepository { get; }
-        IRepository<PurposeOfDating> PurposeRepository { get; }
-        IRepository<Languages> LanguageRepository { get; }
-        IRepository<UserLanguages> UserLanguagesRepository { get; }
-        IRepository<UserPurpose> UserPurposeRepository { get; }
-
         IUserRepository UserRepository { get; }
 
+        IRepository<PurposeOfDating> PurposeRepository { get; }
+        IRepository<UserPurpose> UserPurposeRepository { get; }
+
+        IRepository<Languages> LanguageRepository { get; }
+        IRepository<UserLanguages> UserLanguagesRepository { get; }
+
+        IRepository<BadHabits> BadHabitsRepository { get; }
+        IRepository<UserBadHabits> UserBadHabitsRepository { get; }
+
+        IRepository<Interests> InterestsRepository { get; }
+        IRepository<UserInterests> UserInterestsRepository { get; }
         void Save();
     }
 }

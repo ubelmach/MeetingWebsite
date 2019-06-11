@@ -14,19 +14,26 @@ namespace MeetingWebsite.BLL.Services
         private IAccountService _accountService { get; set; }
         private IUserPurposeService _userPurposeService { get; set; }
         private IUserLanguagesService _userLanguagesService { get; set; }
+
+        private IUserBadHabitsService _userBadHabitsService { get; set; }
+        private IUserInterestsService _userInterestsService { get; set; }
         private readonly UserManager<User> _userManager;
 
         public UserService(IUnitOfWork database,
             UserManager<User> userManager,
             IAccountService accountService,
             IUserPurposeService userPurposeService,
-            IUserLanguagesService userLanguagesService)
+            IUserLanguagesService userLanguagesService,
+            IUserBadHabitsService userBadHabitsService,
+            IUserInterestsService userInterestsService)
         {
             _database = database;
             _userManager = userManager;
             _accountService = accountService;
             _userPurposeService = userPurposeService;
             _userLanguagesService = userLanguagesService;
+            _userBadHabitsService = userBadHabitsService;
+            _userInterestsService = userInterestsService;
         }
 
         public async Task<EditUserProfileInformation> EditUserInformation(EditUserProfileInformation editUser)
@@ -60,12 +67,9 @@ namespace MeetingWebsite.BLL.Services
                 { userProfile.Education = editUser.Education; }
                 if (!string.IsNullOrEmpty(editUser.Nationality))
                 { userProfile.Nationality = editUser.Nationality; }
-                if (!string.IsNullOrEmpty(editUser.BadHabits))
-                { userProfile.BadHabits = editUser.BadHabits; }
                 if (!string.IsNullOrEmpty(editUser.FinancialSituation))
                 { userProfile.FinancialSituation = editUser.FinancialSituation; }
-                if (!string.IsNullOrEmpty(editUser.Interests))
-                { userProfile.Interests = editUser.Interests; }
+
                 user.AnonymityMode = editUser.AnonymityMode;
 
                 if (editUser.PurposeOfDating != null)
@@ -94,6 +98,36 @@ namespace MeetingWebsite.BLL.Services
                             LanguageId = language
                         };
                         _userLanguagesService.AddLanguages(newUserLanguages);
+                    }
+                    _database.Save();
+                }
+
+                if (editUser.BadHabits != null)
+                {
+                    _userBadHabitsService.DeleteHabits(user.UserProfile.Id);
+                    foreach (var badHabit in editUser.BadHabits)
+                    {
+                        var newUserBadHabits = new UserBadHabits
+                        {
+                            UserProfileId = user.UserProfile.Id,
+                            BadHabitsId = badHabit
+                        };
+                        _userBadHabitsService.AddBadHabits(newUserBadHabits);
+                    }
+                    _database.Save();
+                }
+
+                if (editUser.Interests != null)
+                {
+                    _userInterestsService.DeleteInterests(user.UserProfile.Id);
+                    foreach (var interest in editUser.Interests)
+                    {
+                        var newUserInterest = new UserInterests
+                        {
+                            UserProfileId = user.UserProfile.Id,
+                            InterestsId = interest
+                        };
+                        _userInterestsService.AddInterests(newUserInterest);
                     }
                     _database.Save();
                 }
