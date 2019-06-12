@@ -1,6 +1,6 @@
 export class Info{
     constructor(
-        public id?: number,
-        public value?: string
+        public id: number = null,
+        public value: string = null
     ) {}
 }

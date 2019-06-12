@@ -17,6 +17,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { ProfileComponent } from './home/profile/profile.component';
 import { SearchComponent } from './home/search/search.component';
 
+import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +38,8 @@ import { SearchComponent } from './home/search/search.component';
     ToastrModule.forRoot({
       progressBar: true
     }),
-    FormsModule
+    FormsModule,
+    NgxBootstrapSliderModule
   ],
   providers: [UserService, {
     provide: HTTP_INTERCEPTORS,

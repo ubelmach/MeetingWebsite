@@ -14,7 +14,6 @@ namespace MeetingWebsite.Models.Entities
         public bool AnonymityMode { get; set; }
         public string HomeDir { get; set; }
 
-        //changes
         [ForeignKey("Gender")]
         public int? GenderId { get; set; }
         public virtual Gender Gender { get; set; }

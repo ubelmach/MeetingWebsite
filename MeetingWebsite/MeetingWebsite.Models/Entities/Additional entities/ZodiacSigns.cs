@@ -7,7 +7,5 @@ namespace MeetingWebsite.Models.Entities
         [Key]
         public int Id { get; set; }
         public string Value { get; set; }
-
-        //public virtual UserProfile UserProfile { get; set; }
     }
 }

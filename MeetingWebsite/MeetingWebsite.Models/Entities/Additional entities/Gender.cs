@@ -8,7 +8,5 @@ namespace MeetingWebsite.Models.Entities
         [Key]
         public int Id { get; set; }
         public string Value { get; set; }
-
-        //public virtual List<User> User { get; set; }
     }
 }

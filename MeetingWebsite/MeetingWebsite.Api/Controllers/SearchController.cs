@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +23,12 @@ namespace MeetingWebsite.Api.Controllers
         {
             var search = _searchService.FindUsers(criteria);
 
-            var resultSearch = search.Select(item => new ResultSearchByCriteriaViewModel
+            var resultSearch = new List<ResultSearchByCriteriaViewModel>();
+
+            foreach (var item in search)
             {
-                UserId = item.Id,
-                FirstName = item.FirstName,
-                LastName = item.LastName,
-                Age = item.Birthday.Ticks,
-                Avatar = item.Avatar.Path
-            });
+                resultSearch.Add(new ResultSearchByCriteriaViewModel(item));
+            }
 
             return Ok(resultSearch);
         }

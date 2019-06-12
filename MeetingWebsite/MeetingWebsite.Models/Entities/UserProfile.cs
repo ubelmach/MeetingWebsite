@@ -17,18 +17,6 @@ namespace MeetingWebsite.Models.Entities
         public string Height { get; set; }
         public string Weight { get; set; }
 
-        //public ZodiacSigns ZodiacSign { get; set; }
-        //public string MaritalStatus { get; set; }
-        //public string Education { get; set; }
-        //public string Nationality { get; set; }
-        //public string FinancialSituation { get; set; }
-
-        public virtual List<UserPurpose> UserPurposes { get; set; }
-        public virtual List<UserLanguages> UserLanguages { get; set; }
-        public virtual List<UserBadHabits> UserBadHabits { get; set; }
-        public virtual List<UserInterests> UserInterests { get; set; }
-
-        //changes
         [ForeignKey("Education")]
         public int? EducationId { get; set; }
         public virtual Education Education { get; set; }
@@ -44,6 +32,11 @@ namespace MeetingWebsite.Models.Entities
         [ForeignKey("ZodiacSign")]
         public int? ZodiacSignId { get; set; }
         public virtual ZodiacSigns ZodiacSign { get; set; }
+
+        public virtual List<UserPurpose> UserPurposes { get; set; }
+        public virtual List<UserLanguages> UserLanguages { get; set; }
+        public virtual List<UserBadHabits> UserBadHabits { get; set; }
+        public virtual List<UserInterests> UserInterests { get; set; }
 
         public UserProfile()
         {
