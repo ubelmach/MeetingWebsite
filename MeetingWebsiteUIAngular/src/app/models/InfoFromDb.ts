@@ -7,7 +7,7 @@ export class InfoFromDb{
         BadHabits: Info[],
         Interests: Info[],
         Education: Info[],
-        Gender: Info[],
+        Gender: Info[] = new Array(),
         Nationality: Info[],
         ZodiacSigns: Info[], 
         Finans: Info[]

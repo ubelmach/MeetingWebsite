@@ -8,7 +8,7 @@ namespace MeetingWebsite.DAL.Interfaces
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetAll();
+        IQueryable<User> GetAll();
         User Get(string id);
         IQueryable<User> Find(Expression<Func<User, bool>> predicate);
         void Update(User item);

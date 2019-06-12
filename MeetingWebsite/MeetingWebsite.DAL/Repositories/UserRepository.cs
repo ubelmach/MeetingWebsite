@@ -18,7 +18,7 @@ namespace MeetingWebsite.DAL.Repositories
             _db = context;
         }
 
-        public IEnumerable<User> GetAll()
+        public IQueryable<User> GetAll()
         {
             return _db.Users;
         }

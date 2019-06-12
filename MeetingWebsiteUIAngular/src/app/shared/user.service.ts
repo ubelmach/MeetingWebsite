@@ -76,7 +76,7 @@ export class UserService {
   }
 
   getInfo(){
-    return this.http.get(this.BaseURI + '/information/GetInfo')
+    return this.http.get(this.BaseURI + '/information/GetInfo');
   }
 
   updateUserProfile() {

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { InfoFromDb } from 'src/app/models/InfoFromDb';
+import { SearchService } from 'src/app/shared/search.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -7,13 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  visibleAdditionalOptions = true;
-  constructor() { }
+  InfoFromDb: InfoFromDb;
+
+  constructor(public service: SearchService, private router: Router) { }
 
   ngOnInit() {
+    this.service.getInfo().subscribe(
+      res => {
+        this.InfoFromDb = res as InfoFromDb;
+      }
+    )
   }
 
-  onAdditionalOptions() {
-    this.visibleAdditionalOptions = !this.visibleAdditionalOptions;
+  onSubmit(){
+    this.service.searchUsers().subscribe(
+      (res : any) => {
+        console.log('search');
+      },
+      err =>{
+        console.log(err);
+      }
+    )
   }
+
 }

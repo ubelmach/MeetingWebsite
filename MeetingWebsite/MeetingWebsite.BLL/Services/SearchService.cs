@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.EF;
@@ -19,14 +20,21 @@ namespace MeetingWebsite.BLL.Services
             _db = db;
         }
 
-        public IEnumerable<User> FindUsers(SearchByCriteriaViewModel criteria)
+        public IQueryable<User> FindUsers(SearchByCriteriaViewModel criteria)
         {
-            //IQueryable<User> result = null;
-            //if (criteria == null)
-            //    return null;
+            var users = _database.UserRepository.GetAll();
+            if (users == null)
+                return null;
 
-            //if (!string.IsNullOrEmpty(criteria.Age.ToString()))
-            //    result = _database.UserRepository.Find(x => x.Birthday.Ticks == criteria.Age);
+            var today = DateTime.Today;
+            if (!string.IsNullOrEmpty(criteria.AgeFrom.ToString()) &&
+                !string.IsNullOrEmpty(criteria.AgeTo.ToString()))
+                users = _database.UserRepository.Find(x => (today.Year - x.Birthday.Year) <= criteria.AgeTo && (today.Year - x.Birthday.Year) >= criteria.AgeFrom);
+
+            if(!string.IsNullOrEmpty(criteria.Height.ToString()))
+                users = 
+
+
 
             //if (!string.IsNullOrEmpty(criteria.Gender))
             //    result = _database.UserRepository.Find(x => x.Gender.ToString().Contains(criteria.Gender));
@@ -67,7 +75,7 @@ namespace MeetingWebsite.BLL.Services
             //        x.UserProfile.FinancialSituation.Contains(criteria.FinancialSituation));
             //return result;
 
-            return null;
+            return users;
         }
     }
 }

@@ -16,8 +16,8 @@ namespace MeetingWebsite.Api.Controllers
             _searchService = searchService;
         }
 
-        //GET: /api/search/SearchUsersByCriteria
-        [HttpGet, Route("SearchUsersByCriteria")]
+        //POST: /api/search/SearchUsersByCriteria
+        [HttpPost, Route("SearchUsersByCriteria")]
         public IActionResult Get(SearchByCriteriaViewModel criteria)
         {
             var search = _searchService.FindUsers(criteria);
