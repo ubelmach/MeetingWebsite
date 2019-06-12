@@ -24,6 +24,12 @@ namespace MeetingWebsite.DAL.EF
         public DbSet<Interests> IteInterests { get; set; }
         public DbSet<UserInterests> UserInterests { get; set; }
 
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<Education> Educations { get; set; }
+        public DbSet<FinancialSituation> FinancialSituations { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
+        public DbSet<ZodiacSigns> ZodiacSigns { get; set; }
+
         public MeetingDbContext(DbContextOptions options)
             : base(options) { }
 

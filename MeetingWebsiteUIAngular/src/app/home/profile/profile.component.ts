@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../shared/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { Info } from 'src/app/models/Info';
+import { InfoFromDb } from 'src/app/models/InfoFromDb';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
   zodiacSigns;
   genders;
 
+  InfoFromDb: InfoFromDb;
   purposes: Info[];
   languages: Info[];
   badHabits: Info[];
@@ -36,39 +38,40 @@ export class ProfileComponent implements OnInit {
         console.log(err);
       }
     )
-    this.service.getZodiacSigns().subscribe(
-      res => {
-        this.zodiacSigns = res;
-      },
-      err => {
-        console.log(err);
-      }
-    )
-    this.service.getGenders().subscribe(
-      res => {
-        this.genders = res;
-      },
-      err => {
-        console.log(err);
-      }
-    )
-
+    // this.service.getZodiacSigns().subscribe(
+    //   res => {
+    //     this.zodiacSigns = res;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // )
+    // this.service.getGenders().subscribe(
+    //   res => {
+    //     this.genders = res;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // )
 
     this.service.getInfo().subscribe(
-      
+      res => {
+        this.InfoFromDb = res as InfoFromDb;
+      }
     )
 
-    this.service.getPurposes()
-      .subscribe((data: Info[]) => this.purposes = data);
+    // this.service.getPurposes()
+    //   .subscribe((data: Info[]) => this.purposes = data);
 
-    this.service.getLanguages()
-      .subscribe((data: Info[]) => this.languages = data);
+    // this.service.getLanguages()
+    //   .subscribe((data: Info[]) => this.languages = data);
 
-    this.service.getBadHabits()
-      .subscribe((data: Info[]) => this.badHabits = data);
+    // this.service.getBadHabits()
+    //   .subscribe((data: Info[]) => this.badHabits = data);
 
-    this.service.getInterests()
-      .subscribe((data: Info[]) => this.interests = data);
+    // this.service.getInterests()
+    //   .subscribe((data: Info[]) => this.interests = data);
   }
 
   imageUrl: string = "/assets/img/add.jpg";

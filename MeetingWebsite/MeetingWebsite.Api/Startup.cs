@@ -121,6 +121,12 @@ namespace MeetingWebsite.Api
             services.AddScoped<IInterestsService, InterestsService>();
             services.AddScoped<IUserInterestsService, UserInterestsService>();
 
+            services.AddScoped<IGenderService, GenderService>();
+            services.AddScoped<IFinancialSituationService, FinancialSituationService>();
+            services.AddScoped<IEducationService, EducationService>();
+            services.AddScoped<INationalityService, NationalityService>();
+            services.AddScoped<IZodiacSignsService, ZodiacSignsService>();
+
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
@@ -7,7 +6,6 @@ using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MeetingWebsite.Models.EntityEnums;
 
 namespace MeetingWebsite.Api.Controllers
 {
@@ -18,10 +16,8 @@ namespace MeetingWebsite.Api.Controllers
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
         private readonly IFileService _fileService;
-        private readonly IPurposeService _purposeService;
-        private readonly ILanguageService _languageService;
-        private readonly IBadHabitsService _badHabitsService;
-        private readonly IInterestsService _interestsService;
+        private readonly IGenderService _genderService;
+
 
         private const int LengthMax = 5242880;
         private const string CorrectType = "image/jpeg";
@@ -29,18 +25,12 @@ namespace MeetingWebsite.Api.Controllers
         public UserController(IAccountService accountService,
             IUserService userService,
             IFileService fileService,
-            IPurposeService purposeService,
-            ILanguageService languageService,
-            IBadHabitsService badHabitsService,
-            IInterestsService interestsService)
+            IGenderService genderService)
         {
             _accountService = accountService;
             _userService = userService;
             _fileService = fileService;
-            _purposeService = purposeService;
-            _languageService = languageService;
-            _badHabitsService = badHabitsService;
-            _interestsService = interestsService;
+            _genderService = genderService;
         }
 
         //GET: /api/user/UserProfile
@@ -104,47 +94,47 @@ namespace MeetingWebsite.Api.Controllers
             await _fileService.AddUserAvatar(editUserAvatar);
             return Ok(editUserAvatar);
         }
-        
-        //GET: /api/user/ZodiacSigns
-        [HttpGet, Route("ZodiacSigns")]
-        public List<string> GetZodiacSigns()
-        {
-            return Enum.GetNames(typeof(ZodiacSigns)).ToList();
-        }
+
+        ////GET: /api/user/ZodiacSigns
+        //[HttpGet, Route("ZodiacSigns")]
+        //public IEnumerable<ZodiacSigns> GetZodiacSigns()
+        //{
+        //    return Enum.GetNames(typeof(ZodiacSigns)).ToList();
+        //}
 
         //GET: /api/user/Genders
         [HttpGet, Route("Genders")]
-        public List<string> GetGenders()
+        public IEnumerable<Gender> GetGenders()
         {
-            return Enum.GetNames(typeof(Genders)).ToList();
+            return _genderService.GetAll().ToList();
         }
 
-        //GET: /api/user/Purpose
-        [HttpGet, Route("Purpose")]
-        public IEnumerable<PurposeOfDating> GetPurpose()
-        {
-            return _purposeService.GetAll().ToList();
-        }
+        ////GET: /api/user/Purpose
+        //[HttpGet, Route("Purpose")]
+        //public IEnumerable<PurposeOfDating> GetPurpose()
+        //{
+        //    return _purposeService.GetAll().ToList();
+        //}
 
-        //GET: /api/user/Languages
-        [HttpGet, Route("Languages")]
-        public IEnumerable<Languages> GetLanguages()
-        {
-            return _languageService.GetAll().ToList();
-        }
+        ////GET: /api/user/Languages
+        //[HttpGet, Route("Languages")]
+        //public IEnumerable<Languages> GetLanguages()
+        //{
+        //    return _languageService.GetAll().ToList();
+        //}
 
-        //GET: /api/user/BadHabits
-        [HttpGet, Route("BadHabits")]
-        public IEnumerable<BadHabits> GetBadHabits()
-        {
-            return _badHabitsService.GetAll().ToList();
-        }
+        ////GET: /api/user/BadHabits
+        //[HttpGet, Route("BadHabits")]
+        //public IEnumerable<BadHabits> GetBadHabits()
+        //{
+        //    return _badHabitsService.GetAll().ToList();
+        //}
 
-        //GET: /api/user/Interests
-        [HttpGet, Route("Interests")]
-        public IEnumerable<Interests> GetInterests()
-        {
-            return _interestsService.GetAll().ToList();
-        }
+        ////GET: /api/user/Interests
+        //[HttpGet, Route("Interests")]
+        //public IEnumerable<Interests> GetInterests()
+        //{
+        //    return _interestsService.GetAll().ToList();
+        //}
     }
 }

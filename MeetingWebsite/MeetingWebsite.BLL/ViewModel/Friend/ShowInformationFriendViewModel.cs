@@ -41,22 +41,22 @@ namespace MeetingWebsite.BLL.ViewModel
             { ZodiacSign = user.UserProfile.ZodiacSign.ToString(); }
             //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
             //{ PurposeOfDating = user.UserProfile.PurposeOfDating; }
-            if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))
-            { MaritalStatus = user.UserProfile.MaritalStatus; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))
+            //{ MaritalStatus = user.UserProfile.MaritalStatus; }
             if (!string.IsNullOrEmpty(user.UserProfile.Height))
             { Height = user.UserProfile.Height; }
             if (!string.IsNullOrEmpty(user.UserProfile.Weight))
             { Weight = user.UserProfile.Weight; }
-            if (!string.IsNullOrEmpty(user.UserProfile.Education))
-            { Education = user.UserProfile.Education; }
-            if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
-            { Nationality = user.UserProfile.Nationality; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.Education))
+            //{ Education = user.UserProfile.Education; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
+            //{ Nationality = user.UserProfile.Nationality; }
             //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
             //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
             //if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
             //{ BadHabits = user.UserProfile.BadHabits; }
-            if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
-            { FinancialSituation = user.UserProfile.FinancialSituation; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
+            //{ FinancialSituation = user.UserProfile.FinancialSituation; }
             //if (!string.IsNullOrEmpty(user.UserProfile.Interests))
             //{ Interests = user.UserProfile.Interests; }
 

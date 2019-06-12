@@ -24,6 +24,12 @@ namespace MeetingWebsite.DAL.Interfaces
 
         IRepository<Interests> InterestsRepository { get; }
         IRepository<UserInterests> UserInterestsRepository { get; }
+
+        IRepository<Gender> GenderRepository { get; }
+        IRepository<Education> EducationRepository { get; }
+        IRepository<FinancialSituation> FinancialSituationRepository { get; }
+        IRepository<Nationality> NationalityRepository { get; }
+        IRepository<ZodiacSigns> ZodiacSignsRepository { get; }
         void Save();
     }
 }

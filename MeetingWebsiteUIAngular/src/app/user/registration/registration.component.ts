@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { Info } from 'src/app/models/Info';
 
 @Component({
   selector: 'app-registration',
@@ -9,19 +10,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegistrationComponent implements OnInit {
 
-  genders;
+  genders: Info[];
 
   constructor(public service: UserService, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.service.getGenders().subscribe(
-      res => {
-        this.genders = res;
-      },
-      err => {
-        console.log(err);
-      }
-    )
+    this.service.getGenders()
+    .subscribe((data: Info[]) => this.genders = data);
   }
 
   onSubmit() {

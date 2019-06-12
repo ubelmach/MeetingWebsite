@@ -26,6 +26,12 @@ namespace MeetingWebsite.DAL.Repositories
         private InterestsRepository _interestsRepository;
         private UserInterestsRepository _userInterestsRepository;
 
+        private GenderRepository _genderRepository;
+        private EducationRepository _educationRepository;
+        private FinancialSituationRepository _financialSituationRepository;
+        private NationalityRepository _nationalityRepository;
+        private ZodiacSignsRepository _zodiacSignsRepository;
+
         public EfUnitOfWork(DbContextOptions options)
         {
             _db = new MeetingDbContext(options);
@@ -75,6 +81,21 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IRepository<UserInterests> UserInterestsRepository =>
             _userInterestsRepository ?? (_userInterestsRepository = new UserInterestsRepository(_db));
+
+        public IRepository<Gender> GenderRepository => 
+            _genderRepository ?? (_genderRepository = new GenderRepository(_db));
+
+        public IRepository<Education> EducationRepository =>
+         _educationRepository ?? (_educationRepository = new EducationRepository(_db));
+
+        public IRepository<FinancialSituation> FinancialSituationRepository =>
+            _financialSituationRepository ?? (_financialSituationRepository = new FinancialSituationRepository(_db));
+
+        public IRepository<Nationality> NationalityRepository =>
+            _nationalityRepository ?? (_nationalityRepository = new NationalityRepository(_db));
+
+        public IRepository<ZodiacSigns> ZodiacSignsRepository =>
+            _zodiacSignsRepository ?? (_zodiacSignsRepository = new ZodiacSignsRepository(_db));
 
         public void Save()
         {

@@ -91,6 +91,87 @@ namespace MeetingWebsite.DAL.Initializer
             }
 
             context.SaveChanges();
+
+            var genders = new Gender[]
+            {
+                new Gender {Id = 1, Value = "Male"},
+                new Gender {Id = 2, Value = "Female"},
+                new Gender {Id = 3, Value = "Other"}
+            };
+            foreach (var gender in genders)
+            {
+                context.Add(gender);
+            }
+
+            context.SaveChanges();
+
+            var zodiacSigns = new ZodiacSigns[]
+            {
+                new ZodiacSigns {Id = 1, Value = "Aries"},
+                new ZodiacSigns {Id = 2, Value = "Taurus"},
+                new ZodiacSigns {Id = 3, Value = "Gemini"},
+                new ZodiacSigns {Id = 4, Value = "Cancer"},
+                new ZodiacSigns {Id = 5, Value = "Leo"},
+                new ZodiacSigns {Id = 6, Value = "Virgo"},
+                new ZodiacSigns {Id = 7, Value = "Libra"},
+                new ZodiacSigns {Id = 8, Value = "Scorpio"},
+                new ZodiacSigns {Id = 9, Value = "Sagittarius"},
+                new ZodiacSigns {Id = 10, Value = "Capricorn"},
+                new ZodiacSigns {Id = 11, Value = "Aquarius"},
+                new ZodiacSigns {Id = 12, Value = "Pisces"}
+            };
+            foreach (var zodiacSign in zodiacSigns)
+            {
+                context.Add(zodiacSign);
+            }
+
+            context.SaveChanges();
+
+            var educations = new Education[]
+            {
+                new Education {Id = 1, Value = "secondary education"},
+                new Education {Id = 2, Value = "secondary (complete) education"},
+                new Education {Id = 3, Value = "secondary (vocational) education"},
+                new Education {Id = 4, Value = "undergraduate higher education"},
+                new Education {Id = 5, Value = "magistracy"},
+                new Education {Id = 6, Value = "ViPostgraduate (internship, residency, adjuncture) (if you are a candidate of science)rgo"},
+                new Education {Id = 7, Value = "doctoral studies (for the degree of doctor of science)"}
+            };
+            foreach (var education in educations)
+            {
+                context.Add(education);
+            }
+
+            context.SaveChanges();
+
+            var financialSituations = new FinancialSituation[]
+            {
+                new FinancialSituation {Id = 1, Value = "Discussed (He did not decide)"},
+                new FinancialSituation {Id = 2, Value = "Minimum (Up to 50 thousand rubles)"},
+                new FinancialSituation {Id = 3, Value = "Practical (Up to 100 thousand rubles)"},
+                new FinancialSituation {Id = 4, Value = "Moderate (Up to 150 thousand rubles)"},
+                new FinancialSituation {Id = 5, Value = "Significant (Up to 300 thousand rubles)"},
+                new FinancialSituation {Id = 6, Value = "High (300 thousand rubles and more)"}
+            };
+            foreach (var financialSituation in financialSituations)
+            {
+                context.Add(financialSituation);
+            }
+
+            context.SaveChanges();
+
+            var nationalities = new Nationality[]
+            {
+                new Nationality {Id = 1, Value = "Belarusian"},
+                new Nationality {Id = 2, Value = "Russian "},
+                new Nationality {Id = 3, Value = "other"}
+            };
+            foreach (var nationality in nationalities)
+            {
+                context.Add(nationality);
+            }
+
+            context.SaveChanges();
         }
     }
 }

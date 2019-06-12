@@ -41,14 +41,38 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task<object> RegisterUser(RegisterViewModel model, string url)
         {
-            var user = model.CreateUser();
+            //var user = model.CreateUser();
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var user = new User
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                UserName = model.Email,
+                GenderId = model.GenderId,
+                Birthday = model.Birthday,
+                AnonymityMode = false,
+                Gender = null
+            };
+
+            IdentityResult result = null;
+            try
+            {
+                result = await _userManager.CreateAsync(user, model.Password);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+
+            //var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return null;
 
             var userProfile = new UserProfile { UserId = user.Id };
             _userProfileService.CreateUserProfile(userProfile);
+
 
             await _emailService.SendEmailAsync(user.Email, Constants.ConfirmationEmail_Subject,
                 string.Format(Constants.ConfirmationEmail_Message, CreateCallbackUrl(user, url).GetAwaiter().GetResult()));

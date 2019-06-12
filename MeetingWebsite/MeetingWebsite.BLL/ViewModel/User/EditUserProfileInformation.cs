@@ -13,20 +13,25 @@ namespace MeetingWebsite.BLL.ViewModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
-        public Genders Genders { get; set; }
-        public string MaritalStatus { get; set; }
         public string Height { get; set; }
         public string Weight { get; set; }
-        public string Education { get; set; }
-        public string Nationality { get; set; }
-        public ZodiacSigns ZodiacSign { get; set; }
-        public string FinancialSituation { get; set; }
         public bool AnonymityMode { get; set; }
+
+        //public Genders Genders { get; set; }
+        //public string Education { get; set; }
+        //public string Nationality { get; set; }
+        //public string ZodiacSign { get; set; }
+        //public string FinancialSituation { get; set; }
 
         public List<int> PurposeOfDating { get; set; }
         public List<int> KnowledgeOfLanguages { get; set; }
         public List<int> BadHabits { get; set; }
         public List<int> Interests { get; set; }
+        public int Gender { get; set; }
+        public int Education { get; set; }
+        public int Nationality { get; set; }
+        public int ZodiacSign { get; set; }
+        public int FinancialSituation { get; set; }
 
         public EditUserProfileInformation() { }
 
@@ -36,32 +41,39 @@ namespace MeetingWebsite.BLL.ViewModel
 
             if (!string.IsNullOrEmpty(user.FirstName))
             { FirstName = user.FirstName; }
+
             if (!string.IsNullOrEmpty(user.LastName))
             { LastName = user.LastName; }
-            if (!string.IsNullOrEmpty(user.Gender.ToString()))
-            { Genders = user.Gender; }
+
             if (!string.IsNullOrEmpty(user.Birthday.ToString(CultureInfo.InvariantCulture)))
             { Birthday = user.Birthday; }
-            if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
-            { ZodiacSign = user.UserProfile.ZodiacSign; }
-            if (!string.IsNullOrEmpty(user.UserProfile.MaritalStatus))
-            { MaritalStatus = user.UserProfile.MaritalStatus; }
+
             if (!string.IsNullOrEmpty(user.UserProfile.Height))
             { Height = user.UserProfile.Height; }
+
             if (!string.IsNullOrEmpty(user.UserProfile.Weight))
             { Weight = user.UserProfile.Weight; }
-            if (!string.IsNullOrEmpty(user.UserProfile.Education))
-            { Education = user.UserProfile.Education; }
-            if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
-            { Nationality = user.UserProfile.Nationality; }
+
+            AnonymityMode = user.AnonymityMode;
+
+
+            //if (!string.IsNullOrEmpty(user.Gender.ToString()))
+            //{ Genders = user.Gender; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
+            //{ ZodiacSign = user.UserProfile.ZodiacSign; }
+
+
+            //if (!string.IsNullOrEmpty(user.UserProfile.Education))
+            //{ Education = user.UserProfile.Education; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
+            //{ Nationality = user.UserProfile.Nationality; }
             //if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
             //{ BadHabits = user.UserProfile.BadHabits; }
-            if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
-            { FinancialSituation = user.UserProfile.FinancialSituation; }
+            //if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
+            //{ FinancialSituation = user.UserProfile.FinancialSituation; }
             //if (!string.IsNullOrEmpty(user.UserProfile.Interests))
             //{ Interests = user.UserProfile.Interests; }
-            AnonymityMode = user.AnonymityMode;
-            
+
             //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
             //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
             //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))

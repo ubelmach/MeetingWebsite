@@ -11,9 +11,13 @@ namespace MeetingWebsite.Models.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
-        public Genders Gender { get; set; }
         public bool AnonymityMode { get; set; }
         public string HomeDir { get; set; }
+
+        //changes
+        [ForeignKey("Gender")]
+        public int? GenderId { get; set; }
+        public virtual Gender Gender { get; set; }
 
         [ForeignKey("Avatar")]
         public int? AvatarId { get; set; }

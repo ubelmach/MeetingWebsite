@@ -183,7 +183,12 @@
   <ItemGroup>
     <Compile Include="Entities\Additional entities\ApplicationSettings.cs" />
     <Compile Include="Entities\Additional entities\BadHabits.cs" />
+    <Compile Include="Entities\Additional entities\Education.cs" />
+    <Compile Include="Entities\Additional entities\FinancialSituation.cs" />
+    <Compile Include="Entities\Additional entities\Gender.cs" />
     <Compile Include="Entities\Additional entities\Interests.cs" />
+    <Compile Include="Entities\Additional entities\Nationality.cs" />
+    <Compile Include="Entities\Additional entities\ZodiacSigns.cs" />
     <Compile Include="Entities\Intermediate entities\UserBadHabits.cs" />
     <Compile Include="Entities\Intermediate entities\UserInterests.cs" />
     <Compile Include="Entities\Intermediate entities\UserLanguages.cs" />
@@ -198,9 +203,7 @@
     <Compile Include="Entities\PhotoAlbum.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserProfile.cs" />
-    <Compile Include="EntityEnums\Genders.cs" />
     <Compile Include="EntityEnums\InviteStatuses.cs" />
-    <Compile Include="EntityEnums\ZodiacSigns.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

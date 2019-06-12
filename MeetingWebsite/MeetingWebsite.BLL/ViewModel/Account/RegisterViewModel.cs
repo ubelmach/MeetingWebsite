@@ -27,23 +27,22 @@ namespace MeetingWebsite.BLL.ViewModel
 
         public DateTime Birthday { get; set; }
 
-        public Genders Genders { get; set; }
+        public int GenderId { get; set; }
 
-        public User CreateUser()
-        {
-            return new User()
-            {
-                FirstName = FirstName,
-                LastName = LastName,
-                Email = Email,
-                UserName = Email,
+        //public User CreateUser()
+        //{
+        //    return new User()
+        //    {
+        //        FirstName = FirstName,
+        //        LastName = LastName,
+        //        Email = Email,
+        //        UserName = Email,
+        //        GenderId = GenderId,
+        //        Birthday = Birthday,
 
-                Gender = Genders,
-                Birthday = Birthday,
-
-                AnonymityMode = false
-            };
-        }
+        //        AnonymityMode = false
+        //    };
+        //}
 
     }
 }

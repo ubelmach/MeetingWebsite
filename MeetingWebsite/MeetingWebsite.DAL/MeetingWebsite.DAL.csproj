@@ -243,24 +243,21 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Migrations\20190610135014_InitialDatabase.cs" />
-    <Compile Include="Migrations\20190610135014_InitialDatabase.designer.cs">
-      <DependentUpon>20190610135014_InitialDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190611072547_UpdateDbContext.cs" />
-    <Compile Include="Migrations\20190611072547_UpdateDbContext.designer.cs">
-      <DependentUpon>20190611072547_UpdateDbContext.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190611135558_AddNewTable.cs" />
-    <Compile Include="Migrations\20190611135558_AddNewTable.designer.cs">
-      <DependentUpon>20190611135558_AddNewTable.cs</DependentUpon>
+    <Compile Include="Migrations\20190612114705_InitialDB.cs" />
+    <Compile Include="Migrations\20190612114705_InitialDB.designer.cs">
+      <DependentUpon>20190612114705_InitialDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MeetingDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Additional repositories\BadHabitsRepository.cs" />
+    <Compile Include="Repositories\Additional repositories\EducationRepository.cs" />
+    <Compile Include="Repositories\Additional repositories\FinancialSituationRepository.cs" />
+    <Compile Include="Repositories\Additional repositories\GenderRepository.cs" />
     <Compile Include="Repositories\Additional repositories\InterestsRepository.cs" />
+    <Compile Include="Repositories\Additional repositories\NationalityRepository.cs" />
     <Compile Include="Repositories\Additional repositories\UserBadHabitsRepository.cs" />
     <Compile Include="Repositories\Additional repositories\UserInterestsRepository.cs" />
+    <Compile Include="Repositories\Additional repositories\ZodiacSignsRepository.cs" />
     <Compile Include="Repositories\BlacklistRepository.cs" />
     <Compile Include="Repositories\UnitOfWork\EFUnitOfWork.cs" />
     <Compile Include="Repositories\FileRepository.cs" />

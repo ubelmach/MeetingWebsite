@@ -19,17 +19,33 @@ namespace MeetingWebsite.Api.Controllers
         private readonly ILanguageService _languageService;
         private readonly IBadHabitsService _badHabitsService;
         private readonly IInterestsService _interestsService;
+        private readonly IGenderService _genderService;
+        private readonly IEducationService _educationService;
+        private readonly IFinancialSituationService _financialSituationService;
+        private readonly INationalityService _nationalityService;
+        private readonly IZodiacSignsService _zodiacSignsService;
 
         public InformationController(
             IPurposeService purposeService,
             ILanguageService languageService,
             IBadHabitsService badHabitsService,
-            IInterestsService interestsService)
+            IInterestsService interestsService,
+            IGenderService genderService,
+            IEducationService educationService,
+            IFinancialSituationService financialSituationService,
+            INationalityService nationalityService,
+            IZodiacSignsService zodiacSignsService
+            )
         {
             _purposeService = purposeService;
             _languageService = languageService;
             _badHabitsService = badHabitsService;
             _interestsService = interestsService;
+            _genderService = genderService;
+            _educationService = educationService;
+            _financialSituationService = financialSituationService;
+            _nationalityService = nationalityService;
+            _zodiacSignsService = zodiacSignsService;
         }
 
         //GET: /api/user/GetInfo
@@ -38,27 +54,18 @@ namespace MeetingWebsite.Api.Controllers
         {
             var info = new InfoViewModel
             {
-                PurposeOfDatings = _purposeService.GetAll().ToList(),
+                Purposes = _purposeService.GetAll().ToList(),
                 Languages = _languageService.GetAll().ToList(),
                 BadHabits = _badHabitsService.GetAll().ToList(),
-                Interests = _interestsService.GetAll().ToList()
+                Interests = _interestsService.GetAll().ToList(),
+                Gender = _genderService.GetAll().ToList(),
+                Education = _educationService.GetAll().ToList(),
+                Finans = _financialSituationService.GetAll().ToList(),
+                Nationality = _nationalityService.GetAll().ToList(),
+                ZodiacSigns = _zodiacSignsService.GetAll().ToList()
             };
 
             return info;
-        }
-
-        //GET: /api/user/ZodiacSigns
-        [HttpGet, Route("ZodiacSigns")]
-        public List<string> GetZodiacSigns()
-        {
-            return Enum.GetNames(typeof(ZodiacSigns)).ToList();
-        }
-
-        //GET: /api/user/Genders
-        [HttpGet, Route("Genders")]
-        public List<string> GetGenders()
-        {
-            return Enum.GetNames(typeof(Genders)).ToList();
         }
     }
 }

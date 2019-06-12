@@ -2,9 +2,14 @@ import { Info } from 'src/app/models/Info';
 
 export class InfoFromDb{
     constructor(
-        purposes: Info[],
-        languages: Info[],
-        badHabits: Info[],
-        interests: Info[],
+        Purposes: Info[],
+        Languages: Info[],
+        BadHabits: Info[],
+        Interests: Info[],
+        Education: Info[],
+        Gender: Info[],
+        Nationality: Info[],
+        ZodiacSigns: Info[], 
+        Finans: Info[]
     ) {}
 }

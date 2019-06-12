@@ -69,6 +69,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.ToTable("Dialogs");
                 });
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Education", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Educations");
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.FileModel", b =>
                 {
                     b.Property<int>("Id")
@@ -95,6 +107,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.ToTable("Files");
                 });
 
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.FinancialSituation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FinancialSituations");
+                });
+
             modelBuilder.Entity("MeetingWebsite.Models.Entities.Friendship", b =>
                 {
                     b.Property<int>("Id")
@@ -113,6 +137,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasIndex("SecondFriendId");
 
                     b.ToTable("Friendships");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genders");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.Interests", b =>
@@ -163,6 +199,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.Nationality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Nationalities");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.PhotoAlbum", b =>
@@ -218,7 +266,7 @@ namespace MeetingWebsite.DAL.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<int>("Gender");
+                    b.Property<int?>("GenderId");
 
                     b.Property<string>("HomeDir");
 
@@ -250,6 +298,8 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AvatarId");
+
+                    b.HasIndex("GenderId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -320,26 +370,32 @@ namespace MeetingWebsite.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Education");
+                    b.Property<int?>("EducationId");
 
-                    b.Property<string>("FinancialSituation");
+                    b.Property<int?>("FinancialSituationId");
 
                     b.Property<string>("Height");
 
-                    b.Property<string>("MaritalStatus");
-
-                    b.Property<string>("Nationality");
+                    b.Property<int?>("NationalityId");
 
                     b.Property<string>("UserId");
 
                     b.Property<string>("Weight");
 
-                    b.Property<int>("ZodiacSign");
+                    b.Property<int?>("ZodiacSignId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EducationId");
+
+                    b.HasIndex("FinancialSituationId");
+
+                    b.HasIndex("NationalityId");
+
                     b.HasIndex("UserId")
                         .IsUnique();
+
+                    b.HasIndex("ZodiacSignId");
 
                     b.ToTable("UserProfiles");
                 });
@@ -360,6 +416,18 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("UserPurposes");
+                });
+
+            modelBuilder.Entity("MeetingWebsite.Models.Entities.ZodiacSigns", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ZodiacSigns");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -540,6 +608,10 @@ namespace MeetingWebsite.DAL.Migrations
                     b.HasOne("MeetingWebsite.Models.Entities.FileModel", "Avatar")
                         .WithMany()
                         .HasForeignKey("AvatarId");
+
+                    b.HasOne("MeetingWebsite.Models.Entities.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserBadHabits", b =>
@@ -583,9 +655,25 @@ namespace MeetingWebsite.DAL.Migrations
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserProfile", b =>
                 {
+                    b.HasOne("MeetingWebsite.Models.Entities.Education", "Education")
+                        .WithMany()
+                        .HasForeignKey("EducationId");
+
+                    b.HasOne("MeetingWebsite.Models.Entities.FinancialSituation", "FinancialSituation")
+                        .WithMany()
+                        .HasForeignKey("FinancialSituationId");
+
+                    b.HasOne("MeetingWebsite.Models.Entities.Nationality", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId");
+
                     b.HasOne("MeetingWebsite.Models.Entities.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("MeetingWebsite.Models.Entities.UserProfile", "UserId");
+
+                    b.HasOne("MeetingWebsite.Models.Entities.ZodiacSigns", "ZodiacSign")
+                        .WithMany()
+                        .HasForeignKey("ZodiacSignId");
                 });
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.UserPurpose", b =>

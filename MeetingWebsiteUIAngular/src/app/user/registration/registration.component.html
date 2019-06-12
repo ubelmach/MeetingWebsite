@@ -30,9 +30,9 @@
 
   <div class="form-group required">
     <label>Gender</label>
-    <select class="form-control" formControlName="Genders">
-      <option *ngFor="let gender of genders" [value]="gender">
-        {{gender}}
+    <select class="form-control" formControlName="GenderId">
+      <option *ngFor="let gender of genders" [value]="gender.Id">
+        {{gender.Value}}
       </option>
     </select>
   </div>

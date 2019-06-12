@@ -17,6 +17,7 @@ namespace MeetingWebsite.BLL.Services
 
         private IUserBadHabitsService _userBadHabitsService { get; set; }
         private IUserInterestsService _userInterestsService { get; set; }
+
         private readonly UserManager<User> _userManager;
 
         public UserService(IUnitOfWork database,
@@ -49,28 +50,39 @@ namespace MeetingWebsite.BLL.Services
             {
                 if (!string.IsNullOrEmpty(editUser.FirstName))
                 { user.FirstName = editUser.FirstName; }
+
                 if (!string.IsNullOrEmpty(editUser.LastName))
                 { user.LastName = editUser.LastName; }
-                if (!string.IsNullOrEmpty(editUser.Genders.ToString()))
-                { user.Gender = editUser.Genders; }
-                if (!string.IsNullOrEmpty(editUser.Birthday.ToString(CultureInfo.InvariantCulture)))
-                { user.Birthday = editUser.Birthday; }
-                if (!string.IsNullOrEmpty(editUser.ZodiacSign.ToString()))
-                { userProfile.ZodiacSign = editUser.ZodiacSign; }
-                if (!string.IsNullOrEmpty(editUser.MaritalStatus))
-                { userProfile.MaritalStatus = editUser.MaritalStatus; }
+
                 if (!string.IsNullOrEmpty(editUser.Height))
                 { userProfile.Height = editUser.Height; }
+
                 if (!string.IsNullOrEmpty(editUser.Weight))
                 { userProfile.Weight = editUser.Weight; }
-                if (!string.IsNullOrEmpty(editUser.Education))
-                { userProfile.Education = editUser.Education; }
-                if (!string.IsNullOrEmpty(editUser.Nationality))
-                { userProfile.Nationality = editUser.Nationality; }
-                if (!string.IsNullOrEmpty(editUser.FinancialSituation))
-                { userProfile.FinancialSituation = editUser.FinancialSituation; }
+
+                if (!string.IsNullOrEmpty(editUser.Birthday.ToString(CultureInfo.InvariantCulture)))
+                { user.Birthday = editUser.Birthday; }
+
+                if (!string.IsNullOrEmpty(editUser.ZodiacSign.ToString()))
+                { userProfile.ZodiacSignId = editUser.ZodiacSign; }
+
+                if (!string.IsNullOrEmpty(editUser.Nationality.ToString()))
+                { userProfile.NationalityId = editUser.Nationality; }
+
+                if (!string.IsNullOrEmpty(editUser.FinancialSituation.ToString()))
+                { userProfile.FinancialSituationId = editUser.FinancialSituation; }
 
                 user.AnonymityMode = editUser.AnonymityMode;
+
+                if (!string.IsNullOrEmpty(editUser.Gender.ToString()))
+                {
+                    user.GenderId = editUser.Gender;
+                }
+
+                if (!string.IsNullOrEmpty(editUser.Education.ToString()))
+                {
+                    userProfile.EducationId = editUser.Education;
+                }
 
                 if (editUser.PurposeOfDating != null)
                 {
@@ -132,6 +144,7 @@ namespace MeetingWebsite.BLL.Services
                     _database.Save();
                 }
 
+                //_database.UserRepository.Update(user);
                 await _userManager.UpdateAsync(user);
 
                 var result = new EditUserProfileInformation(user);

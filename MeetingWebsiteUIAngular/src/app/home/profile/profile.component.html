@@ -104,8 +104,8 @@
         <div class="form-group required">
           <label>Gender</label>
           <select class="form-control" formControlName="Genders">
-            <option *ngFor="let gender of genders" [value]="gender">
-              {{gender}}
+            <option *ngFor="let gender of InfoFromDb.Gender" [value]="gender.Id">
+              {{gender.Value}}
             </option>
           </select>
         </div>
@@ -113,15 +113,10 @@
         <div class="form-group required">
           <label>Purpose of dating</label>
           <select class="form-control" formControlName="PurposeOfDating" multiple>
-            <option *ngFor="let purpose of purposes" [value]="purpose.Id">
+            <option *ngFor="let purpose of InfoFromDb.Purposes" [value]="purpose.Id">
               {{purpose.Value}}
             </option>
           </select>
-        </div>
-
-        <div class="form-group">
-          <label>Marital status</label>
-          <input class="form-control" formControlName="MaritalStatus" value="{{userDetails.MaritalStatus}}">
         </div>
 
         <div class="form-group">
@@ -134,52 +129,81 @@
           <input class="form-control" formControlName="Weight" value="{{userDetails.Weight}}">
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Education</label>
           <input class="form-control" formControlName="Education" value="{{userDetails.Education}}">
-        </div>
+        </div> -->
 
         <div class="form-group">
+          <label>Education</label>
+          <select class="form-control" formControlName="Education">
+            <option *ngFor="let education of InfoFromDb.Education" [value]="education.Id">
+              {{education.Value}}
+            </option>
+          </select>
+        </div>
+
+        <!-- <div class="form-group">
           <label>Nationality</label>
           <input class="form-control" formControlName="Nationality" value="{{userDetails.Nationality}}">
+        </div> -->
+
+        
+        <div class="form-group">
+          <label>Nationality</label>
+          <select class="form-control" formControlName="Nationality">
+            <option *ngFor="let nationality of InfoFromDb.Nationality" [value]="nationality.Id">
+              {{nationality.Value}}
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
           <label>Zodiac sign</label>
           <select class="form-control" formControlName="ZodiacSign">
-            <option *ngFor="let comp of zodiacSigns" [value]="comp">
-              {{comp}}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group required">
-          <label>Knowledge of languages</label>
-          <select class="form-control" formControlName="KnowledgeOfLanguages" multiple>
-            <option *ngFor="let language of languages" [value]="language.Id">
-              {{language.Value}}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group required">
-          <label>Bad Habits</label>
-          <select class="form-control" formControlName="BadHabits" multiple>
-            <option *ngFor="let badHabit of badHabits" [value]="badHabit.Id">
-              {{badHabit.Value}}
+            <option *ngFor="let sign of InfoFromDb.ZodiacSigns" [value]="sign.Id">
+              {{sign.Value}}
             </option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>FinancialSituation</label>
-          <input class="form-control" formControlName="FinancialSituation" value="{{userDetails.FinancialSituation}}">
+          <label>Knowledge of languages</label>
+          <select class="form-control" formControlName="KnowledgeOfLanguages" multiple>
+            <option *ngFor="let language of InfoFromDb.Languages" [value]="language.Id">
+              {{language.Value}}
+            </option>
+          </select>
         </div>
 
-        <div class="form-group required">
+        <div class="form-group">
+          <label>Bad Habits</label>
+          <select class="form-control" formControlName="BadHabits" multiple>
+            <option *ngFor="let badHabit of InfoFromDb.BadHabits" [value]="badHabit.Id">
+              {{badHabit.Value}}
+            </option>
+          </select>
+        </div>
+
+        <!-- <div class="form-group">
+          <label>FinancialSituation</label>
+          <input class="form-control" formControlName="FinancialSituation" value="{{userDetails.FinancialSituation}}">
+        </div> -->
+
+        
+        <div class="form-group">
+          <label>Financial situation</label>
+          <select class="form-control" formControlName="FinancialSituation">
+            <option *ngFor="let finans of InfoFromDb.Finans" [value]="finans.Id">
+              {{finans.Value}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label>Interests</label>
           <select class="form-control" formControlName="Interests" multiple>
-            <option *ngFor="let interest of interests" [value]="interest.Id">
+            <option *ngFor="let interest of InfoFromDb.Interests" [value]="interest.Id">
               {{interest.Value}}
             </option>
           </select>
