@@ -74,9 +74,9 @@ namespace MeetingWebsite.BLL.Services
 
                 user.AnonymityMode = editUser.AnonymityMode;
 
-                if (!string.IsNullOrEmpty(editUser.Gender.ToString()))
+                if (!string.IsNullOrEmpty(editUser.Genders.ToString()))
                 {
-                    user.GenderId = editUser.Gender;
+                    user.GenderId = editUser.Genders;
                 }
 
                 if (!string.IsNullOrEmpty(editUser.Education.ToString()))
@@ -144,7 +144,6 @@ namespace MeetingWebsite.BLL.Services
                     _database.Save();
                 }
 
-                //_database.UserRepository.Update(user);
                 await _userManager.UpdateAsync(user);
 
                 var result = new EditUserProfileInformation(user);

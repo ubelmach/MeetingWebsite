@@ -17,17 +17,11 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Weight { get; set; }
         public bool AnonymityMode { get; set; }
 
-        //public Genders Genders { get; set; }
-        //public string Education { get; set; }
-        //public string Nationality { get; set; }
-        //public string ZodiacSign { get; set; }
-        //public string FinancialSituation { get; set; }
-
         public List<int> PurposeOfDating { get; set; }
         public List<int> KnowledgeOfLanguages { get; set; }
         public List<int> BadHabits { get; set; }
         public List<int> Interests { get; set; }
-        public int Gender { get; set; }
+        public int Genders { get; set; }
         public int Education { get; set; }
         public int Nationality { get; set; }
         public int ZodiacSign { get; set; }

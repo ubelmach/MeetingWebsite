@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Info } from 'src/app/models/Info';
 import { InfoFromDb } from 'src/app/models/InfoFromDb';
 
 @Component({
@@ -13,21 +12,13 @@ import { InfoFromDb } from 'src/app/models/InfoFromDb';
 export class ProfileComponent implements OnInit {
 
   userDetails;
-  zodiacSigns;
-  genders;
 
   InfoFromDb: InfoFromDb;
-  purposes: Info[];
-  languages: Info[];
-  badHabits: Info[];
-  interests: Info[];
 
   visibleDetailsUser = true;
   visiblePhotoUser = true;
 
-  constructor(public service: UserService, private toastr: ToastrService, private router: Router) {
-
-  }
+  constructor(public service: UserService, private toastr: ToastrService, private router: Router) {  }
 
   ngOnInit() {
     this.service.getUserProfile().subscribe(
@@ -38,40 +29,12 @@ export class ProfileComponent implements OnInit {
         console.log(err);
       }
     )
-    // this.service.getZodiacSigns().subscribe(
-    //   res => {
-    //     this.zodiacSigns = res;
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // )
-    // this.service.getGenders().subscribe(
-    //   res => {
-    //     this.genders = res;
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // )
 
     this.service.getInfo().subscribe(
       res => {
         this.InfoFromDb = res as InfoFromDb;
       }
     )
-
-    // this.service.getPurposes()
-    //   .subscribe((data: Info[]) => this.purposes = data);
-
-    // this.service.getLanguages()
-    //   .subscribe((data: Info[]) => this.languages = data);
-
-    // this.service.getBadHabits()
-    //   .subscribe((data: Info[]) => this.badHabits = data);
-
-    // this.service.getInterests()
-    //   .subscribe((data: Info[]) => this.interests = data);
   }
 
   imageUrl: string = "/assets/img/add.jpg";
@@ -91,7 +54,6 @@ export class ProfileComponent implements OnInit {
     this.service.postFile(this.fileToUpload).subscribe(
       (res: any) => {
         console.log('done');
-        //Image.value = null;
         this.ngOnInit();
         this.onEditPicture();
         this.toastr.success('Update!', 'Edit user infrormation successful.');
