@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
@@ -11,7 +10,7 @@ namespace MeetingWebsite.BLL.Services
 {
     public class FriendService : IFriendService
     {
-        private IUnitOfWork _database;
+        private readonly IUnitOfWork _database;
 
         public FriendService(IUnitOfWork database)
         {
@@ -27,31 +26,6 @@ namespace MeetingWebsite.BLL.Services
                            x.SecondFriendId == userId);
 
             return friend;
-        }
-
-        public ShowInformationFriendViewModel ShowInformationFriend(Task<User> friend)
-        {
-            //var showInfoFriend = new ShowInformationFriendViewModel
-            //{
-            //    FirstName = friend.Result.FirstName,
-            //    LastName = friend.Result.LastName,
-            //    Birthday = friend.Result.Birthday,
-            //    Gender = friend.Result.FirstName,
-            //    PurposeOfDating = friend.Result.UserProfile.PurposeOfDating,
-            //    MaritalStatus = friend.Result.UserProfile.MaritalStatus,
-            //    Height = friend.Result.UserProfile.Height,
-            //    Weight = friend.Result.UserProfile.Education,
-            //    Education = friend.Result.UserProfile.Education,
-            //    Nationality = friend.Result.UserProfile.Nationality,
-            //    ZodiacSign = friend.Result.UserProfile.ZodiacSign.ToString(),
-            //    KnowledgeOfLanguages = friend.Result.UserProfile.KnowledgeOfLanguages,
-            //    BadHabits = friend.Result.UserProfile.BadHabits,
-            //    FinancialSituation = friend.Result.UserProfile.FinancialSituation,
-            //    Interests = friend.Result.UserProfile.Interests,
-            //    Avatar = friend.Result.Avatar.Path
-            //};
-
-            return null;
         }
 
         public Friendship SendRequest(SendFriendRequestViewModel request)

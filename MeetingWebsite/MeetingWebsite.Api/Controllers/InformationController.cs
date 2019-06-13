@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel.Information;
-using MeetingWebsite.Models.Entities;
-using MeetingWebsite.Models.EntityEnums;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Api.Controllers

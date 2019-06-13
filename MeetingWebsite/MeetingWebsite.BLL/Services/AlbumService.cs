@@ -10,29 +10,29 @@ namespace MeetingWebsite.BLL.Services
 {
     public class AlbumService : IAlbumService
     {
-        private IUnitOfWork _database { get; set; }
+        private IUnitOfWork Database { get; set; }
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public AlbumService(IUnitOfWork database,
             IHostingEnvironment hostingEnvironment)
         {
-            _database = database;
+            Database = database;
             _hostingEnvironment = hostingEnvironment;
         }
 
         public IEnumerable<PhotoAlbum> FindAllAlbumsCurrentUser(string userId)
         {
-            return _database.AlbumRepository.Find(x => x.UserId == userId);
+            return Database.AlbumRepository.Find(x => x.UserId == userId);
         }
 
         public PhotoAlbum FindAlbum(int id)
         {
-            return _database.AlbumRepository.Get(id);
+            return Database.AlbumRepository.Get(id);
         }
 
         public PhotoAlbum OpenAlbum(int id)
         {
-            return _database.AlbumRepository.Get(id);
+            return Database.AlbumRepository.Get(id);
         }
 
         public PhotoAlbum CreateAlbum(CreateAlbumViewModel createAlbum)
@@ -52,8 +52,8 @@ namespace MeetingWebsite.BLL.Services
                     Path = path
                 };
 
-                _database.AlbumRepository.Create(newAlbum);
-                _database.Save();
+                Database.AlbumRepository.Create(newAlbum);
+                Database.Save();
                 return newAlbum;
             }
             catch (Exception ex)
@@ -64,8 +64,8 @@ namespace MeetingWebsite.BLL.Services
 
         public void DeleteAlbum(int id)
         {
-            _database.AlbumRepository.Delete(id);
-            _database.Save();
+            Database.AlbumRepository.Delete(id);
+            Database.Save();
         }
     }
 }

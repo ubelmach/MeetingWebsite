@@ -9,16 +9,16 @@ namespace MeetingWebsite.BLL.Services
 {
     public class BlacklistService : IBlacklistService
     {
-        public IUnitOfWork _database { get; set; }
+        public IUnitOfWork Database { get; set; }
 
         public BlacklistService(IUnitOfWork database)
         {
-            _database = database;
+            Database = database;
         }
 
         public IEnumerable<BlackList> GetListUsersInBlackList(string userId)
         {
-            return _database.BlacklistRepository.Find(x => x.CurrentUserId == userId);
+            return Database.BlacklistRepository.Find(x => x.CurrentUserId == userId);
         }
 
         public BlackList AddUserInBlackList(AddUserInBlackListViewModel addInBlackList)
@@ -32,8 +32,8 @@ namespace MeetingWebsite.BLL.Services
                     Date = addInBlackList.Date
                 };
 
-                _database.BlacklistRepository.Create(addUserInBlackList);
-                _database.Save();
+                Database.BlacklistRepository.Create(addUserInBlackList);
+                Database.Save();
                 return addUserInBlackList;
             }
             catch (Exception ex)
@@ -44,15 +44,15 @@ namespace MeetingWebsite.BLL.Services
 
         public BlackList FindBlackList(DeleteUserFromBlackListViewModel delete)
         {
-            return _database.BlacklistRepository
+            return Database.BlacklistRepository
                 .Find(x => x.CurrentUserId == delete.CurrentUserId
                                 && x.WhomId == delete.WhomId).First();
         }
 
         public void DeleteFromBlackList(int id)
         {
-            _database.BlacklistRepository.Delete(id);
-            _database.Save();
+            Database.BlacklistRepository.Delete(id);
+            Database.Save();
         }
     }
 }

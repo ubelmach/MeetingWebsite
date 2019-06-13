@@ -10,7 +10,7 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class BlackListController : ControllerBase
     {
-        private IBlacklistService _blacklistService;
+        private readonly IBlacklistService _blacklistService;
 
         public BlackListController(IBlacklistService blacklistService)
         {
@@ -24,12 +24,7 @@ namespace MeetingWebsite.Api.Controllers
             var userId = GetUserId();
             var blackList = _blacklistService.GetListUsersInBlackList(userId);
 
-            var showBlackList = blackList.Select(item => new ShowBlackListCurrentUserViewModel
-            {
-                FirstName = item.Whom.FirstName,
-                LastName = item.Whom.LastName,
-                Date = item.Date
-            }).ToList();
+            var showBlackList = blackList.Select(item => new ShowBlackListCurrentUserViewModel(item)).ToList();
 
             return Ok(showBlackList);
         }
@@ -40,16 +35,12 @@ namespace MeetingWebsite.Api.Controllers
         {
             var currentUserId = GetUserId();
 
-            var add = new AddUserInBlackListViewModel
-            {
-                CurrentUserId = currentUserId,
-                WhomId = userId,
-                Date = DateTime.Now
-            };
-            
+            var add = new AddUserInBlackListViewModel(currentUserId, userId);
             var addInBlackList = _blacklistService.AddUserInBlackList(add);
             if (addInBlackList == null)
+            {
                 return BadRequest();
+            }
             return Ok();
         }
 
@@ -59,15 +50,13 @@ namespace MeetingWebsite.Api.Controllers
         {
             var currentUserId = GetUserId();
 
-            var delete = new DeleteUserFromBlackListViewModel
-            {
-                CurrentUserId = currentUserId,
-                WhomId = userId
-            };
+            var delete = new DeleteUserFromBlackListViewModel(currentUserId, userId);
 
             var findBlackList = _blacklistService.FindBlackList(delete);
             if (findBlackList == null)
+            {
                 return NotFound();
+            }
             _blacklistService.DeleteFromBlackList(findBlackList.Id);
             return Ok();
         }

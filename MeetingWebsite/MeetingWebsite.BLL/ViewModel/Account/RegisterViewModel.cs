@@ -29,20 +29,19 @@ namespace MeetingWebsite.BLL.ViewModel
 
         public int GenderId { get; set; }
 
-        //public User CreateUser()
-        //{
-        //    return new User()
-        //    {
-        //        FirstName = FirstName,
-        //        LastName = LastName,
-        //        Email = Email,
-        //        UserName = Email,
-        //        GenderId = GenderId,
-        //        Birthday = Birthday,
+        public User CreateUser()
+        {
+            return new User()
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                Email = Email,
+                UserName = Email,
+                GenderId = GenderId,
+                Birthday = Birthday,
 
-        //        AnonymityMode = false
-        //    };
-        //}
-
+                AnonymityMode = false
+            };
+        }
     }
 }

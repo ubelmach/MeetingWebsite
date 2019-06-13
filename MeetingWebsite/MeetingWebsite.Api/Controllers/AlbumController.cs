@@ -10,9 +10,9 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class AlbumController : ControllerBase
     {
-        private IAlbumService _albumService;
-        private IAccountService _accountService;
-        private IFileService _fileService;
+        private readonly IAlbumService _albumService;
+        private readonly IAccountService _accountService;
+        private readonly IFileService _fileService;
 
         public AlbumController(IAlbumService albumService,
             IAccountService accountService,
@@ -33,12 +33,7 @@ namespace MeetingWebsite.Api.Controllers
             if (!albums.Any())
                 return BadRequest(new {message = "Error, current user has no albums"});
 
-            var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel
-            {
-                Id = item.Id,
-                Name = item.Name
-            }).ToList();
-
+            var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel(item)).ToList();
             return Ok(showAlbumCurrentUser);
         }
 
@@ -48,7 +43,9 @@ namespace MeetingWebsite.Api.Controllers
         {
             var album = _albumService.OpenAlbum(id);
             if (album == null)
+            {
                 return NotFound();
+            }
 
             var showAlbumPhotos = new ShowAlbumPhotosViewModel()
             {
@@ -61,19 +58,22 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST: api/album/CreateAlbum
         [HttpPost, Route("CreateAlbum")]
-        public IActionResult Post([FromForm] CreateAlbumViewModel createAlbum)
+        public async Task<IActionResult> Post([FromForm] CreateAlbumViewModel createAlbum)
         {
             if (createAlbum == null)
+            {
                 return BadRequest();
+            }
 
-            var userId = GetUserId();
-            var user = _accountService.GetUser(userId);
-            createAlbum.UserId = userId;
-            createAlbum.HomeDir = user.Result.HomeDir;
+            var user = await _accountService.GetUser(GetUserId());
+            createAlbum.UserId = user.Id;
+            createAlbum.HomeDir = user.HomeDir;
 
             var newAlbum = _albumService.CreateAlbum(createAlbum);
             if (newAlbum == null)
+            {
                 return BadRequest(new { message = "Error creating album" });
+            }
             return Ok(newAlbum);
         }
 
@@ -81,18 +81,16 @@ namespace MeetingWebsite.Api.Controllers
         [HttpPut, Route("AddPhotoInAlbum/{id}")]
         public async Task<IActionResult> AddPhoto(int id, [FromForm] AddPhotoInAlbumViewModel addPhoto)
         {
-            var getAlbum = _albumService.FindAlbum(id);
-            if (getAlbum == null)
+            var album = _albumService.FindAlbum(id);
+            if (album == null)
+            {
                 return NotFound();
+            }
 
             var userId = GetUserId();
             var user = _accountService.GetUser(userId);
 
-            addPhoto.AlbumId = getAlbum.Id;
-            addPhoto.AlbumName = getAlbum.Name;
-            addPhoto.HomeDir = user.Result.HomeDir;
-            addPhoto.AlbumDir = getAlbum.Path;
-            addPhoto.UserId = userId;
+            addPhoto.AppendAdditionalInfo(album, user.Result);
 
             await _fileService.AddPhotoInAlbum(addPhoto);
             return Ok(addPhoto);
@@ -104,7 +102,9 @@ namespace MeetingWebsite.Api.Controllers
         {
             var album = _albumService.FindAlbum(id);
             if (album == null)
+            {
                 return NotFound();
+            }
             _albumService.DeleteAlbum(id);
             return Ok();
         }
@@ -115,7 +115,9 @@ namespace MeetingWebsite.Api.Controllers
         {
             var photo = _fileService.FindPhotoInAlbum(id);
             if (photo == null)
+            {
                 return NotFound();
+            }
             _fileService.DeletePhotoInAlbum(id);
             return Ok();
         }

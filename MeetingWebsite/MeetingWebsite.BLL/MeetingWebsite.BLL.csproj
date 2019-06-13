@@ -270,7 +270,7 @@
     <Compile Include="ViewModel\Album\ShowAlbumPhotosViewModel.cs" />
     <Compile Include="ViewModel\Blacklist\ShowBlackListCurrentUserViewModel.cs" />
     <Compile Include="ViewModel\Album\ShowCurrentUserAlbumViewModel.cs" />
-    <Compile Include="ViewModel\Friend\ShowFriendCurrentUserViewModel.cs" />
+    <Compile Include="ViewModel\Friend\ShowFriendViewModel.cs" />
     <Compile Include="ViewModel\Friend\ShowInformationFriendViewModel.cs" />
     <Compile Include="ViewModel\Friend\ShowNewRequestsViewModel.cs" />
     <Compile Include="ViewModel\User\UserProfileViewModel.cs" />

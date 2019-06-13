@@ -49,7 +49,6 @@ namespace MeetingWebsite.BLL.Services
                 users = users.Where(x =>
                     x.GenderId == criteria.Genders);
 
-
             if (criteria.Education != null)
                 users = users.Where(x =>
                     criteria.Education.Contains(x.UserProfile.EducationId.Value));
@@ -68,26 +67,14 @@ namespace MeetingWebsite.BLL.Services
 
             //if (criteria.PurposeOfDating != null)
             //{
-            //    foreach (var user in users)
-            //    {
-            //        foreach (var item in user.UserProfile.UserPurposes)
-            //        {
-            //            users.Where(x => criteria.PurposeOfDating.Contains(item.PurposeId));
-            //        }
-            //    }
-            //}
-
-            //if (criteria.PurposeOfDating != null)
-            //{
             //    foreach (var purpose in criteria.PurposeOfDating)
             //    {
             //        users = users.Where(x =>
-            //            criteria.PurposeOfDating.Contains(
-            //                x.UserProfile.UserPurposes.Select(s => s.PurposeId);
+            //            criteria.PurposeOfDating.Intersect(
+            //                x.UserProfile.UserPurposes.Select(
+            //                    s => s.PurposeId == purpose)));
             //    }
-               
             //}
-                
 
             return users;
         }

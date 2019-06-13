@@ -1,21 +1,20 @@
-﻿using System;
+﻿using MeetingWebsite.Models.Entities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.BLL.ViewModel
 {
-    public class ResultSearchByCriteriaViewModel
+    public class ShowFriendViewModel
     {
         public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Age { get; set; }
         public string Avatar { get; set; }
-        public ResultSearchByCriteriaViewModel() { }
-        public ResultSearchByCriteriaViewModel(User user)
+
+        public ShowFriendViewModel(string userId, User user)
         {
-            UserId = user.Id;
+            UserId = userId;
             FirstName = user.FirstName;
             LastName = user.LastName;
             Age = DateTime.Today.Year - user.Birthday.Year;
@@ -29,11 +28,14 @@ namespace MeetingWebsite.BLL.ViewModel
                 Avatar = "/File/Nophoto.jpg";
             }
         }
-        public static IEnumerable<ResultSearchByCriteriaViewModel> MapToViewModels(List<User> users)
+
+        public static IEnumerable<ShowFriendViewModel> MapToViewModels(string userId, List<Friendship> friendships)
         {
-            foreach (var user in users)
+            foreach (var friendship in friendships)
             {
-                yield return new ResultSearchByCriteriaViewModel(user);
+                yield return friendship.FirstFriendId == userId
+                    ? new ShowFriendViewModel(userId, friendship.FirstFriend)
+                    : new ShowFriendViewModel(userId, friendship.SecondFriend);
             }
         }
     }

@@ -7,5 +7,10 @@ namespace MeetingWebsite.BLL.ViewModel
     {
         public User User { get; set; }
         public IFormFile Avatar { get; set; }
+        public EditUserAvatarViewModel(User user, IFormFile file)
+        {
+            User = user;
+            Avatar = file;
+        }
     }
 }

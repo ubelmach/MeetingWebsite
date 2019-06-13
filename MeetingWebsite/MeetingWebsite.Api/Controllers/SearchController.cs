@@ -10,7 +10,7 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private ISearchService _searchService;
+        private readonly ISearchService _searchService;
 
         public SearchController(ISearchService searchService)
         {
@@ -24,14 +24,8 @@ namespace MeetingWebsite.Api.Controllers
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
             criteria.CurrentUserId = userId;
 
-            var search = _searchService.FindUsers(criteria);
-
-            var resultSearch = new List<ResultSearchByCriteriaViewModel>();
-            foreach (var item in search)
-            {
-                resultSearch.Add(new ResultSearchByCriteriaViewModel(item));
-            }
-
+            var search = _searchService.FindUsers(criteria).ToList();
+            var resultSearch = ResultSearchByCriteriaViewModel.MapToViewModels(search);
             return Ok(resultSearch);
         }
     }

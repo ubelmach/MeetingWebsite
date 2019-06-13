@@ -26,19 +26,13 @@ namespace MeetingWebsite.Api.Controllers
         [HttpGet, Route("GetCurrentUserFriend")]
         public IActionResult GetAll()
         {
-            var userId = GetUserId();
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
             var friends = _friendService.FindFriendCurrentUser(userId).ToList();
-
             if (!friends.Any())
-                return BadRequest(new { message = "Error, you have no friends yet" });
-
-            var showFriendCurrentUser = new List<ShowFriendCurrentUserViewModel>();
-            foreach (var friend in friends)
             {
-                showFriendCurrentUser.Add(new ShowFriendCurrentUserViewModel(userId, friend));
+                return BadRequest(new { message = "Error, you have no friends yet" });
             }
-
-            return Ok(showFriendCurrentUser);
+            return Ok(ShowFriendViewModel.MapToViewModels(userId, friends).ToList());
         }
 
         //GET: api/friend/DetailsFriendInformation/id
@@ -46,9 +40,7 @@ namespace MeetingWebsite.Api.Controllers
         public async Task<IActionResult> Get(string id)
         {
             var friend = await _accountService.GetUser(id);
-
             var showInfoFriend = new ShowInformationFriendViewModel(friend);
-
             return Ok(showInfoFriend);
         }
 
@@ -56,17 +48,13 @@ namespace MeetingWebsite.Api.Controllers
         [HttpGet, Route("SendFriendRequest/{userId}")]
         public IActionResult SendRequest(string userId)
         {
-            var currentUserId = GetUserId();
-
-            var request = new SendFriendRequestViewModel
-            {
-                WhoSendsRequest = currentUserId,
-                WhoReceivesRequest = userId
-            };
-
+            var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
+            var request = new SendFriendRequestViewModel(currentUserId, userId);
             var sendRequest = _friendService.SendRequest(request);
             if (sendRequest == null)
+            {
                 return BadRequest();
+            }
             return Ok();
         }
 
@@ -74,16 +62,9 @@ namespace MeetingWebsite.Api.Controllers
         [HttpGet, Route("GetListFriendRequests")]
         public IActionResult GetListFriendRequests()
         {
-            var currentUserId = GetUserId();
+            var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
             var friendRequests = _friendService.FindNewRequests(currentUserId);
-
-            
-            var showNewRequests = new List<ShowNewRequestsViewModel>();
-            foreach (var request in friendRequests)
-            {
-                showNewRequests.Add(new ShowNewRequestsViewModel(request));
-            }
-
+            var showNewRequests = friendRequests.Select(request => new ShowNewRequestsViewModel(request)).ToList();
             return Ok(showNewRequests);
         }
 
@@ -108,11 +89,6 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult DeleteFriendship(int id)
         {
             return Ok();
-        }
-
-        private string GetUserId()
-        {
-            return User.Claims.First(c => c.Type == "UserID").Value;
         }
     }
 }

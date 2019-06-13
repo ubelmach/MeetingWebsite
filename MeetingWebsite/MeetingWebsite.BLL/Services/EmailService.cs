@@ -7,13 +7,6 @@ namespace MeetingWebsite.BLL.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IHostingEnvironment _appEnvironment;
-
-        public EmailService(IHostingEnvironment appEnvironment)
-        {
-            _appEnvironment = appEnvironment;
-        }
-
         public async Task SendEmailAsync(string email, string subject, string message)
         {
             var emailMessage = new EmailBuilder().From().To(email).Subject(subject).Body(message).Build();

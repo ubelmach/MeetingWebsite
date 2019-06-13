@@ -10,13 +10,12 @@ namespace MeetingWebsite.BLL.Services
 {
     public class UserService : IUserService
     {
-        private IUnitOfWork _database { get; set; }
-        private IAccountService _accountService { get; set; }
-        private IUserPurposeService _userPurposeService { get; set; }
-        private IUserLanguagesService _userLanguagesService { get; set; }
-
-        private IUserBadHabitsService _userBadHabitsService { get; set; }
-        private IUserInterestsService _userInterestsService { get; set; }
+        private IUnitOfWork Database { get; set; }
+        private IAccountService AccountService { get; set; }
+        private IUserPurposeService UserPurposeService { get; set; }
+        private IUserLanguagesService UserLanguagesService { get; set; }
+        private IUserBadHabitsService UserBadHabitsService { get; set; }
+        private IUserInterestsService UserInterestsService { get; set; }
 
         private readonly UserManager<User> _userManager;
 
@@ -28,18 +27,18 @@ namespace MeetingWebsite.BLL.Services
             IUserBadHabitsService userBadHabitsService,
             IUserInterestsService userInterestsService)
         {
-            _database = database;
+            Database = database;
             _userManager = userManager;
-            _accountService = accountService;
-            _userPurposeService = userPurposeService;
-            _userLanguagesService = userLanguagesService;
-            _userBadHabitsService = userBadHabitsService;
-            _userInterestsService = userInterestsService;
+            AccountService = accountService;
+            UserPurposeService = userPurposeService;
+            UserLanguagesService = userLanguagesService;
+            UserBadHabitsService = userBadHabitsService;
+            UserInterestsService = userInterestsService;
         }
 
         public async Task<EditUserProfileInformation> EditUserInformation(EditUserProfileInformation editUser)
         {
-            var user = await _accountService.GetUser(editUser.Id);
+            var user = await AccountService.GetUser(editUser.Id);
 
             if (user == null || user.UserProfile == null)
                 return null;
@@ -86,7 +85,7 @@ namespace MeetingWebsite.BLL.Services
 
                 if (editUser.PurposeOfDating != null)
                 {
-                    _userPurposeService.DeletePurpose(user.UserProfile.Id);
+                    UserPurposeService.DeletePurpose(user.UserProfile.Id);
                     foreach (var purpose in editUser.PurposeOfDating)
                     {
                         var newUserPurpose = new UserPurpose
@@ -94,14 +93,14 @@ namespace MeetingWebsite.BLL.Services
                             UserProfileId = user.UserProfile.Id,
                             PurposeId = purpose
                         };
-                        _userPurposeService.AddPurpose(newUserPurpose);
+                        UserPurposeService.AddPurpose(newUserPurpose);
                     }
-                    _database.Save();
+                    Database.Save();
                 }
 
                 if (editUser.KnowledgeOfLanguages != null)
                 {
-                    _userLanguagesService.DeleteLanguage(user.UserProfile.Id);
+                    UserLanguagesService.DeleteLanguage(user.UserProfile.Id);
                     foreach (var language in editUser.KnowledgeOfLanguages)
                     {
                         var newUserLanguages = new UserLanguages
@@ -109,14 +108,14 @@ namespace MeetingWebsite.BLL.Services
                             UserProfileId = user.UserProfile.Id,
                             LanguageId = language
                         };
-                        _userLanguagesService.AddLanguages(newUserLanguages);
+                        UserLanguagesService.AddLanguages(newUserLanguages);
                     }
-                    _database.Save();
+                    Database.Save();
                 }
 
                 if (editUser.BadHabits != null)
                 {
-                    _userBadHabitsService.DeleteHabits(user.UserProfile.Id);
+                    UserBadHabitsService.DeleteHabits(user.UserProfile.Id);
                     foreach (var badHabit in editUser.BadHabits)
                     {
                         var newUserBadHabits = new UserBadHabits
@@ -124,14 +123,14 @@ namespace MeetingWebsite.BLL.Services
                             UserProfileId = user.UserProfile.Id,
                             BadHabitsId = badHabit
                         };
-                        _userBadHabitsService.AddBadHabits(newUserBadHabits);
+                        UserBadHabitsService.AddBadHabits(newUserBadHabits);
                     }
-                    _database.Save();
+                    Database.Save();
                 }
 
                 if (editUser.Interests != null)
                 {
-                    _userInterestsService.DeleteInterests(user.UserProfile.Id);
+                    UserInterestsService.DeleteInterests(user.UserProfile.Id);
                     foreach (var interest in editUser.Interests)
                     {
                         var newUserInterest = new UserInterests
@@ -139,9 +138,9 @@ namespace MeetingWebsite.BLL.Services
                             UserProfileId = user.UserProfile.Id,
                             InterestsId = interest
                         };
-                        _userInterestsService.AddInterests(newUserInterest);
+                        UserInterestsService.AddInterests(newUserInterest);
                     }
-                    _database.Save();
+                    Database.Save();
                 }
 
                 await _userManager.UpdateAsync(user);
@@ -158,7 +157,7 @@ namespace MeetingWebsite.BLL.Services
 
         public void Dispose()
         {
-            _database.Dispose();
+            Database.Dispose();
         }
     }
 }
