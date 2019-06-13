@@ -1,0 +1,24 @@
+<div class="result-request" *ngFor="let request of newRequest">
+  <div class="w4-container" style="padding: 2%;">
+
+    <div class="w3-card-4" style="width:70%; margin: auto;">
+      <header class="w3-container w3-light-grey">
+        <h3>{{request.FirstName}} {{request.LastName}}, {{request.Age}}</h3>
+      </header>
+      <div class="w3-container w3-light-grey">
+        <hr>
+        <img src="https://localhost:44333{{request.Avatar}}" alt="Avatar" class="w3-left w3-circle w3-margin-right"
+          style="width:70px">
+        <p>CEO at Mighty Schools. Marketing and Advertising. Seeking a new job and new opportunities.</p><br>
+        <div class="row" >
+          <div style="margin: auto;">
+              <button class="btn btn-outline-success" 
+              style="margin-left: 3px; margin-top: -30px;" (click)="onAccept(request.Id)">Accept</button>
+              <button class="btn btn-outline-danger" style="margin-left: 3px; margin-top: -30px;">Decline</button>
+              <button class="btn btn-outline-dark" style="margin-left: 3px; margin-top: -30px;">Blacklist</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

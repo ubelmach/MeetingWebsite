@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
@@ -32,28 +33,11 @@ namespace MeetingWebsite.Api.Controllers
                 return BadRequest(new { message = "Error, you have no friends yet" });
 
             var showFriendCurrentUser = new List<ShowFriendCurrentUserViewModel>();
-
             foreach (var friend in friends)
             {
-                if (friend.FirstFriendId == userId)
-                {
-                    showFriendCurrentUser.Add(new ShowFriendCurrentUserViewModel
-                    {
-                        FirstName = friend.SecondFriend.FirstName,
-                        LastName = friend.SecondFriend.LastName
-                    });
-                }
-
-                else
-                {
-                    showFriendCurrentUser.Add(new ShowFriendCurrentUserViewModel
-                    {
-                        FirstName = friend.FirstFriend.FirstName,
-                        LastName = friend.FirstFriend.LastName
-                    });
-                }
+                showFriendCurrentUser.Add(new ShowFriendCurrentUserViewModel(userId, friend));
             }
-            
+
             return Ok(showFriendCurrentUser);
         }
 
@@ -80,7 +64,9 @@ namespace MeetingWebsite.Api.Controllers
                 WhoReceivesRequest = userId
             };
 
-            _friendService.SendRequest(request);
+            var sendRequest = _friendService.SendRequest(request);
+            if (sendRequest == null)
+                return BadRequest();
             return Ok();
         }
 
@@ -91,26 +77,26 @@ namespace MeetingWebsite.Api.Controllers
             var currentUserId = GetUserId();
             var friendRequests = _friendService.FindNewRequests(currentUserId);
 
-            var showNewRequests = friendRequests.Select(item => new ShowNewRequestsViewModel
+            
+            var showNewRequests = new List<ShowNewRequestsViewModel>();
+            foreach (var request in friendRequests)
             {
-                Id = item.Id,
-                FirstName = item.FirstFriend.FirstName,
-                LastName = item.FirstFriend.LastName
-            }).ToList();
+                showNewRequests.Add(new ShowNewRequestsViewModel(request));
+            }
 
             return Ok(showNewRequests);
         }
 
-        //PUT: api/friend/AcceptNewRequest/id
-        [HttpPut, Route("AcceptNewRequest/{id}")]
+        //GET: api/friend/AcceptNewRequest/id
+        [HttpGet, Route("AcceptNewRequest/{id}")]
         public IActionResult AcceptNewRequest(int id)
         {
             _friendService.Accepted(id);
             return Ok();
         }
 
-        //PUT: api/friend/RejectNewRequest/id
-        [HttpPut, Route("RejectNewRequest/{id}")]
+        //GET: api/friend/RejectNewRequest/id
+        [HttpGet, Route("RejectNewRequest/{id}")]
         public IActionResult RejectNewRequest(int id)
         {
             _friendService.Rejected(id);

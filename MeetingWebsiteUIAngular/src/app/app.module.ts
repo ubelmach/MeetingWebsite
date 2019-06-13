@@ -20,6 +20,9 @@ import { SearchComponent } from './home/search/search.component';
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { FriendComponent } from './home/friend/friend.component';
 import { InfoComponent } from './home/search/info/info.component';
+import { ListComponent } from './home/friend/list/list.component';
+import { IncomingComponent } from './home/friend/incoming/incoming.component';
+import { OutgoingComponent } from './home/friend/outgoing/outgoing.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { InfoComponent } from './home/search/info/info.component';
     ProfileComponent,
     SearchComponent,
     FriendComponent,
-    InfoComponent
+    InfoComponent,
+    ListComponent,
+    IncomingComponent,
+    OutgoingComponent
   ],
   imports: [
     BrowserModule,

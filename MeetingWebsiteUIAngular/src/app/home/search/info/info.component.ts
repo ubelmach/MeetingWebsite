@@ -13,35 +13,37 @@ export class InfoComponent implements OnInit {
 
   userId: string;
   userDetails;
-  
+
   constructor(private activateRoute: ActivatedRoute,
-    public service:SearchService,
+    public service: SearchService,
     private router: Router,
     private toastr: ToastrService) { }
-  
+
 
   async ngOnInit() {
     await this.activateRoute.params.subscribe(params => this.userId = params.id);
 
     this.service.getSearchUserDetails(this.userId).subscribe(
-      res =>{
+      res => {
         this.userDetails = res;
       }
     ),
-    err => {
-      console.log(err);
-    }    
+      err => {
+        console.log(err);
+      }
   }
 
-  onAddToFriend(){
+  onAddToFriend() {
     this.service.sendRequestUser(this.userId).subscribe(
       (res: any) => {
-        this.toastr.success('Success!', 'User received friend request');
+        this.toastr.success('Success!', 'User received friend request.');
         console.log('sendrequest');
       },
-      (err: any ) =>{
-        this.toastr.success('Faild!', '-_-');
-        console.log(err);
+      (err: any) => {
+        if (err.status == 400)
+          this.toastr.error('Faild!', 'You have already sent a request to this user.');
+        else
+          console.log(err);
       }
     )
   }

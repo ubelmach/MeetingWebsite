@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
@@ -55,7 +56,14 @@ namespace MeetingWebsite.BLL.Services
 
         public Friendship SendRequest(SendFriendRequestViewModel request)
         {
-            var friendship = _database.FriendRepository.Find()
+            var friendship = _database.FriendRepository.Find(x =>
+                x.FirstFriendId == request.WhoSendsRequest &&
+                x.SecondFriendId == request.WhoReceivesRequest ||
+                x.FirstFriendId == request.WhoReceivesRequest &&
+                x.SecondFriendId == request.WhoSendsRequest);
+
+            if (friendship.Any())
+                return null;
 
             try
             {

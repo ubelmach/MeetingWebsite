@@ -8,6 +8,10 @@ import { ProfileComponent } from './home/profile/profile.component';
 import { AuthGuard } from './auth/auth.guard';
 import { SearchComponent } from './home/search/search.component';
 import { InfoComponent } from './home/search/info/info.component';
+import { FriendComponent } from './home/friend/friend.component';
+import { ListComponent } from './home/friend/list/list.component';
+import { IncomingComponent } from './home/friend/incoming/incoming.component';
+import { OutgoingComponent } from './home/friend/outgoing/outgoing.component';
 
 
 const routes: Routes = [
@@ -24,16 +28,24 @@ const routes: Routes = [
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard],
     children: [
-      { 
-        path: 'profile', component: ProfileComponent 
+      {
+        path: 'profile', component: ProfileComponent
       },
-      { 
+      {
+        path: 'friend', component: FriendComponent,
+        children: [
+          { path: 'list', component: ListComponent },
+          { path: 'incoming', component: IncomingComponent },
+          { path: 'outgoing', component: OutgoingComponent }
+        ]
+      },
+      {
         path: 'search', component: SearchComponent,
         children: [
-          { 
+          {
             path: 'info/:id', component: InfoComponent
           }
-        ] 
+        ]
       }
     ]
   }

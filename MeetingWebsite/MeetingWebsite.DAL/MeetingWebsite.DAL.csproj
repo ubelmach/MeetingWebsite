@@ -243,9 +243,9 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Migrations\20190612114705_InitialDB.cs" />
-    <Compile Include="Migrations\20190612114705_InitialDB.designer.cs">
-      <DependentUpon>20190612114705_InitialDB.cs</DependentUpon>
+    <Compile Include="Migrations\20190613155641_InitialDB.cs" />
+    <Compile Include="Migrations\20190613155641_InitialDB.designer.cs">
+      <DependentUpon>20190613155641_InitialDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MeetingDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

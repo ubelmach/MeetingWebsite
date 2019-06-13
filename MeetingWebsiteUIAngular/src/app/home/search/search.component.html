@@ -158,10 +158,26 @@
             <strong>Age: </strong>{{result.Age}}</li>
         </ul>
       </div>
+      <!-- <div class="w3-card-4 w3-dark-grey" style="padding: 5%">
+
+          <div class="w3-container w3-center">
+            <h3>{{result.FirstName}} {{result.LastName}}, {{result.Age}}</h3>
+            <img src="https://localhost:44333{{result.Avatar}}" style="max-height: 196px; max-width: 431px">
+            <h5>{{result.Age}}</h5>
+          
+            <button class="w3-button w3-green">Accept</button>
+            <button class="w3-button w3-red">Decline</button>
+          </div>
+          
+          </div> -->
 
     </div>
   </div>
 </div>
+
 <div *ngIf="!visibleSearch">
+  <div>
+    <button type="button" class="btn btn-outline-danger" (click)="onBackToSearch()">Back to search</button>
+  </div>
   <router-outlet></router-outlet>
 </div>

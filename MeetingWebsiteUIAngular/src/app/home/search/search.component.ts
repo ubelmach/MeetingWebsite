@@ -43,4 +43,7 @@ export class SearchComponent implements OnInit {
     this.router.navigateByUrl('/home/search/info/' + userId);
   }
 
+  onBackToSearch(){
+    this.visibleSearch = !this.visibleSearch;
+  }
 }
