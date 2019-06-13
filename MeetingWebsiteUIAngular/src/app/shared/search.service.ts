@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
@@ -50,5 +50,13 @@ export class SearchService {
             Interests: this.searchModel.value.Interests
         }
         return this.http.post(this.BaseURI + '/search/SearchUsersByCriteria', body)
+    }
+
+    getSearchUserDetails(userId: string){
+        return this.http.get(this.BaseURI + '/friend/DetailsFriendInformation/' + userId)
+    }
+
+    sendRequestUser(userId: string){
+        return this.http.get(this.BaseURI + '/friend/SendFriendRequest/' + userId)
     }
 }

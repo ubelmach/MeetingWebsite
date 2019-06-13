@@ -21,10 +21,12 @@ namespace MeetingWebsite.Api.Controllers
         [HttpPost, Route("SearchUsersByCriteria")]
         public IActionResult Get(SearchByCriteriaViewModel criteria)
         {
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            criteria.CurrentUserId = userId;
+
             var search = _searchService.FindUsers(criteria);
 
             var resultSearch = new List<ResultSearchByCriteriaViewModel>();
-
             foreach (var item in search)
             {
                 resultSearch.Add(new ResultSearchByCriteriaViewModel(item));

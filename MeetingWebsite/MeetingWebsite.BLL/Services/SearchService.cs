@@ -23,6 +23,9 @@ namespace MeetingWebsite.BLL.Services
             if (users == null)
                 return null;
 
+            users = users.Where(x => x.Id != criteria.CurrentUserId &&
+                                     x.AnonymityMode == false);
+
             var today = DateTime.Today;
             if (!string.IsNullOrEmpty(criteria.AgeFrom.ToString()) &&
                 !string.IsNullOrEmpty(criteria.AgeTo.ToString()))

@@ -5,6 +5,8 @@ namespace MeetingWebsite.BLL.ViewModel
 {
     public class SearchByCriteriaViewModel
     {
+        public string CurrentUserId { get; set; }
+
         public int? AgeFrom { get; set; }
         public int? AgeTo { get; set; }
         public int? HeightFrom { get; set; }

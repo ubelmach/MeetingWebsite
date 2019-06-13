@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -58,18 +59,18 @@ namespace MeetingWebsite.Api.Controllers
 
         //GET: api/friend/DetailsFriendInformation/id
         [HttpGet, Route("DetailsFriendInformation/{id}")]
-        public IActionResult Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            var friend = _accountService.GetUser(id);
+            var friend = await _accountService.GetUser(id);
 
-            var showInfoFriend = new ShowInformationFriendViewModel(friend.Result);
+            var showInfoFriend = new ShowInformationFriendViewModel(friend);
 
             return Ok(showInfoFriend);
         }
 
         //POST: api/friend/SendFriendRequest/{id}
-        [HttpPost, Route("SendFriendRequest/{userId}")]
-        public IActionResult Post(string userId)
+        [HttpGet, Route("SendFriendRequest/{userId}")]
+        public IActionResult SendRequest(string userId)
         {
             var currentUserId = GetUserId();
 
@@ -79,7 +80,7 @@ namespace MeetingWebsite.Api.Controllers
                 WhoReceivesRequest = userId
             };
 
-            var sendRequest = _friendService.SendRequest(request);
+            _friendService.SendRequest(request);
             return Ok();
         }
 

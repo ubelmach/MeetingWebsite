@@ -55,6 +55,8 @@ namespace MeetingWebsite.BLL.Services
 
         public Friendship SendRequest(SendFriendRequestViewModel request)
         {
+            var friendship = _database.FriendRepository.Find()
+
             try
             {
                 var newRequest = new Friendship

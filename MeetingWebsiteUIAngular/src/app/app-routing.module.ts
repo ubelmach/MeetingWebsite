@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './home/profile/profile.component';
 import { AuthGuard } from './auth/auth.guard';
 import { SearchComponent } from './home/search/search.component';
+import { InfoComponent } from './home/search/info/info.component';
+
 
 const routes: Routes = [
   {
@@ -22,8 +24,17 @@ const routes: Routes = [
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'profile', component: ProfileComponent },
-      { path: 'search', component: SearchComponent }
+      { 
+        path: 'profile', component: ProfileComponent 
+      },
+      { 
+        path: 'search', component: SearchComponent,
+        children: [
+          { 
+            path: 'info/:id', component: InfoComponent
+          }
+        ] 
+      }
     ]
   }
 ];

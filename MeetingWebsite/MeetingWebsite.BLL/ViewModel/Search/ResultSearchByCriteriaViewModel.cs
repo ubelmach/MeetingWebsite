@@ -16,6 +16,7 @@ namespace MeetingWebsite.BLL.ViewModel
 
         public ResultSearchByCriteriaViewModel(User user)
         {
+            UserId = user.Id;
             FirstName = user.FirstName;
             LastName = user.LastName;
             Age = DateTime.Today.Year - user.Birthday.Year;

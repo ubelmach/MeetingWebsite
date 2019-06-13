@@ -18,6 +18,8 @@ import { ProfileComponent } from './home/profile/profile.component';
 import { SearchComponent } from './home/search/search.component';
 
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
+import { FriendComponent } from './home/friend/friend.component';
+import { InfoComponent } from './home/search/info/info.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
     LoginComponent,
     HomeComponent,
     ProfileComponent,
-    SearchComponent
+    SearchComponent,
+    FriendComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
