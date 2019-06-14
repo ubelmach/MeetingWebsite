@@ -44,7 +44,9 @@ namespace MeetingWebsite.DAL.Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var friend = _db.Friendships.Find(id);
+            if (friend != null)
+                _db.Friendships.Remove(friend);
         }
     }
 }

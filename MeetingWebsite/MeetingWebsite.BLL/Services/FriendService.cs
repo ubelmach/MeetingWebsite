@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
@@ -20,15 +21,23 @@ namespace MeetingWebsite.BLL.Services
             _accountService = accountService;
         }
 
-        public IEnumerable<Friendship> FindFriendCurrentUser(string userId)
+        public async Task<List<Friendship>> FindFriendCurrentUser(string userId)
         {
-            return _database.FriendRepository
-                .Find(x =>
-                    x.InviteStatus == InviteStatuses.Accepted &&
-                           x.FirstFriendId == userId ||
-                    x.InviteStatus == InviteStatuses.Accepted &&
-                           x.SecondFriendId == userId);
+            var user = await _accountService.GetUser(userId);
 
+            var incomingFriendships = user.IncomingFriendships
+                .Where(x => x.InviteStatus == InviteStatuses.Accepted &&
+                            x.SecondFriendId == userId);
+
+            var outgoingFriendships = user.OutgoingFriendships
+                .Where(x => x.InviteStatus == InviteStatuses.Accepted &&
+                            x.FirstFriendId == userId);
+
+            var fullList = new List<Friendship>();
+            fullList.AddRange(incomingFriendships);
+            fullList.AddRange(outgoingFriendships);
+
+            return fullList;
         }
 
         public Friendship MoveRequest(int friendId, string userId)
@@ -47,53 +56,15 @@ namespace MeetingWebsite.BLL.Services
             }
             else
             {
-                friendship.FirstFriendId = userId;
-                friendship.SecondFriendId = friendship.SecondFriend.Id;
+                friendship.FirstFriendId = friendship.FirstFriend.Id;
+                friendship.SecondFriendId = userId;
                 friendship.InviteStatus = InviteStatuses.WaitingForApprovals;
             }
 
             _database.FriendRepository.Update(friendship);
             _database.Save();
 
-            //if (friend.FirstFriendId == userId)
-            //{
-            //    UserId = userId;
-            //    FirstName = friend.SecondFriend.FirstName;
-            //    LastName = friend.SecondFriend.LastName;
-            //    Age = DateTime.Today.Year - friend.SecondFriend.Birthday.Year;
-
-            //    if (friend.SecondFriend.Avatar != null)
-            //    {
-            //        Avatar = friend.SecondFriend.HomeDir
-            //                 + friend.SecondFriend.Avatar.Path;
-            //        Avatar = friend.HomeDir + friend.Avatar.Path;
-            //    }
-            //    else
-            //    {
-            //        Avatar = "/File/Nophoto.jpg";
-            //    }
-            //}
-
-
-            //else
-            //{
-            //    UserId = userId;
-            //    FirstName = friend.FirstFriend.FirstName;
-            //    LastName = friend.FirstFriend.LastName;
-            //    Age = DateTime.Today.Year - friend.FirstFriend.Birthday.Year;
-
-            //    if (friend.FirstFriend.Avatar != null)
-            //    {
-            //        Avatar = friend.FirstFriend.HomeDir
-            //                 + friend.FirstFriend.Avatar.Path;
-            //    }
-            //    else
-            //    {
-            //        Avatar = "/File/Nophoto.jpg";
-            //    }
-            //}
-
-            return null;
+            return friendship;
         }
 
         public Friendship SendRequest(SendFriendRequestViewModel request)
@@ -108,24 +79,17 @@ namespace MeetingWebsite.BLL.Services
             {
                 return null;
             }
-
-            try
+            var newRequest = new Friendship
             {
-                var newRequest = new Friendship
-                {
-                    FirstFriendId = request.WhoSendsRequest,
-                    SecondFriendId = request.WhoReceivesRequest,
-                    InviteStatus = InviteStatuses.WaitingForApprovals
-                };
+                FirstFriendId = request.WhoSendsRequest,
+                SecondFriendId = request.WhoReceivesRequest,
+                InviteStatus = InviteStatuses.WaitingForApprovals
+            };
 
-                _database.FriendRepository.Create(newRequest);
-                _database.Save();
-                return newRequest;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            _database.FriendRepository.Create(newRequest);
+            _database.Save();
+            return newRequest;
+
         }
 
         public IEnumerable<Friendship> FindNewRequests(string userId)
@@ -147,14 +111,10 @@ namespace MeetingWebsite.BLL.Services
             return findRequest;
         }
 
-        public Friendship Rejected(int id)
-        {
-            var findRequest = _database.FriendRepository.Get(id);
-            findRequest.InviteStatus = InviteStatuses.Rejected;
+        public void Rejected(int id){
 
-            _database.FriendRepository.Update(findRequest);
+            _database.FriendRepository.Delete(id);
             _database.Save();
-            return findRequest;
         }
     }
 }

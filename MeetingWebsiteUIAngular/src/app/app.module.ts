@@ -21,8 +21,8 @@ import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { FriendComponent } from './home/friend/friend.component';
 import { InfoComponent } from './home/search/info/info.component';
 import { ListComponent } from './home/friend/list/list.component';
-import { IncomingComponent } from './home/friend/incoming/incoming.component';
-import { OutgoingComponent } from './home/friend/outgoing/outgoing.component';
+import { RequestComponent } from './home/friend/request/request.component';
+import { UserProfileComponent } from './home/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +36,8 @@ import { OutgoingComponent } from './home/friend/outgoing/outgoing.component';
     FriendComponent,
     InfoComponent,
     ListComponent,
-    IncomingComponent,
-    OutgoingComponent
+    RequestComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

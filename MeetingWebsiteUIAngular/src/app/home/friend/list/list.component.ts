@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FriendService } from 'src/app/shared/friend.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -10,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ListComponent implements OnInit {
 
   constructor(public service : FriendService,
+    private router: Router,
     private toastr: ToastrService) { }
 
   friendList;
@@ -22,8 +24,12 @@ export class ListComponent implements OnInit {
     )
   }
 
-  onDelete(id: number){
-    this.service.DeleteFriend(id).subscribe(
+  onCheckInfo(userId: string) {
+    this.router.navigateByUrl('/home/user-profile/' + userId);
+  }
+
+  onDelete(friendshipId: number){
+    this.service.DeleteFriend(friendshipId).subscribe(
       (res: any) => {
         this.ngOnInit();
         this.toastr.success('Success!', 'User moved to "Friend requests"')

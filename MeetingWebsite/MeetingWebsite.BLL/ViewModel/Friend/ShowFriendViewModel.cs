@@ -11,9 +11,10 @@ namespace MeetingWebsite.BLL.ViewModel
         public string LastName { get; set; }
         public long Age { get; set; }
         public string Avatar { get; set; }
-        public int FriendId { get; set; }
+        public int FriendshipId { get; set; }
+        public string FriendId { get; set; }
 
-        public ShowFriendViewModel(string userId, int friendId, User user)
+        public ShowFriendViewModel(string userId, int friendshipId, User user)
         {
             UserId = userId;
             FirstName = user.FirstName;
@@ -29,7 +30,8 @@ namespace MeetingWebsite.BLL.ViewModel
                 Avatar = "/File/Nophoto.jpg";
             }
 
-            FriendId = friendId;
+            FriendId = user.Id;
+            FriendshipId = friendshipId;
         }
 
         public static IEnumerable<ShowFriendViewModel> MapToViewModels(string userId, List<Friendship> friendships)

@@ -12,7 +12,7 @@ namespace MeetingWebsite.BLL.ViewModel
         public string LastName { get; set; }
         public long Age { get; set; }
         public string Avatar { get; set; }
-        public ResultSearchByCriteriaViewModel() { }
+
         public ResultSearchByCriteriaViewModel(User user)
         {
             UserId = user.Id;

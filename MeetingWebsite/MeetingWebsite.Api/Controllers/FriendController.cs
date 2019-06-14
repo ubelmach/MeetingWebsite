@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
+using MeetingWebsite.Models.Entities;
+using MeetingWebsite.Models.EntityEnums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Api.Controllers
@@ -24,15 +25,16 @@ namespace MeetingWebsite.Api.Controllers
 
         //GET: api/friend/Friends
         [HttpGet, Route("Friends")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var friends = _friendService.FindFriendCurrentUser(userId).ToList();
-            if (!friends.Any())
+            var friends = await _friendService.FindFriendCurrentUser(userId);
+            if (friends == null)
             {
                 return BadRequest(new { message = "Error, you have no friends yet" });
             }
-            return Ok(ShowFriendViewModel.MapToViewModels(userId, friends).ToList());
+
+           return Ok(ShowFriendViewModel.MapToViewModels(userId, friends).ToList());
         }
 
         //GET: api/friend/FriendInfo/id
@@ -85,15 +87,12 @@ namespace MeetingWebsite.Api.Controllers
         }
 
         //GET: api/friend/DeleteFriend/id
-        [HttpGet, Route("DeleteFriend/{id}")]
-        public IActionResult DeleteFriendship(int friendId)
+        [HttpGet, Route("DeleteFriend/{friendshipId}")]
+        public IActionResult DeleteFriendship(int friendshipId)
         {
             var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
 
-            _friendService.MoveRequest(friendId, currentUserId);
-
-            
-
+            _friendService.MoveRequest(friendshipId, currentUserId);
             return Ok();
         }
     }

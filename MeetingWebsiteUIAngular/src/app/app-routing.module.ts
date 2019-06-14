@@ -10,8 +10,8 @@ import { SearchComponent } from './home/search/search.component';
 import { InfoComponent } from './home/search/info/info.component';
 import { FriendComponent } from './home/friend/friend.component';
 import { ListComponent } from './home/friend/list/list.component';
-import { IncomingComponent } from './home/friend/incoming/incoming.component';
-import { OutgoingComponent } from './home/friend/outgoing/outgoing.component';
+import { RequestComponent } from './home/friend/request/request.component';
+import { UserProfileComponent } from './home/user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -35,9 +35,11 @@ const routes: Routes = [
         path: 'friend', component: FriendComponent,
         children: [
           { path: 'list', component: ListComponent },
-          { path: 'incoming', component: IncomingComponent },
-          { path: 'outgoing', component: OutgoingComponent }
+          { path: 'request', component: RequestComponent }
         ]
+      },
+      {
+        path: 'user-profile/:id', component: UserProfileComponent
       },
       {
         path: 'search', component: SearchComponent,
