@@ -26,12 +26,11 @@ namespace MeetingWebsite.BLL.Services
             users = users.Where(x => x.Id != criteria.CurrentUserId &&
                                      x.AnonymityMode == false);
 
-            var today = DateTime.Today;
             if (!string.IsNullOrEmpty(criteria.AgeFrom.ToString()) &&
                 !string.IsNullOrEmpty(criteria.AgeTo.ToString()))
                 users = users.Where(x =>
-                    (today.Year - x.Birthday.Year) <= criteria.AgeTo &&
-                    (today.Year - x.Birthday.Year) >= criteria.AgeFrom);
+                    (DateTime.Today.Year - x.Birthday.Year) <= criteria.AgeTo &&
+                    (DateTime.Today.Year - x.Birthday.Year) >= criteria.AgeFrom);
 
             if (!string.IsNullOrEmpty(criteria.HeightFrom.ToString()) &&
                 !string.IsNullOrEmpty(criteria.HeightTo.ToString()))

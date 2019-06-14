@@ -12,6 +12,7 @@ import { FriendComponent } from './home/friend/friend.component';
 import { ListComponent } from './home/friend/list/list.component';
 import { RequestComponent } from './home/friend/request/request.component';
 import { UserProfileComponent } from './home/user-profile/user-profile.component';
+import { BlackListComponent } from './home/friend/black-list/black-list.component';
 
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
         path: 'friend', component: FriendComponent,
         children: [
           { path: 'list', component: ListComponent },
-          { path: 'request', component: RequestComponent }
+          { path: 'request', component: RequestComponent },
+          { path: 'black-list', component: BlackListComponent }
         ]
       },
       {

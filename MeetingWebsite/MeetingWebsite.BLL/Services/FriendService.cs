@@ -40,28 +40,16 @@ namespace MeetingWebsite.BLL.Services
             return fullList;
         }
 
-        public Friendship MoveRequest(int friendId, string userId)
+        public Friendship MoveRequest(int friendshipId, string userId)
         {
-            var friendship = _database.FriendRepository.Get(friendId);
+            var friendship = _database.FriendRepository.Get(friendshipId);
             if (friendship == null)
             {
                 return null;
             }
 
-            if (friendship.FirstFriendId == userId)
-            {
-                friendship.FirstFriendId = friendship.SecondFriend.Id;
-                friendship.SecondFriendId = userId;
-                friendship.InviteStatus = InviteStatuses.WaitingForApprovals;
-            }
-            else
-            {
-                friendship.FirstFriendId = friendship.FirstFriend.Id;
-                friendship.SecondFriendId = userId;
-                friendship.InviteStatus = InviteStatuses.WaitingForApprovals;
-            }
-
-            _database.FriendRepository.Update(friendship);
+            var moveRequest = Friendship.Test(userId, friendship);
+            _database.FriendRepository.Update(moveRequest);
             _database.Save();
 
             return friendship;
@@ -79,6 +67,7 @@ namespace MeetingWebsite.BLL.Services
             {
                 return null;
             }
+
             var newRequest = new Friendship
             {
                 FirstFriendId = request.WhoSendsRequest,
@@ -111,7 +100,8 @@ namespace MeetingWebsite.BLL.Services
             return findRequest;
         }
 
-        public void Rejected(int id){
+        public void Rejected(int id)
+        {
 
             _database.FriendRepository.Delete(id);
             _database.Save();

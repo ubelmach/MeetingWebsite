@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
-using MeetingWebsite.Models.Entities;
-using MeetingWebsite.Models.EntityEnums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Api.Controllers
@@ -90,9 +87,9 @@ namespace MeetingWebsite.Api.Controllers
         [HttpGet, Route("DeleteFriend/{friendshipId}")]
         public IActionResult DeleteFriendship(int friendshipId)
         {
-            var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
 
-            _friendService.MoveRequest(friendshipId, currentUserId);
+            _friendService.MoveRequest(friendshipId, userId);
             return Ok();
         }
     }

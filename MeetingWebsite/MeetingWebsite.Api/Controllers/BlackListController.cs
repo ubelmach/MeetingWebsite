@@ -17,8 +17,8 @@ namespace MeetingWebsite.Api.Controllers
             _blacklistService = blacklistService;
         }
 
-        //GET: api/blacklist/GetListUsersInBlackList
-        [HttpGet, Route("GetListUsersInBlackList")]
+        //GET: api/blacklist/BlackList
+        [HttpGet, Route("BlackList")]
         public IActionResult Get()
         {
             var userId = GetUserId();
@@ -29,9 +29,9 @@ namespace MeetingWebsite.Api.Controllers
             return Ok(showBlackList);
         }
 
-        //PUT: api/blacklist/AddUserInBlackList/id
-        [HttpPut, Route("AddUserInBlackList/{id}")]
-        public IActionResult Put([FromForm]string userId)
+        //GET: api/blacklist/AddUserInBlackList/userId
+        [HttpGet, Route("AddUserInBlackList/{userId}")]
+        public IActionResult Add(string userId)
         {
             var currentUserId = GetUserId();
 
@@ -44,8 +44,8 @@ namespace MeetingWebsite.Api.Controllers
             return Ok();
         }
 
-        //DELETE : api/blacklist/DeleteUserFromBlackList/{id}
-        [HttpDelete, Route("DeleteUserFromBlackList/{id}")]
+        //DELETE : api/blacklist/DeleteUserFromBlackList/{userId}
+        [HttpDelete, Route("DeleteUserFromBlackList/{userId}")]
         public IActionResult Delete([FromForm] string userId)
         {
             var currentUserId = GetUserId();
