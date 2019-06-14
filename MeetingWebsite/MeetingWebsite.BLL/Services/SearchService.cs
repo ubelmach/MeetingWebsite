@@ -65,16 +65,41 @@ namespace MeetingWebsite.BLL.Services
                 users = users.Where(x =>
                     criteria.ZodiacSign.Contains(x.UserProfile.ZodiacSignId.Value));
 
-            //if (criteria.PurposeOfDating != null)
-            //{
-            //    foreach (var purpose in criteria.PurposeOfDating)
-            //    {
-            //        users = users.Where(x =>
-            //            criteria.PurposeOfDating.Intersect(
-            //                x.UserProfile.UserPurposes.Select(
-            //                    s => s.PurposeId == purpose)));
-            //    }
-            //}
+            if (criteria.PurposeOfDating != null)
+            {
+                users = users.Where(user =>
+                    user.UserProfile.UserPurposes
+                        .Select(purpose => purpose.PurposeId)
+                        .Intersect(criteria.PurposeOfDating)
+                        .Any());
+            }
+
+            if (criteria.KnowledgeOfLanguages != null)
+            {
+                users = users.Where(user =>
+                    user.UserProfile.UserLanguages
+                        .Select(language => language.LanguageId)
+                        .Intersect(criteria.KnowledgeOfLanguages)
+                        .Any());
+            }
+
+            if (criteria.BadHabits != null)
+            {
+                users = users.Where(user =>
+                    user.UserProfile.UserBadHabits
+                        .Select(badHabit => badHabit.BadHabitsId)
+                        .Intersect(criteria.BadHabits)
+                        .Any());
+            }
+
+            if (criteria.Interests != null)
+            {
+                users = users.Where(user =>
+                    user.UserProfile.UserInterests
+                        .Select(interest => interest.InterestsId)
+                        .Intersect(criteria.BadHabits)
+                        .Any());
+            }
 
             return users;
         }

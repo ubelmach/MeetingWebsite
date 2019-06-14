@@ -22,8 +22,8 @@ namespace MeetingWebsite.Api.Controllers
             _accountService = accountService;
         }
 
-        //GET: api/friend/GetCurrentUserFriend
-        [HttpGet, Route("GetCurrentUserFriend")]
+        //GET: api/friend/Friends
+        [HttpGet, Route("Friends")]
         public IActionResult GetAll()
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
@@ -35,8 +35,8 @@ namespace MeetingWebsite.Api.Controllers
             return Ok(ShowFriendViewModel.MapToViewModels(userId, friends).ToList());
         }
 
-        //GET: api/friend/DetailsFriendInformation/id
-        [HttpGet, Route("DetailsFriendInformation/{id}")]
+        //GET: api/friend/FriendInfo/id
+        [HttpGet, Route("FriendInfo/{id}")]
         public async Task<IActionResult> Get(string id)
         {
             var friend = await _accountService.GetUser(id);
@@ -44,8 +44,8 @@ namespace MeetingWebsite.Api.Controllers
             return Ok(showInfoFriend);
         }
 
-        //POST: api/friend/SendFriendRequest/{id}
-        [HttpGet, Route("SendFriendRequest/{userId}")]
+        //POST: api/friend/NewRequest/{id}
+        [HttpGet, Route("NewRequest/{userId}")]
         public IActionResult SendRequest(string userId)
         {
             var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
@@ -58,8 +58,8 @@ namespace MeetingWebsite.Api.Controllers
             return Ok();
         }
 
-        //GET: api/friend/GetListFriendRequests
-        [HttpGet, Route("GetListFriendRequests")]
+        //GET: api/friend/ListNewRequests
+        [HttpGet, Route("ListNewRequests")]
         public IActionResult GetListFriendRequests()
         {
             var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
@@ -84,10 +84,16 @@ namespace MeetingWebsite.Api.Controllers
             return Ok();
         }
 
-        //PUT: api/friend/DeleteFriendship/id
-        [HttpPut, Route("DeleteFriendship/{id}")]
-        public IActionResult DeleteFriendship(int id)
+        //GET: api/friend/DeleteFriend/id
+        [HttpGet, Route("DeleteFriend/{id}")]
+        public IActionResult DeleteFriendship(int friendId)
         {
+            var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
+
+            _friendService.MoveRequest(friendId, currentUserId);
+
+            
+
             return Ok();
         }
     }

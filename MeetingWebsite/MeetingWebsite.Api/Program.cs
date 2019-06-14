@@ -1,8 +1,10 @@
 ﻿using System;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Initializer;
+using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

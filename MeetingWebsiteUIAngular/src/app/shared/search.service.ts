@@ -53,10 +53,10 @@ export class SearchService {
     }
 
     getSearchUserDetails(userId: string){
-        return this.http.get(this.BaseURI + '/friend/DetailsFriendInformation/' + userId)
+        return this.http.get(this.BaseURI + '/friend/FriendInfo/' + userId)
     }
 
     sendRequestUser(userId: string){
-        return this.http.get(this.BaseURI + '/friend/SendFriendRequest/' + userId)
+        return this.http.get(this.BaseURI + '/friend/NewRequest/' + userId)
     }
 }

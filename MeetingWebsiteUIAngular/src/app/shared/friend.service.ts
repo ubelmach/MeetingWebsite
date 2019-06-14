@@ -10,7 +10,7 @@ export class FriendService {
     readonly BaseURI = 'https://localhost:44333/api';
 
     getNewRequest(){
-        return this.http.get(this.BaseURI + '/friend/GetListFriendRequests');
+        return this.http.get(this.BaseURI + '/friend/ListNewRequests');
     }
 
     AcceptNewRequest(id: number){
@@ -22,6 +22,10 @@ export class FriendService {
     }
 
     getFriendList(){
-        return this.http.get(this.BaseURI + '/friend/GetCurrentUserFriend');
+        return this.http.get(this.BaseURI + '/friend/Friends');
+    }
+
+    DeleteFriend(id: number){
+        return this.http.get(this.BaseURI + '/friend/DeleteFriend/' + id.toString());
     }
 }

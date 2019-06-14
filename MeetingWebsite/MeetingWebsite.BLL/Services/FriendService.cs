@@ -11,21 +11,89 @@ namespace MeetingWebsite.BLL.Services
     public class FriendService : IFriendService
     {
         private readonly IUnitOfWork _database;
+        private readonly IAccountService _accountService;
 
-        public FriendService(IUnitOfWork database)
+        public FriendService(IUnitOfWork database,
+            IAccountService accountService)
         {
             _database = database;
+            _accountService = accountService;
         }
 
         public IEnumerable<Friendship> FindFriendCurrentUser(string userId)
         {
-            var friend = _database.FriendRepository
+            return _database.FriendRepository
                 .Find(x =>
                     x.InviteStatus == InviteStatuses.Accepted &&
                            x.FirstFriendId == userId ||
+                    x.InviteStatus == InviteStatuses.Accepted &&
                            x.SecondFriendId == userId);
 
-            return friend;
+        }
+
+        public Friendship MoveRequest(int friendId, string userId)
+        {
+            var friendship = _database.FriendRepository.Get(friendId);
+            if (friendship == null)
+            {
+                return null;
+            }
+
+            if (friendship.FirstFriendId == userId)
+            {
+                friendship.FirstFriendId = friendship.SecondFriend.Id;
+                friendship.SecondFriendId = userId;
+                friendship.InviteStatus = InviteStatuses.WaitingForApprovals;
+            }
+            else
+            {
+                friendship.FirstFriendId = userId;
+                friendship.SecondFriendId = friendship.SecondFriend.Id;
+                friendship.InviteStatus = InviteStatuses.WaitingForApprovals;
+            }
+
+            _database.FriendRepository.Update(friendship);
+            _database.Save();
+
+            //if (friend.FirstFriendId == userId)
+            //{
+            //    UserId = userId;
+            //    FirstName = friend.SecondFriend.FirstName;
+            //    LastName = friend.SecondFriend.LastName;
+            //    Age = DateTime.Today.Year - friend.SecondFriend.Birthday.Year;
+
+            //    if (friend.SecondFriend.Avatar != null)
+            //    {
+            //        Avatar = friend.SecondFriend.HomeDir
+            //                 + friend.SecondFriend.Avatar.Path;
+            //        Avatar = friend.HomeDir + friend.Avatar.Path;
+            //    }
+            //    else
+            //    {
+            //        Avatar = "/File/Nophoto.jpg";
+            //    }
+            //}
+
+
+            //else
+            //{
+            //    UserId = userId;
+            //    FirstName = friend.FirstFriend.FirstName;
+            //    LastName = friend.FirstFriend.LastName;
+            //    Age = DateTime.Today.Year - friend.FirstFriend.Birthday.Year;
+
+            //    if (friend.FirstFriend.Avatar != null)
+            //    {
+            //        Avatar = friend.FirstFriend.HomeDir
+            //                 + friend.FirstFriend.Avatar.Path;
+            //    }
+            //    else
+            //    {
+            //        Avatar = "/File/Nophoto.jpg";
+            //    }
+            //}
+
+            return null;
         }
 
         public Friendship SendRequest(SendFriendRequestViewModel request)
@@ -37,7 +105,9 @@ namespace MeetingWebsite.BLL.Services
                 x.SecondFriendId == request.WhoSendsRequest);
 
             if (friendship.Any())
+            {
                 return null;
+            }
 
             try
             {

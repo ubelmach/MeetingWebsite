@@ -22,4 +22,15 @@ export class ListComponent implements OnInit {
     )
   }
 
+  onDelete(id: number){
+    this.service.DeleteFriend(id).subscribe(
+      (res: any) => {
+        this.ngOnInit();
+        this.toastr.success('Success!', 'User moved to "Friend requests"')
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
 }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingWebsite.DAL.Migrations
 {
     [DbContext(typeof(MeetingDbContext))]
-    [Migration("20190613155641_InitialDB")]
-    partial class InitialDB
+    [Migration("20190614104503_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

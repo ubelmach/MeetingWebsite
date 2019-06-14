@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.Models.Entities;
 
@@ -18,9 +19,9 @@ namespace MeetingWebsite.DAL.Initializer
             var purposes = new PurposeOfDating[]
             {
                 new PurposeOfDating {Id = 1, Value = "I will become a sponsor"},
-                new PurposeOfDating {Id = 3, Value = "Spend the evening"},
-                new PurposeOfDating {Id = 4, Value = "Permanent relationship"},
-                new PurposeOfDating {Id = 5, Value = "Travel together"}
+                new PurposeOfDating {Id = 2, Value = "Spend the evening"},
+                new PurposeOfDating {Id = 3, Value = "Permanent relationship"},
+                new PurposeOfDating {Id = 4, Value = "Travel together"}
             };
 
             foreach (var purpose in purposes)
