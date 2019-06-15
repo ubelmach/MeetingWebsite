@@ -37,7 +37,7 @@ namespace MeetingWebsite.BLL.Services
             fullList.AddRange(incomingFriendships);
             fullList.AddRange(outgoingFriendships);
 
-            return fullList;
+            return !fullList.Any() ? null : fullList;
         }
 
         public Friendship MoveRequest(int friendshipId, string userId)
@@ -78,8 +78,9 @@ namespace MeetingWebsite.BLL.Services
             _database.FriendRepository.Create(newRequest);
             _database.Save();
             return newRequest;
-
         }
+
+
 
         public IEnumerable<Friendship> FindNewRequests(string userId)
         {
@@ -102,7 +103,6 @@ namespace MeetingWebsite.BLL.Services
 
         public void Rejected(int id)
         {
-
             _database.FriendRepository.Delete(id);
             _database.Save();
         }

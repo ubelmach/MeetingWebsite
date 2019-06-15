@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
@@ -9,50 +11,119 @@ namespace MeetingWebsite.BLL.Services
 {
     public class BlacklistService : IBlacklistService
     {
-        public IUnitOfWork Database { get; set; }
+        private readonly IUnitOfWork _database;
+        private readonly IAccountService _accountService;
+        private readonly IFriendService _friendService;
 
-        public BlacklistService(IUnitOfWork database)
+        public BlacklistService(IUnitOfWork database,
+            IAccountService accountService,
+            IFriendService friendService)
         {
-            Database = database;
+            _database = database;
+            _accountService = accountService;
+            _friendService = friendService;
         }
 
-        public IEnumerable<BlackList> GetListUsersInBlackList(string userId)
+        public async Task<List<BlackList>> GetListUsersInBlackList(string userId)
         {
-            return Database.BlacklistRepository.Find(x => x.CurrentUserId == userId);
+            var badUser = await _accountService.GetUser(userId);
+            var blackList = badUser.WhoAddedCurrentUser;
+            return !blackList.Any() ? null : blackList;
         }
 
-        public BlackList AddUserInBlackList(AddUserInBlackListViewModel addInBlackList)
+        public async Task<BlackList> AddUserInBlackList(AddUserInBlackListViewModel addInBlackList)
         {
+            var badUser = await _accountService.GetUser(addInBlackList.WhomId);
+
             try
             {
-                var addUserInBlackList = new BlackList
+                var incomingFriendships = badUser.IncomingFriendships
+                    .Where(x => x.FirstFriendId == addInBlackList.CurrentUserId &&
+                                x.SecondFriendId == addInBlackList.WhomId)
+                    .ToList();
+
+                var outgoingFriendships = badUser.OutgoingFriendships
+                    .Where(x => x.FirstFriendId == addInBlackList.WhomId &&
+                                x.SecondFriendId == addInBlackList.CurrentUserId)
+                    .ToList();
+
+                var fullList = new List<Friendship>();
+                fullList.AddRange(incomingFriendships);
+                fullList.AddRange(outgoingFriendships);
+
+
+                var whomTheUserAdded = badUser.WhomTheUserAdded
+                    .Where(x => x.CurrentUserId == addInBlackList.CurrentUserId &&
+                                x.WhomId == addInBlackList.WhomId)
+                    .ToList();
+
+                if (whomTheUserAdded.Any())
+                {
+                    return null;
+                }
+
+                BlackList addUserInBlackList;
+                if (fullList.Any())
+                {
+                    _friendService.Rejected(fullList.Select(x => x.Id).First());
+                    addUserInBlackList = new BlackList
+                    {
+                        CurrentUserId = addInBlackList.CurrentUserId,
+                        WhomId = addInBlackList.WhomId,
+                        Date = addInBlackList.Date
+                    };
+
+                    _database.BlacklistRepository.Create(addUserInBlackList);
+                    _database.Save();
+                    return addUserInBlackList;
+                }
+
+                addUserInBlackList = new BlackList
                 {
                     CurrentUserId = addInBlackList.CurrentUserId,
                     WhomId = addInBlackList.WhomId,
                     Date = addInBlackList.Date
                 };
 
-                Database.BlacklistRepository.Create(addUserInBlackList);
-                Database.Save();
+                _database.BlacklistRepository.Create(addUserInBlackList);
+                _database.Save();
                 return addUserInBlackList;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw ex;
+                throw e;
             }
         }
 
-        public BlackList FindBlackList(DeleteUserFromBlackListViewModel delete)
+        public async Task<bool> CheckBlackList(string userId, string who)
         {
-            return Database.BlacklistRepository
-                .Find(x => x.CurrentUserId == delete.CurrentUserId
-                                && x.WhomId == delete.WhomId).First();
+            var user = await _accountService.GetUser(userId);
+
+            var test = user.WhoAddedCurrentUser
+                .Where(x => x.CurrentUserId == userId &&
+                            x.WhomId == who)
+                .ToList();
+
+            return !test.Any();
         }
+
+        public async Task<bool> Check(string userId, string who)
+        {
+            var user = await _accountService.GetUser(userId);
+
+            var test = user.WhomTheUserAdded
+                .Where(x => x.CurrentUserId == who &&
+                            x.WhomId == userId)
+                .ToList();
+
+            return test.Any();
+        }
+
 
         public void DeleteFromBlackList(int id)
         {
-            Database.BlacklistRepository.Delete(id);
-            Database.Save();
+            _database.BlacklistRepository.Delete(id);
+            _database.Save();
         }
     }
 }

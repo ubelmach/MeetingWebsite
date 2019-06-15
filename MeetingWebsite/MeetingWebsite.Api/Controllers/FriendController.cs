@@ -10,14 +10,27 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class FriendController : ControllerBase
     {
-        public IFriendService _friendService;
-        public IAccountService _accountService;
+        private readonly IFriendService _friendService;
+        private readonly IAccountService _accountService;
+        private readonly IBlacklistService _blacklistService;
 
         public FriendController(IFriendService friendService,
-            IAccountService accountService)
+            IAccountService accountService,
+            IBlacklistService blacklistService)
         {
             _friendService = friendService;
             _accountService = accountService;
+            _blacklistService = blacklistService;
+        }
+
+        //GET: api/friend/checkBlacklist/id
+        [HttpGet, Route("CheckBlacklist/{id}")]
+        public async Task<bool> Check(string id)
+        {
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var check = await _blacklistService.Check(userId, id);
+
+            return check;
         }
 
         //GET: api/friend/Friends
@@ -28,7 +41,7 @@ namespace MeetingWebsite.Api.Controllers
             var friends = await _friendService.FindFriendCurrentUser(userId);
             if (friends == null)
             {
-                return BadRequest(new { message = "Error, you have no friends yet" });
+                return NotFound(new { message = "Error, you have no friends yet" });
             }
 
            return Ok(ShowFriendViewModel.MapToViewModels(userId, friends).ToList());
@@ -45,9 +58,16 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST: api/friend/NewRequest/{id}
         [HttpGet, Route("NewRequest/{userId}")]
-        public IActionResult SendRequest(string userId)
+        public async Task<IActionResult> SendRequest(string userId)
         {
             var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
+
+            var checkBlacklist = await _blacklistService.CheckBlackList(currentUserId, userId);
+            if (!checkBlacklist)
+            {
+                return BadRequest();
+            }
+
             var request = new SendFriendRequestViewModel(currentUserId, userId);
             var sendRequest = _friendService.SendRequest(request);
             if (sendRequest == null)

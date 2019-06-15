@@ -19,7 +19,6 @@ import { SearchComponent } from './home/search/search.component';
 
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { FriendComponent } from './home/friend/friend.component';
-import { InfoComponent } from './home/search/info/info.component';
 import { ListComponent } from './home/friend/list/list.component';
 import { RequestComponent } from './home/friend/request/request.component';
 import { UserProfileComponent } from './home/user-profile/user-profile.component';
@@ -35,7 +34,6 @@ import { BlackListComponent } from './home/friend/black-list/black-list.componen
     ProfileComponent,
     SearchComponent,
     FriendComponent,
-    InfoComponent,
     ListComponent,
     RequestComponent,
     UserProfileComponent,

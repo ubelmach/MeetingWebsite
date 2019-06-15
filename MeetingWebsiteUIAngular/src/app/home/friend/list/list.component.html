@@ -1,25 +1,33 @@
-<div class="friendList" *ngFor="let friend of friendList">
-    <div class="w4-container" style="padding: 2%;">
-  
-      <div class="w3-card-4" style="width:70%; margin: auto;">
-        <header class="w3-container w3-light-grey">
-          <h3>{{friend.FirstName}} {{friend.LastName}}, {{friend.Age}}</h3>
-        </header>
-        <div class="w3-container w3-light-grey">
-          <hr>
-          <img src="https://localhost:44333{{friend.Avatar}}" alt="Avatar" class="w3-left w3-circle w3-margin-right"
-            style="width:70px">
-          <p>CEO at Mighty Schools. Marketing and Advertising. Seeking a new job and new opportunities.</p><br>
-          <div class="row" >
-            <div style="margin: auto;">
-                <button class="btn btn-outline-danger" style="margin-left: 3px; margin-top: -30px;"
-                (click)="onDelete(friend.FriendshipId)">Delete from friend list</button>
-                <button class="btn btn-outline-dark" style="margin-left: 3px; margin-top: -30px;"
-                (click)="onCheckInfo(friend.FriendId)">Profile</button>
-                <button class="btn btn-outline-dark" style="margin-left: 3px; margin-top: -30px;">Blacklist</button>
+  <ng-template [ngIf]="friendList?.length > 0" [ngIfElse]="loggedOut">
+    <div class="friendList" *ngFor="let friend of friendList">
+      <div class="w4-container" style="padding: 2%;">
+          <div class="w3-card-4" style="width:70%; margin: auto;">
+            <header class="w3-container w3-light-grey">
+              <h3>{{friend.FirstName}} {{friend.LastName}}, {{friend.Age}}</h3>
+            </header>
+            <div class="w3-container w3-light-grey">
+              <hr>
+              <img src="https://localhost:44333{{friend.Avatar}}" alt="Avatar" class="w3-left w3-circle w3-margin-right"
+                style="width:70px">
+              <p>CEO at Mighty Schools. Marketing and Advertising. Seeking a new job and new opportunities.</p><br>
+              <div class="row" >
+                <div style="margin: auto;">
+                    <button class="btn btn-outline-danger" style="margin-left: 3px; margin-top: -30px;"
+                    (click)="onDelete(friend.FriendshipId)">Delete from friend list</button>
+                    <button class="btn btn-outline-dark" style="margin-left: 3px; margin-top: -30px;"
+                    (click)="onCheckInfo(friend.FriendId)">Profile</button>
+                    <button class="btn btn-outline-dark" style="margin-left: 3px; margin-top: -30px;"
+                    (click)="onAddToBlacklist(friend.FriendId)">Blacklist</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+  </ng-template>
+  
+  <ng-template #loggedOut>
+    <div class="p-3 mb-2 bg-light text-dark" style="text-align: center">
+      Your friends list is empty. Add other users to display here.
     </div>
-  </div>
+  </ng-template>

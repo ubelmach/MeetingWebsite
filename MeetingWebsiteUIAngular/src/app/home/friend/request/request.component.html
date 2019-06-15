@@ -1,3 +1,4 @@
+<ng-template [ngIf]="newRequest?.length > 0" [ngIfElse]="loggedOut">
 <div class="result-request" *ngFor="let request of newRequest">
   <div class="w4-container" style="padding: 2%;">
 
@@ -25,3 +26,10 @@
     </div>
   </div>
 </div>
+</ng-template>
+
+<ng-template #loggedOut>
+  <div class="p-3 mb-2 bg-light text-dark" style="text-align: center">
+    No new friend requests.
+  </div>
+</ng-template>

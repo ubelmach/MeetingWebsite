@@ -49,14 +49,18 @@ export class SearchService {
             FinancialSituation: this.searchModel.value.FinancialSituation,
             Interests: this.searchModel.value.Interests
         }
-        return this.http.post(this.BaseURI + '/search/SearchUsersByCriteria', body)
+        return this.http.post(this.BaseURI + '/search/SearchUsersByCriteria', body);
     }
 
     getSearchUserDetails(userId: string){
-        return this.http.get(this.BaseURI + '/friend/FriendInfo/' + userId)
+        return this.http.get(this.BaseURI + '/friend/FriendInfo/' + userId);
     }
 
     sendRequestUser(userId: string){
-        return this.http.get(this.BaseURI + '/friend/NewRequest/' + userId)
+        return this.http.get(this.BaseURI + '/friend/NewRequest/' + userId);
+    }
+
+    AddToBlackList(userId: string){
+        return this.http.get(this.BaseURI + '/blacklist/AddUserInBlackList/' + userId);
     }
 }

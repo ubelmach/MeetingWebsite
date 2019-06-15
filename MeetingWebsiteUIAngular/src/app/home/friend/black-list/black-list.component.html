@@ -1,3 +1,29 @@
-<p>
-  black-list works!
-</p>
+<ng-template [ngIf]="blackList?.length > 0" [ngIfElse]="loggedOut">
+<div class="blackList" *ngFor="let black of blackList">
+  <div class="w4-container" style="padding: 2%;">
+
+    <div class="w3-card-4" style="width:70%; margin: auto;">
+      <header class="w3-container w3-light-grey">
+        <h3>{{black.FirstName}} {{black.LastName}}, {{black.Date}}</h3>
+      </header>
+      <div class="w3-container w3-light-grey">
+        <p>Understand and forgive.</p><br>
+        <div class="row" >
+          <div style="margin: auto;">
+              <button class="btn btn-outline-danger" style="margin-left: 3px; margin-top: -30px;"
+              (click)="onDeleteFromBlacklist(black.Id)">Delete from black list</button>
+              <button class="btn btn-outline-dark" style="margin-left: 3px; margin-top: -30px;"
+              (click)="onCheckInfo(black.BannedUserId)">Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-template>
+
+<ng-template #loggedOut>
+  <div class="p-3 mb-2 bg-light text-dark" style="text-align: center">
+    Your blacklist is empty.
+  </div>
+</ng-template>

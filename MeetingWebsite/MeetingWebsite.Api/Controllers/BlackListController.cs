@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -19,24 +20,29 @@ namespace MeetingWebsite.Api.Controllers
 
         //GET: api/blacklist/BlackList
         [HttpGet, Route("BlackList")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             var userId = GetUserId();
-            var blackList = _blacklistService.GetListUsersInBlackList(userId);
 
-            var showBlackList = blackList.Select(item => new ShowBlackListCurrentUserViewModel(item)).ToList();
+            var blackList = await _blacklistService.GetListUsersInBlackList(userId);
+            if (blackList == null)
+            {
+                return BadRequest();
+            }
+
+            var showBlackList =  
+                ShowBlackListCurrentUserViewModel.MapToViewModels(blackList).ToList();
 
             return Ok(showBlackList);
         }
 
         //GET: api/blacklist/AddUserInBlackList/userId
         [HttpGet, Route("AddUserInBlackList/{userId}")]
-        public IActionResult Add(string userId)
+        public async Task<IActionResult> Add(string userId)
         {
-            var currentUserId = GetUserId();
-
+            var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
             var add = new AddUserInBlackListViewModel(currentUserId, userId);
-            var addInBlackList = _blacklistService.AddUserInBlackList(add);
+            var addInBlackList = await _blacklistService.AddUserInBlackList(add);
             if (addInBlackList == null)
             {
                 return BadRequest();
@@ -44,20 +50,11 @@ namespace MeetingWebsite.Api.Controllers
             return Ok();
         }
 
-        //DELETE : api/blacklist/DeleteUserFromBlackList/{userId}
-        [HttpDelete, Route("DeleteUserFromBlackList/{userId}")]
-        public IActionResult Delete([FromForm] string userId)
+        //GET : api/blacklist/DeleteUserFromBlackList/{id}
+        [HttpGet, Route("DeleteUserFromBlackList/{id}")]
+        public IActionResult Delete(int id)
         {
-            var currentUserId = GetUserId();
-
-            var delete = new DeleteUserFromBlackListViewModel(currentUserId, userId);
-
-            var findBlackList = _blacklistService.FindBlackList(delete);
-            if (findBlackList == null)
-            {
-                return NotFound();
-            }
-            _blacklistService.DeleteFromBlackList(findBlackList.Id);
+            _blacklistService.DeleteFromBlackList(id);
             return Ok();
         }
 

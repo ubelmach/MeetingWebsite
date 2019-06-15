@@ -7,7 +7,6 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './home/profile/profile.component';
 import { AuthGuard } from './auth/auth.guard';
 import { SearchComponent } from './home/search/search.component';
-import { InfoComponent } from './home/search/info/info.component';
 import { FriendComponent } from './home/friend/friend.component';
 import { ListComponent } from './home/friend/list/list.component';
 import { RequestComponent } from './home/friend/request/request.component';
@@ -44,12 +43,7 @@ const routes: Routes = [
         path: 'user-profile/:id', component: UserProfileComponent
       },
       {
-        path: 'search', component: SearchComponent,
-        children: [
-          {
-            path: 'info/:id', component: InfoComponent
-          }
-        ]
+        path: 'search', component: SearchComponent
       }
     ]
   }

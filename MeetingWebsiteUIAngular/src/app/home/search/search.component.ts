@@ -39,8 +39,9 @@ export class SearchComponent implements OnInit {
   }
 
   onCheckInfo(userId: string) {
-    this.visibleSearch = !this.visibleSearch;
-    this.router.navigateByUrl('/home/search/info/' + userId);
+    // this.visibleSearch = !this.visibleSearch;
+    // this.router.navigateByUrl('/home/search/info/' + userId);
+    this.router.navigateByUrl('/home/user-profile/' + userId);
   }
 
   onBackToSearch(){
