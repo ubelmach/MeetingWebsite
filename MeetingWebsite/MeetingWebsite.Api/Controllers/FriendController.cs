@@ -83,7 +83,8 @@ namespace MeetingWebsite.Api.Controllers
         {
             var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
             var friendRequests = _friendService.FindNewRequests(currentUserId);
-            var showNewRequests = friendRequests.Select(request => new ShowNewRequestsViewModel(request)).ToList();
+            var showNewRequests = friendRequests.Select(request => 
+                new ShowNewRequestsViewModel(request)).ToList();
             return Ok(showNewRequests);
         }
 

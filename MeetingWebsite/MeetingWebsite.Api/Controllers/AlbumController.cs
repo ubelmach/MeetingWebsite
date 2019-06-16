@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
+using MeetingWebsite.DAL.EF;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Api.Controllers
@@ -31,7 +33,9 @@ namespace MeetingWebsite.Api.Controllers
             var albums = _albumService.FindAllAlbumsCurrentUser(userId).ToList();
 
             if (!albums.Any())
-                return BadRequest(new {message = "Error, current user has no albums"});
+            {
+                return BadRequest(new { message = "Error, current user has no albums" });
+            }
 
             var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel(item)).ToList();
             return Ok(showAlbumCurrentUser);
@@ -47,18 +51,15 @@ namespace MeetingWebsite.Api.Controllers
                 return NotFound();
             }
 
-            var showAlbumPhotos = new ShowAlbumPhotosViewModel()
-            {
-                IdPhoto = album.Files.Where(x => x.AlbumId == id).Select(x => x.Id),
-                PathPhoto = album.Files.Where(x => x.AlbumId == id).Select(x => x.Path)
-            };
+            var photoAlbum = _fileService.FindPhotosInAlbum(id);
+            var showAlbumPhotos = photoAlbum.Select(photo => new ShowAlbumPhotosViewModel(photo)).ToList();
 
             return Ok(showAlbumPhotos);
         }
 
         //POST: api/album/CreateAlbum
         [HttpPost, Route("CreateAlbum")]
-        public async Task<IActionResult> Post([FromForm] CreateAlbumViewModel createAlbum)
+        public async Task<IActionResult> Post([FromBody] CreateAlbumViewModel createAlbum)
         {
             if (createAlbum == null)
             {

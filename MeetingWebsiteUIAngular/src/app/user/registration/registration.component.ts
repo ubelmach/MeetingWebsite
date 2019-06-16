@@ -12,7 +12,8 @@ export class RegistrationComponent implements OnInit {
 
   genders: Info[];
 
-  constructor(public service: UserService, private toastr: ToastrService) { }
+  constructor(public service: UserService, 
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.service.getGenders()

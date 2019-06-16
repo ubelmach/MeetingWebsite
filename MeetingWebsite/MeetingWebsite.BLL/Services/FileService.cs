@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
@@ -65,7 +67,7 @@ namespace MeetingWebsite.BLL.Services
 
             foreach (var photo in photos.Photos)
             {
-                var path = photos.AlbumDir + photo.FileName;
+                var path = photos.AlbumDir + photos.AlbumName + photo.FileName;
                 using (var fileStream = new FileStream(album + photo.FileName, FileMode.Create))
                 {
                     await photo.CopyToAsync(fileStream);
@@ -92,6 +94,11 @@ namespace MeetingWebsite.BLL.Services
         {
             Database.FileRepository.Delete(id);
             Database.Save();
+        }
+
+        public IEnumerable<FileModel> FindPhotosInAlbum(int id)
+        {
+            return Database.FileRepository.Find(x => x.AlbumId == id);
         }
     }
 }

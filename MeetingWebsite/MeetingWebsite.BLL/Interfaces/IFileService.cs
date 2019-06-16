@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.Models.Entities;
 
@@ -11,5 +12,6 @@ namespace MeetingWebsite.BLL.Services
         Task AddPhotoInAlbum(AddPhotoInAlbumViewModel photo);
         FileModel FindPhotoInAlbum(int id);
         void DeletePhotoInAlbum(int id);
+        IEnumerable<FileModel> FindPhotosInAlbum(int id);
     }
 }

@@ -18,7 +18,9 @@ export class ProfileComponent implements OnInit {
   visibleDetailsUser = true;
   visiblePhotoUser = true;
 
-  constructor(public service: UserService, private toastr: ToastrService, private router: Router) {  }
+  constructor(public service: UserService, 
+    private toastr: ToastrService, 
+    private router: Router) {  }
 
   ngOnInit() {
     this.service.getUserProfile().subscribe(
@@ -70,6 +72,10 @@ export class ProfileComponent implements OnInit {
 
   onEditPicture() {
     this.visiblePhotoUser = !this.visiblePhotoUser;
+  }
+
+  onViewAlbums(){
+    this.router.navigateByUrl('/home/album');
   }
 
   onSubmit() {

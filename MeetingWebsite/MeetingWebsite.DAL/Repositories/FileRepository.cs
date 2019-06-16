@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
@@ -22,7 +23,7 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IEnumerable<FileModel> Find(Func<FileModel, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _db.Files.Where(predicate);
         }
 
         public FileModel Get(int id)

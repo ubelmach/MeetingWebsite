@@ -1,0 +1,82 @@
+<div class="container" style="margin-top: 3%;">
+  <div class="jumbotron">
+
+    <div style="text-align: right">
+      <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-primary">Create
+        album</button>
+
+      <div class="flex-container">
+        <div *ngFor="let album of userAlbums" class="flex-element" (click)="onOpenAlbum(album.Id)"
+          onclick="document.getElementById('id02').style.display='block'">
+          <div style="text-align: center">
+            <img [src]="imageUrl" style="max-height: 150px; max-width: 431px">
+            <p>{{album.Name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w3-container">
+
+      <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+          <div class="w3-center"><br>
+            <span onclick="document.getElementById('id01').style.display='none'"
+              class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+          </div>
+
+          <form class="w3-container" action="/action_page.php" [formGroup]="service.formModel" autocomplete="off"
+            (submit)="onSubmit()">
+            <div class="w3-section">
+
+              <label><b>Name album:</b></label>
+              <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter name album"
+                formControlName="Name" required>
+
+              <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Create</button>
+            </div>
+          </form>
+
+          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+            <button onclick="document.getElementById('id01').style.display='none'" type="button"
+              class="w3-button w3-red">Cancel</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="we-container">
+      <div id="id02" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+          <div class="w3-center"><br>
+            <span onclick="document.getElementById('id02').style.display='none'"
+              class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+          </div>
+
+          <form class="w3-container" action="/action_page.php">
+            <div class="w3-section">
+
+              <div class="flex-container">
+                <div *ngFor="let photo of photos" class="flex-element">
+
+                    <img src="https://localhost:44333{{photo.PathPhoto}}" style="max-height: 150px; max-width: 150px">
+
+                </div>
+              </div>
+
+            </div>
+          </form>
+
+          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+            <button onclick="document.getElementById('id02').style.display='none'" type="button"
+              class="w3-button w3-red">Cancel</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

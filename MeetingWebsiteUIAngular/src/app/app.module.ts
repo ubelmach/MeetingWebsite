@@ -23,6 +23,7 @@ import { ListComponent } from './home/friend/list/list.component';
 import { RequestComponent } from './home/friend/request/request.component';
 import { UserProfileComponent } from './home/user-profile/user-profile.component';
 import { BlackListComponent } from './home/friend/black-list/black-list.component';
+import { AlbumComponent } from './home/album/album.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { BlackListComponent } from './home/friend/black-list/black-list.componen
     ListComponent,
     RequestComponent,
     UserProfileComponent,
-    BlackListComponent
+    BlackListComponent,
+    AlbumComponent
   ],
   imports: [
     BrowserModule,
