@@ -7,9 +7,6 @@ namespace MeetingWebsite.BLL.ViewModel
 {
     public class ShowAlbumPhotosViewModel
     {
-        //public List<int> IdPhoto { get; set; }
-        //public List<string> PathPhoto { get; set; }
-
         public int IdAlbum { get; set; }
         public int IdPhoto { get; set; }
         public string PathPhoto { get; set; }
@@ -19,8 +16,6 @@ namespace MeetingWebsite.BLL.ViewModel
             IdPhoto = photos.Id;
             PathPhoto = photos.User.HomeDir + photos.Album.Path + "/" +  photos.Name;
             IdAlbum = id;
-
-            //Photo = photos.User.HomeDir + photos.Path;
         }
     }
 }

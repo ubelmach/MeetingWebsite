@@ -96,7 +96,7 @@ namespace MeetingWebsite.BLL.Services
                 users = users.Where(user =>
                     user.UserProfile.UserInterests
                         .Select(interest => interest.InterestsId)
-                        .Intersect(criteria.BadHabits)
+                        .Intersect(criteria.Interests)
                         .Any());
             }
 
