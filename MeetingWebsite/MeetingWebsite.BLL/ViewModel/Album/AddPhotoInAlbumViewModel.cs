@@ -11,14 +11,16 @@ namespace MeetingWebsite.BLL.ViewModel
         public string AlbumName { get; set; }
         public string HomeDir { get; set; }
         public string AlbumDir { get; set; }
-        public List<IFormFile> Photos { get; set; }
-        public void AppendAdditionalInfo(PhotoAlbum album, User user)
+        public IFormFileCollection Photos { get; set; }
+
+        public void AppendAdditionalInfo(PhotoAlbum album, User user, IFormFileCollection files)
         {
             AlbumId = album.Id;
             AlbumName = album.Name;
             HomeDir = user.HomeDir;
             AlbumDir = album.Path;
             UserId = user.Id;
+            Photos = files;
         }
     }
 }

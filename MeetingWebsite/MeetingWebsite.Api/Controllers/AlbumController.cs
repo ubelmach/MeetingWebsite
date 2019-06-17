@@ -52,7 +52,8 @@ namespace MeetingWebsite.Api.Controllers
             }
 
             var photoAlbum = _fileService.FindPhotosInAlbum(id);
-            var showAlbumPhotos = photoAlbum.Select(photo => new ShowAlbumPhotosViewModel(photo)).ToList();
+            var showAlbumPhotos = photoAlbum.Select(photo => 
+                new ShowAlbumPhotosViewModel(photo, id)).ToList();
 
             return Ok(showAlbumPhotos);
         }
@@ -80,7 +81,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //PUT: api/album/AddPhotoInAlbum/id
         [HttpPut, Route("AddPhotoInAlbum/{id}")]
-        public async Task<IActionResult> AddPhoto(int id, [FromForm] AddPhotoInAlbumViewModel addPhoto)
+        public async Task<IActionResult> AddPhoto(int id)
         {
             var album = _albumService.FindAlbum(id);
             if (album == null)
@@ -88,10 +89,12 @@ namespace MeetingWebsite.Api.Controllers
                 return NotFound();
             }
 
+            var addPhoto = new AddPhotoInAlbumViewModel();
+            var files = HttpContext.Request.Form.Files;
             var userId = GetUserId();
             var user = _accountService.GetUser(userId);
 
-            addPhoto.AppendAdditionalInfo(album, user.Result);
+            addPhoto.AppendAdditionalInfo(album, user.Result, files);
 
             await _fileService.AddPhotoInAlbum(addPhoto);
             return Ok(addPhoto);

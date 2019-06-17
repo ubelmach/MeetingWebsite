@@ -1,0 +1,19 @@
+
+  .flex-container {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-row-gap: 20px;
+    grid-column-gap: 10px;
+    width: 90%;
+    margin: 0 auto;
+    list-style: none;
+}
+
+.flex-element {
+    color: black;
+    padding: 15px;
+    margin: 5px;
+    background: white;
+    border-radius: 3px; 
+    display: block;
+}

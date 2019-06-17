@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlbumService } from 'src/app/shared/album.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-album',
@@ -13,7 +14,8 @@ export class AlbumComponent implements OnInit {
   photos = [];
   imageUrl: string = "/assets/img/Nophoto.jpg";
   constructor(public service: AlbumService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit() {
     this.service.getAlbums().subscribe(
@@ -26,16 +28,12 @@ export class AlbumComponent implements OnInit {
     );
   }
 
-  onOpenAlbum(id: number){
-    this.service.OpenAlbum(id).subscribe(
-      (res: any) =>{
-        this.photos = res;
-        console.log('open')
-      },
-      err => {
-        console.log(err);
-      }
-    )
+  onOpenAlbum(id: number) {
+    this.router.navigateByUrl('/home/album/details-album/' + id.toString());
+  }
+
+  onGoHome() {
+    this.router.navigateByUrl('/home/album')
   }
 
   onSubmit() {
@@ -52,6 +50,6 @@ export class AlbumComponent implements OnInit {
           console.log(err);
       }
     )
-}
+  }
 
 }

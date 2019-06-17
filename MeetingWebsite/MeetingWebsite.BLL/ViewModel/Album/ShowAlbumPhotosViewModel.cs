@@ -10,13 +10,15 @@ namespace MeetingWebsite.BLL.ViewModel
         //public List<int> IdPhoto { get; set; }
         //public List<string> PathPhoto { get; set; }
 
+        public int IdAlbum { get; set; }
         public int IdPhoto { get; set; }
         public string PathPhoto { get; set; }
 
-        public ShowAlbumPhotosViewModel(FileModel photos)
+        public ShowAlbumPhotosViewModel(FileModel photos, int id)
         {
             IdPhoto = photos.Id;
             PathPhoto = photos.User.HomeDir + photos.Album.Path + "/" +  photos.Name;
+            IdAlbum = id;
 
             //Photo = photos.User.HomeDir + photos.Path;
         }

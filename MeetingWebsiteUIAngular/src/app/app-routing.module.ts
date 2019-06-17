@@ -13,6 +13,7 @@ import { RequestComponent } from './home/friend/request/request.component';
 import { UserProfileComponent } from './home/user-profile/user-profile.component';
 import { BlackListComponent } from './home/friend/black-list/black-list.component';
 import { AlbumComponent } from './home/album/album.component';
+import { DetailsAlbumComponent } from './home/album/details-album/details-album.component';
 
 
 const routes: Routes = [
@@ -47,7 +48,10 @@ const routes: Routes = [
         path: 'search', component: SearchComponent
       },
       {
-        path: 'album', component: AlbumComponent
+        path: 'album', component: AlbumComponent,
+        children: [
+          {path: 'details-album/:id', component: DetailsAlbumComponent}
+        ]
       }
     ]
   }

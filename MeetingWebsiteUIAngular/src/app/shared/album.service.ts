@@ -28,7 +28,20 @@ export class AlbumService {
     }
 
     OpenAlbum(id: number){
-        return this.http.get(this.BaseURI  + '/album/AlbumDetails/' + id.toString());
+        return this.http.get(this.BaseURI  + '/album/AlbumDetails/' + id);
     }
 
+    DeleteAlbum(id: number){
+        return this.http.delete(this.BaseURI + '/album/DeleteAlbum/' + id)
+    }
+
+    DeletePhoto(id: number){
+        return this.http.delete(this.BaseURI + '/album/DeletePhotoInAlbum/' + id);
+    }
+    
+    AddPhoto(id: number, fileToUpload: File){
+        const formData: FormData = new FormData();
+        formData.append('Image', fileToUpload);
+        return this.http.put(this.BaseURI + '/album/AddPhotoInAlbum/' + id, formData);
+    }
 }
