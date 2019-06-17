@@ -9,7 +9,6 @@ namespace MeetingWebsite.DAL.Repositories
     public class BadHabitsRepository : IRepository<BadHabits>
     {
         private MeetingDbContext _db;
-
         public BadHabitsRepository(MeetingDbContext context)
         {
             _db = context;

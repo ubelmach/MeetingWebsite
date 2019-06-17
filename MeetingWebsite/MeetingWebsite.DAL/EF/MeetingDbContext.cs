@@ -14,7 +14,6 @@ namespace MeetingWebsite.DAL.EF
         public DbSet<Message> Messages { get; set; }
         public DbSet<PhotoAlbum> PhotoAlbums { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-
         public DbSet<PurposeOfDating> PurposeOfDatings { get; set; }
         public DbSet<UserPurpose> UserPurposes { get; set; }
         public DbSet<Languages> Languages { get; set; }
@@ -23,7 +22,6 @@ namespace MeetingWebsite.DAL.EF
         public DbSet<UserBadHabits> UserBadHabits { get; set; }
         public DbSet<Interests> IteInterests { get; set; }
         public DbSet<UserInterests> UserInterests { get; set; }
-
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Education> Educations { get; set; }
         public DbSet<FinancialSituation> FinancialSituations { get; set; }

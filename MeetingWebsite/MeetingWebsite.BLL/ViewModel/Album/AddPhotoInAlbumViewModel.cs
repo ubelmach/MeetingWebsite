@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MeetingWebsite.Models.Entities;
+﻿using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace MeetingWebsite.BLL.ViewModel

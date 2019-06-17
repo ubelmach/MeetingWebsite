@@ -28,9 +28,7 @@ namespace MeetingWebsite.Api.Controllers
         public async Task<bool> Check(string id)
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var check = await _blacklistService.Check(userId, id);
-
-            return check;
+            return await _blacklistService.Check(userId, id);
         }
 
         //GET: api/friend/Friends
@@ -52,8 +50,7 @@ namespace MeetingWebsite.Api.Controllers
         public async Task<IActionResult> Get(string id)
         {
             var friend = await _accountService.GetUser(id);
-            var showInfoFriend = new ShowInformationFriendViewModel(friend);
-            return Ok(showInfoFriend);
+            return Ok(new ShowInformationFriendViewModel(friend));
         }
 
         //POST: api/friend/NewRequest/{id}
@@ -109,7 +106,6 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult DeleteFriendship(int friendshipId)
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
-
             _friendService.MoveRequest(friendshipId, userId);
             return Ok();
         }

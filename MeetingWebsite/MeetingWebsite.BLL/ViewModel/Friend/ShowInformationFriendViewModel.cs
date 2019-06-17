@@ -15,15 +15,12 @@ namespace MeetingWebsite.BLL.ViewModel
         public string Gender { get; set; }
         public string Height { get; set; }
         public string Weight { get; set; }
-
         public string Education { get; set; }
         public string Nationality { get; set; }
         public string ZodiacSign { get; set; }
         public string FinancialSituation { get; set; }
-
         public string Avatar { get; set; }
         public string HomeDir { get; set; }
-
         public List<string> PurposeOfDating { get; set; }
         public List<string> KnowledgeOfLanguages { get; set; }
         public List<string> BadHabits { get; set; }
@@ -40,9 +37,7 @@ namespace MeetingWebsite.BLL.ViewModel
             { LastName = user.LastName; }
 
             if (user.Gender != null)
-            {
-                Gender = user.Gender.Value;
-            }
+            { Gender = user.Gender.Value; }
 
             if (!string.IsNullOrEmpty(user.Birthday.ToString(CultureInfo.InvariantCulture)))
             { Birthday = user.Birthday; }
@@ -53,31 +48,20 @@ namespace MeetingWebsite.BLL.ViewModel
             if (!string.IsNullOrEmpty(user.UserProfile.Weight))
             { Weight = user.UserProfile.Weight; }
 
-
             if (user.UserProfile.Education != null)
-            {
-                Education = user.UserProfile.Education.Value;
-            }
+            { Education = user.UserProfile.Education.Value; }
 
             if (user.UserProfile.Nationality != null)
-            {
-                Nationality = user.UserProfile.Nationality.Value;
-            }
+            { Nationality = user.UserProfile.Nationality.Value; }
 
             if (user.UserProfile.ZodiacSign != null)
-            {
-                ZodiacSign = user.UserProfile.ZodiacSign.Value;
-            }
+            { ZodiacSign = user.UserProfile.ZodiacSign.Value; }
 
             if (user.UserProfile.FinancialSituation != null)
-            {
-                FinancialSituation = user.UserProfile.FinancialSituation.Value;
-            }
+            { FinancialSituation = user.UserProfile.FinancialSituation.Value; }
 
             if (!string.IsNullOrEmpty(user.HomeDir))
-            {
-                HomeDir = user.HomeDir;
-            }
+            { HomeDir = user.HomeDir; }
 
             if (user.Avatar != null)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
@@ -18,17 +19,17 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IEnumerable<UserProfile> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.UserProfiles;
         }
 
         public UserProfile Get(int id)
         {
-            throw new NotImplementedException();
+            return _db.UserProfiles.Find(id);
         }
 
         public IEnumerable<UserProfile> Find(Func<UserProfile, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _db.UserProfiles.Where(predicate);
         }
 
         public void Create(UserProfile item)
@@ -43,7 +44,9 @@ namespace MeetingWebsite.DAL.Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var userProfile = _db.UserProfiles.Find(id);
+            if (userProfile != null)
+                _db.UserProfiles.Remove(userProfile);
         }
     }
 }

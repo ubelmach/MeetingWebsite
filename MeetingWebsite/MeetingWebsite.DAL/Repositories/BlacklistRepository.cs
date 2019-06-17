@@ -40,7 +40,7 @@ namespace MeetingWebsite.DAL.Repositories
 
         public BlackList Get(int id)
         {
-            throw new NotImplementedException();
+            return _db.BlackLists.Find(id);
         }
 
         public void Update(BlackList item)

@@ -4,6 +4,7 @@ using System.Linq;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.DAL.Repositories
 {
@@ -40,12 +41,12 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IEnumerable<PhotoAlbum> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.PhotoAlbums;
         }
 
         public void Update(PhotoAlbum item)
         {
-            throw new NotImplementedException();
+            _db.Entry(item).State = EntityState.Modified;
         }
     }
 }

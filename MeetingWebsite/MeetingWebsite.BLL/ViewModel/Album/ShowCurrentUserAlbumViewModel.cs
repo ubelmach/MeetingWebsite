@@ -1,5 +1,4 @@
 ﻿using MeetingWebsite.Models.Entities;
-using System.Collections.Generic;
 
 namespace MeetingWebsite.BLL.ViewModel
 {

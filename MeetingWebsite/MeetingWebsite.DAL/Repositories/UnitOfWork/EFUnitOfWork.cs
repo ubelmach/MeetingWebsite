@@ -14,9 +14,9 @@ namespace MeetingWebsite.DAL.Repositories
         private FileRepository _fileRepository;
         private FriendshipRepository _friendshipRepository;
         private MessageRepository _messageRepository;
+        private DialogRepository _dialogRepository;
         private AlbumRepository _albumRepository;
         private BlacklistRepository _blacklistRepository;
-
         private PurposeRepository _purposeRepository;
         private UserPurposeRepository _userPurposeRepository;
         private LanguageRepository _languageRepository;
@@ -25,7 +25,6 @@ namespace MeetingWebsite.DAL.Repositories
         private UserBadHabitsRepository _userBadHabitsRepository;
         private InterestsRepository _interestsRepository;
         private UserInterestsRepository _userInterestsRepository;
-
         private GenderRepository _genderRepository;
         private EducationRepository _educationRepository;
         private FinancialSituationRepository _financialSituationRepository;
@@ -51,6 +50,9 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IRepository<Message> MessageRepository =>
             _messageRepository ?? (_messageRepository = new MessageRepository(_db));
+
+        public IRepository<Dialog> DialogRepository =>
+            _dialogRepository ?? (_dialogRepository = new DialogRepository(_db));
 
         public IRepository<PhotoAlbum> AlbumRepository =>
             _albumRepository ?? (_albumRepository = new AlbumRepository(_db));

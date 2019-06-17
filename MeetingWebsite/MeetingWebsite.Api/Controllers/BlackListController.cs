@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
@@ -23,7 +22,6 @@ namespace MeetingWebsite.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var userId = GetUserId();
-
             var blackList = await _blacklistService.GetListUsersInBlackList(userId);
             if (blackList == null)
             {

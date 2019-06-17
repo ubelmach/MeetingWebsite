@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
@@ -11,14 +10,13 @@ namespace MeetingWebsite.BLL.Services
 {
     public class FileService : IFileService
     {
-        private IUnitOfWork Database { get; set; }
-
+        private readonly IUnitOfWork _database;
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public FileService(IUnitOfWork uow,
             IHostingEnvironment hostingEnvironment)
         {
-            Database = uow;
+            _database = uow;
             _hostingEnvironment = hostingEnvironment;
         }
 
@@ -27,11 +25,13 @@ namespace MeetingWebsite.BLL.Services
             var createFolder = _hostingEnvironment.WebRootPath + "/File/" + user.Id;
 
             user.HomeDir = "/File/" + user.Id;
-            Database.UserRepository.Update(user);
-            Database.Save();
+            _database.UserRepository.Update(user);
+            _database.Save();
 
             if (!Directory.Exists(createFolder))
+            {
                 Directory.CreateDirectory(createFolder);
+            }
         }
 
         public async Task AddUserAvatar(EditUserAvatarViewModel editAvatar)
@@ -40,7 +40,9 @@ namespace MeetingWebsite.BLL.Services
             var path = "/Avatar/" + editAvatar.Avatar.FileName;
 
             if (!Directory.Exists(createFolder))
+            {
                 Directory.CreateDirectory(createFolder);
+            }
 
             using (var fileStream = new FileStream(createFolder + editAvatar.Avatar.FileName, FileMode.Create))
             {
@@ -53,12 +55,12 @@ namespace MeetingWebsite.BLL.Services
                 Name = editAvatar.Avatar.FileName,
                 Path = path
             };
-            Database.FileRepository.Create(avatar);
-            Database.Save();
+            _database.FileRepository.Create(avatar);
+            _database.Save();
 
             editAvatar.User.AvatarId = avatar.Id;
-            Database.UserRepository.Update(editAvatar.User);
-            Database.Save();
+            _database.UserRepository.Update(editAvatar.User);
+            _database.Save();
         }
 
         public async Task AddPhotoInAlbum(AddPhotoInAlbumViewModel photos)
@@ -80,25 +82,25 @@ namespace MeetingWebsite.BLL.Services
                     Name = photo.FileName,
                     Path = path
                 };
-                Database.FileRepository.Create(file);
+                _database.FileRepository.Create(file);
             }
-            Database.Save();
+            _database.Save();
         }
 
         public FileModel FindPhotoInAlbum(int id)
         {
-            return Database.FileRepository.Get(id);
+            return _database.FileRepository.Get(id);
         }
 
         public void DeletePhotoInAlbum(int id)
         {
-            Database.FileRepository.Delete(id);
-            Database.Save();
+            _database.FileRepository.Delete(id);
+            _database.Save();
         }
 
         public IEnumerable<FileModel> FindPhotosInAlbum(int id)
         {
-            return Database.FileRepository.Find(x => x.AlbumId == id);
+            return _database.FileRepository.Find(x => x.AlbumId == id);
         }
     }
 }

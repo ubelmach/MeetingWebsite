@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
@@ -10,62 +9,56 @@ namespace MeetingWebsite.BLL.Services
 {
     public class AlbumService : IAlbumService
     {
-        private IUnitOfWork Database { get; set; }
+        private readonly IUnitOfWork _database;
         private readonly IHostingEnvironment _hostingEnvironment;
-
         public AlbumService(IUnitOfWork database,
             IHostingEnvironment hostingEnvironment)
         {
-            Database = database;
+            _database = database;
             _hostingEnvironment = hostingEnvironment;
         }
 
         public IEnumerable<PhotoAlbum> FindAllAlbumsCurrentUser(string userId)
         {
-            return Database.AlbumRepository.Find(x => x.UserId == userId);
+            return _database.AlbumRepository.Find(x => x.UserId == userId);
         }
 
         public PhotoAlbum FindAlbum(int id)
         {
-            return Database.AlbumRepository.Get(id);
+            return _database.AlbumRepository.Get(id);
         }
 
         public PhotoAlbum OpenAlbum(int id)
         {
-            return Database.AlbumRepository.Get(id);
+            return _database.AlbumRepository.Get(id);
         }
 
         public PhotoAlbum CreateAlbum(CreateAlbumViewModel createAlbum)
         {
-            try
+            var createFolder = _hostingEnvironment.WebRootPath + createAlbum.HomeDir + "/Albums/" + createAlbum.Name;
+            var path = "/Albums/" + createAlbum.Name;
+
+            if (!Directory.Exists(createFolder))
             {
-                var createFolder = _hostingEnvironment.WebRootPath + createAlbum.HomeDir + "/Albums/" + createAlbum.Name;
-                var path = "/Albums/" + createAlbum.Name;
-
-                if (!Directory.Exists(createFolder))
-                    Directory.CreateDirectory(createFolder);
-
-                var newAlbum = new PhotoAlbum
-                {
-                    Name = createAlbum.Name,
-                    UserId = createAlbum.UserId,
-                    Path = path
-                };
-
-                Database.AlbumRepository.Create(newAlbum);
-                Database.Save();
-                return newAlbum;
+                Directory.CreateDirectory(createFolder);
             }
-            catch (Exception ex)
+
+            var newAlbum = new PhotoAlbum
             {
-                throw ex;
-            }
+                Name = createAlbum.Name,
+                UserId = createAlbum.UserId,
+                Path = path
+            };
+
+            _database.AlbumRepository.Create(newAlbum);
+            _database.Save();
+            return newAlbum;
         }
 
         public void DeleteAlbum(int id)
         {
-            Database.AlbumRepository.Delete(id);
-            Database.Save();
+            _database.AlbumRepository.Delete(id);
+            _database.Save();
         }
     }
 }

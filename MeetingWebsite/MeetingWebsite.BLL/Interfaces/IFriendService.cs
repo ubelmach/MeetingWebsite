@@ -11,7 +11,7 @@ namespace MeetingWebsite.BLL.Services
         Friendship MoveRequest(int friendId, string userId);
         Friendship SendRequest(SendFriendRequestViewModel request);
         IEnumerable<Friendship> FindNewRequests(string userId);
-        Friendship Accepted(int id);
+        void Accepted(int id);
         void Rejected(int id);
     }
 }

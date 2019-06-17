@@ -19,7 +19,7 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IEnumerable<Friendship> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.Friendships;
         }
 
         public Friendship Get(int id)

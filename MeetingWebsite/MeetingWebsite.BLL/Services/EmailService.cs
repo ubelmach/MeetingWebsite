@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MeetingWebsite.BLL.Builders;
-using Microsoft.AspNetCore.Hosting;
 
 namespace MeetingWebsite.BLL.Services
 {

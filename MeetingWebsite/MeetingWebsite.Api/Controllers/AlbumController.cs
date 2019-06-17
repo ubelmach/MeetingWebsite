@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
-using MeetingWebsite.DAL.EF;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingWebsite.Api.Controllers
@@ -92,9 +90,9 @@ namespace MeetingWebsite.Api.Controllers
             var addPhoto = new AddPhotoInAlbumViewModel();
             var files = HttpContext.Request.Form.Files;
             var userId = GetUserId();
-            var user = _accountService.GetUser(userId);
+            var user = await _accountService.GetUser(userId);
 
-            addPhoto.AppendAdditionalInfo(album, user.Result, files);
+            addPhoto.AppendAdditionalInfo(album, user, files);
 
             await _fileService.AddPhotoInAlbum(addPhoto);
             return Ok(addPhoto);

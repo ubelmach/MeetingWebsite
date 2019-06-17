@@ -208,6 +208,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Constants.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SearchHelper.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Infrastructure\ValidationException.cs" />
     <Compile Include="Interfaces\Additional interfaces\IBadHabitsService.cs" />

@@ -1,5 +1,4 @@
-﻿using System;
-using MeetingWebsite.DAL.Interfaces;
+﻿using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.BLL.Services
@@ -15,15 +14,8 @@ namespace MeetingWebsite.BLL.Services
 
         public void CreateUserProfile(UserProfile userProfile)
         {
-            try
-            {
-                _database.UserProfileRepository.Create(userProfile);
-                _database.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            _database.UserProfileRepository.Create(userProfile);
+            _database.Save();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,7 +14,7 @@ namespace MeetingWebsite.BLL.Services
 {
     public class AccountService : IAccountService
     {
-        private IUnitOfWork Database { get; set; }
+        private readonly IUnitOfWork _database;
         private readonly UserManager<User> _userManager;
         private readonly ApplicationSettings _applicationSettingsOption;
         private readonly IEmailService _emailService;
@@ -31,7 +30,7 @@ namespace MeetingWebsite.BLL.Services
             IUserProfileService userProfileService
             )
         {
-            Database = uow;
+            _database = uow;
             _userManager = userManager;
             _applicationSettingsOption = applicationSettingsOption.Value;
             _emailService = emailService;
@@ -42,7 +41,6 @@ namespace MeetingWebsite.BLL.Services
         public async Task<object> RegisterUser(RegisterViewModel model, string url)
         {
             var user = model.CreateUser();
-
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return null;
@@ -92,7 +90,7 @@ namespace MeetingWebsite.BLL.Services
 
         public void Dispose()
         {
-            Database.Dispose();
+            _database.Dispose();
         }
     }
 }

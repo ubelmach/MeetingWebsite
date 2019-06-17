@@ -84,21 +84,18 @@ namespace MeetingWebsite.BLL.Services
 
         public IEnumerable<Friendship> FindNewRequests(string userId)
         {
-            var newRequests = _database.FriendRepository
+            return _database.FriendRepository
                 .Find(x => x.SecondFriendId == userId &&
                            x.InviteStatus == InviteStatuses.WaitingForApprovals);
-
-            return newRequests;
         }
 
-        public Friendship Accepted(int id)
+        public void Accepted(int id)
         {
             var findRequest = _database.FriendRepository.Get(id);
             findRequest.InviteStatus = InviteStatuses.Accepted;
 
             _database.FriendRepository.Update(findRequest);
             _database.Save();
-            return findRequest;
         }
 
         public void Rejected(int id)

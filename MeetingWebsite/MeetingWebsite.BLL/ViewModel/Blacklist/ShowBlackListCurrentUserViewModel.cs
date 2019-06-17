@@ -1,7 +1,6 @@
 ﻿using MeetingWebsite.Models.Entities;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 
 namespace MeetingWebsite.BLL.ViewModel
 {
@@ -10,7 +9,6 @@ namespace MeetingWebsite.BLL.ViewModel
         public int Id { get; set; }
         public string BannedUserId { get; set; }
         public int BlacklistId { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Date { get; set; }
@@ -20,7 +18,6 @@ namespace MeetingWebsite.BLL.ViewModel
             Id = blackList.Id;
             BannedUserId = blackList.WhomId;
             BlacklistId = blackList.Id;
-
             FirstName = blackList.Whom.FirstName;
             LastName = blackList.Whom.LastName;
             Date = blackList.Date;
@@ -30,8 +27,7 @@ namespace MeetingWebsite.BLL.ViewModel
         {
             foreach (var blackList in blackLists)
             {
-                yield return
-                    new ShowBlackListCurrentUserViewModel(blackList);
+                yield return new ShowBlackListCurrentUserViewModel(blackList);
             }
         }
     }

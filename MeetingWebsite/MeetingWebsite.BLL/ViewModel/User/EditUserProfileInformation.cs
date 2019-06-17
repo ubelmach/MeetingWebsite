@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.Globalization;
 using MeetingWebsite.Models.Entities;
-using MeetingWebsite.Models.EntityEnums;
 
 namespace MeetingWebsite.BLL.ViewModel
 {
     public class EditUserProfileInformation
     {
         public string Id { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
         public string Height { get; set; }
         public string Weight { get; set; }
         public bool AnonymityMode { get; set; }
-
         public List<int> PurposeOfDating { get; set; }
         public List<int> KnowledgeOfLanguages { get; set; }
         public List<int> BadHabits { get; set; }
@@ -50,13 +47,10 @@ namespace MeetingWebsite.BLL.ViewModel
 
             AnonymityMode = user.AnonymityMode;
 
-
             //if (!string.IsNullOrEmpty(user.Gender.ToString()))
             //{ Genders = user.Gender; }
             //if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
             //{ ZodiacSign = user.UserProfile.ZodiacSign; }
-
-
             //if (!string.IsNullOrEmpty(user.UserProfile.Education))
             //{ Education = user.UserProfile.Education; }
             //if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
@@ -67,7 +61,6 @@ namespace MeetingWebsite.BLL.ViewModel
             //{ FinancialSituation = user.UserProfile.FinancialSituation; }
             //if (!string.IsNullOrEmpty(user.UserProfile.Interests))
             //{ Interests = user.UserProfile.Interests; }
-
             //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
             //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
             //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))

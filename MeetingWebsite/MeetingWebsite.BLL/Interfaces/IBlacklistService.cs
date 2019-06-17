@@ -9,7 +9,6 @@ namespace MeetingWebsite.BLL.Services
     {
         Task<List<BlackList>> GetListUsersInBlackList(string userId);
         Task<BlackList> AddUserInBlackList(AddUserInBlackListViewModel addInBlackList);
-        //Task<BlackList> CheckBlackList(string userId, string who);
         Task<bool> CheckBlackList(string userId, string who);
         Task<bool> Check(string userId, string who);
         void DeleteFromBlackList(int id);

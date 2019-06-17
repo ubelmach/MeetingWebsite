@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using MeetingWebsite.Models.Entities;
-using MeetingWebsite.Models.EntityEnums;
 
 namespace MeetingWebsite.BLL.ViewModel
 {
@@ -39,7 +38,6 @@ namespace MeetingWebsite.BLL.ViewModel
                 UserName = Email,
                 GenderId = GenderId,
                 Birthday = Birthday,
-
                 AnonymityMode = false
             };
         }

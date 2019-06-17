@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingWebsite.DAL.Repositories
 {
@@ -17,32 +19,34 @@ namespace MeetingWebsite.DAL.Repositories
 
         public IEnumerable<Message> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.Messages;
         }
 
         public Message Get(int id)
         {
-            throw new NotImplementedException();
+            return _db.Messages.Find(id);
         }
 
         public IEnumerable<Message> Find(Func<Message, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _db.Messages.Where(predicate);
         }
 
         public void Create(Message item)
         {
-            throw new NotImplementedException();
+            _db.Messages.Add(item);
         }
 
         public void Update(Message item)
         {
-            throw new NotImplementedException();
+            _db.Entry(item).State = EntityState.Modified;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var message = _db.Messages.Find(id);
+            if (message != null)
+                _db.Messages.Remove(message); 
         }
     }
 }

@@ -21,17 +21,13 @@ namespace MeetingWebsite.Models.Entities
         [ForeignKey("Avatar")]
         public int? AvatarId { get; set; }
         public virtual FileModel Avatar { get; set; }
-
         public virtual UserProfile UserProfile { get; set; }
-
         public virtual List<PhotoAlbum> PhotoAlbums { get; set; }
-
         public virtual List<Friendship> IncomingFriendships { get; set; }
         public virtual List<Friendship> OutgoingFriendships { get; set; }
-
+        public virtual List<Message> Messages { get; set; }
         public virtual List<Dialog> IncomingMessages { get; set; }
         public virtual List<Dialog> OutgoingMessages { get; set; }
-
         public virtual List<BlackList> WhomTheUserAdded { get; set; }
         public virtual List<BlackList> WhoAddedCurrentUser { get; set; }
 
@@ -39,6 +35,8 @@ namespace MeetingWebsite.Models.Entities
         {
             IncomingFriendships = new List<Friendship>();
             OutgoingFriendships = new List<Friendship>();
+
+            Messages = new List<Message>();
 
             IncomingMessages = new List<Dialog>();
             OutgoingMessages = new List<Dialog>();
