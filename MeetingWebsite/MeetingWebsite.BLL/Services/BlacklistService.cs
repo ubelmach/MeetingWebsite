@@ -34,49 +34,35 @@ namespace MeetingWebsite.BLL.Services
         {
             var badUser = await _accountService.GetUser(addInBlackList.WhomId);
 
-            try
+            var incomingFriendships = badUser.IncomingFriendships
+                .Where(x => x.FirstFriendId == addInBlackList.CurrentUserId &&
+                            x.SecondFriendId == addInBlackList.WhomId)
+                .ToList();
+
+            var outgoingFriendships = badUser.OutgoingFriendships
+                .Where(x => x.FirstFriendId == addInBlackList.WhomId &&
+                            x.SecondFriendId == addInBlackList.CurrentUserId)
+                .ToList();
+
+            var fullList = new List<Friendship>();
+            fullList.AddRange(incomingFriendships);
+            fullList.AddRange(outgoingFriendships);
+
+
+            var whomTheUserAdded = badUser.WhomTheUserAdded
+                .Where(x => x.CurrentUserId == addInBlackList.CurrentUserId &&
+                            x.WhomId == addInBlackList.WhomId)
+                .ToList();
+
+            if (whomTheUserAdded.Any())
             {
-                var incomingFriendships = badUser.IncomingFriendships
-                    .Where(x => x.FirstFriendId == addInBlackList.CurrentUserId &&
-                                x.SecondFriendId == addInBlackList.WhomId)
-                    .ToList();
+                return null;
+            }
 
-                var outgoingFriendships = badUser.OutgoingFriendships
-                    .Where(x => x.FirstFriendId == addInBlackList.WhomId &&
-                                x.SecondFriendId == addInBlackList.CurrentUserId)
-                    .ToList();
-
-                var fullList = new List<Friendship>();
-                fullList.AddRange(incomingFriendships);
-                fullList.AddRange(outgoingFriendships);
-
-
-                var whomTheUserAdded = badUser.WhomTheUserAdded
-                    .Where(x => x.CurrentUserId == addInBlackList.CurrentUserId &&
-                                x.WhomId == addInBlackList.WhomId)
-                    .ToList();
-
-                if (whomTheUserAdded.Any())
-                {
-                    return null;
-                }
-
-                BlackList addUserInBlackList;
-                if (fullList.Any())
-                {
-                    _friendService.Rejected(fullList.Select(x => x.Id).First());
-                    addUserInBlackList = new BlackList
-                    {
-                        CurrentUserId = addInBlackList.CurrentUserId,
-                        WhomId = addInBlackList.WhomId,
-                        Date = addInBlackList.Date
-                    };
-
-                    _database.BlacklistRepository.Create(addUserInBlackList);
-                    _database.Save();
-                    return addUserInBlackList;
-                }
-
+            BlackList addUserInBlackList;
+            if (fullList.Any())
+            {
+                _friendService.Rejected(fullList.Select(x => x.Id).First());
                 addUserInBlackList = new BlackList
                 {
                     CurrentUserId = addInBlackList.CurrentUserId,
@@ -88,10 +74,17 @@ namespace MeetingWebsite.BLL.Services
                 _database.Save();
                 return addUserInBlackList;
             }
-            catch (Exception e)
+
+            addUserInBlackList = new BlackList
             {
-                throw e;
-            }
+                CurrentUserId = addInBlackList.CurrentUserId,
+                WhomId = addInBlackList.WhomId,
+                Date = addInBlackList.Date
+            };
+
+            _database.BlacklistRepository.Create(addUserInBlackList);
+            _database.Save();
+            return addUserInBlackList;
         }
 
         public async Task<bool> CheckBlackList(string userId, string who)

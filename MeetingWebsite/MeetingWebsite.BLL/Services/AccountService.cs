@@ -88,6 +88,11 @@ namespace MeetingWebsite.BLL.Services
             return await _userManager.FindByIdAsync(userId);
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+
         public void Dispose()
         {
             _database.Dispose();

@@ -448,7 +448,6 @@ C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\AutoMapper.dll
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\AutoMapper.pdb
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\AutoMapper.xml
-C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\MeetingWebsite.BLL.dll.config
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\MeetingWebsite.BLL.dll
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\MeetingWebsite.BLL.pdb
@@ -677,3 +676,4 @@ F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\o
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.csproj.CopyComplete
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.dll
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.pdb
+C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll

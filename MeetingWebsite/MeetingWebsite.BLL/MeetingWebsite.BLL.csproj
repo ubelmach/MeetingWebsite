@@ -222,6 +222,7 @@
     <Compile Include="Interfaces\Additional interfaces\IZodiacSignsService.cs" />
     <Compile Include="Interfaces\IAlbumService.cs" />
     <Compile Include="Interfaces\IBlacklistService.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
     <Compile Include="Interfaces\IFriendService.cs" />
     <Compile Include="Interfaces\Additional interfaces\ILanguageService.cs" />
@@ -246,6 +247,7 @@
     <Compile Include="Services\Additional service\ZodiacSignsService.cs" />
     <Compile Include="Services\AlbumService.cs" />
     <Compile Include="Services\BlacklistService.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\FriendService.cs" />
@@ -260,6 +262,10 @@
     <Compile Include="ViewModel\Blacklist\AddUserInBlackListViewModel.cs" />
     <Compile Include="ViewModel\Album\CreateAlbumViewModel.cs" />
     <Compile Include="ViewModel\Blacklist\DeleteUserFromBlackListViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\AddDialogMessageViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\CreateDialogViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\DetailsDialogViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\GetAllDialogsViewModel.cs" />
     <Compile Include="ViewModel\Information\InfoViewModel.cs" />
     <Compile Include="ViewModel\User\EditUserAvatarViewModel.cs" />
     <Compile Include="ViewModel\User\EditUserProfileInformation.cs" />

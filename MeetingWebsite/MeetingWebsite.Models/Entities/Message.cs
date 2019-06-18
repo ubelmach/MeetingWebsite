@@ -14,8 +14,8 @@ namespace MeetingWebsite.Models.Entities
         public string SenderId { get; set; }
         public virtual User Sender { get; set; }
 
-        [ForeignKey("File")]
-        public int? IdFile { get; set; }
+        //[ForeignKey("File")]
+        //public int? IdFile { get; set; }
         public virtual List<FileModel> Files { get; set; }
 
         [ForeignKey("Dialog")]
@@ -27,6 +27,5 @@ namespace MeetingWebsite.Models.Entities
         public DateTime Date { get; set; }
 
         public bool New { get; set; }
-
     }
 }

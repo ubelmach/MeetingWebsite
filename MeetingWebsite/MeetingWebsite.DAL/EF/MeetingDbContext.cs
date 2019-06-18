@@ -42,6 +42,11 @@ namespace MeetingWebsite.DAL.EF
             modelBuilder.ApplyConfiguration(new BlacklistConfiguration());
             modelBuilder.ApplyConfiguration(new DialogConfiguration());
 
+            modelBuilder.Entity<FileModel>()
+                .HasOne(s => s.Album)
+                .WithMany(x => x.Files)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
     }

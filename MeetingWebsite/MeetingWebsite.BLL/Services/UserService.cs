@@ -75,14 +75,10 @@ namespace MeetingWebsite.BLL.Services
             user.AnonymityMode = editUser.AnonymityMode;
 
             if (!string.IsNullOrEmpty(editUser.Genders.ToString()))
-            {
-                user.GenderId = editUser.Genders;
-            }
+            { user.GenderId = editUser.Genders; }
 
             if (!string.IsNullOrEmpty(editUser.Education.ToString()))
-            {
-                userProfile.EducationId = editUser.Education;
-            }
+            { userProfile.EducationId = editUser.Education; }
 
             if (editUser.PurposeOfDating != null)
             {

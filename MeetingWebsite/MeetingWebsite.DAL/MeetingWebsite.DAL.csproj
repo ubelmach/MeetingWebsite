@@ -243,6 +243,15 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Migrations\20190618081122_InitialDB.cs" />
+    <Compile Include="Migrations\20190618081122_InitialDB.designer.cs">
+      <DependentUpon>20190618081122_InitialDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190618164019_UpdateDB.cs" />
+    <Compile Include="Migrations\20190618164019_UpdateDB.designer.cs">
+      <DependentUpon>20190618164019_UpdateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\MeetingDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Additional repositories\BadHabitsRepository.cs" />
     <Compile Include="Repositories\Additional repositories\EducationRepository.cs" />

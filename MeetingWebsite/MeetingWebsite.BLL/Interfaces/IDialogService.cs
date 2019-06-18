@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using MeetingWebsite.BLL.ViewModel.Dialog;
+using MeetingWebsite.Models.Entities;
+using Microsoft.AspNetCore.Http;
+
+namespace MeetingWebsite.BLL.Services
+{
+    public interface IDialogService
+    {
+        Task<List<Dialog>> FindAllDialogs(string userId);
+        Dialog FindDialog(int id);
+        Task<bool> IsExistDialog(string userId, string receiverId);
+        Dialog CreateDialog(string receiverId, string senderId);
+        Task AddDialogMessage(string userId, string message, int dialogId, IFormFileCollection file);
+    }
+}

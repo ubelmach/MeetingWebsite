@@ -5,6 +5,7 @@ using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace MeetingWebsite.BLL.Services
 {
@@ -79,6 +80,33 @@ namespace MeetingWebsite.BLL.Services
                 {
                     UserId = photos.UserId,
                     AlbumId = photos.AlbumId,
+                    Name = photo.FileName,
+                    Path = path
+                };
+                _database.FileRepository.Create(file);
+            }
+            _database.Save();
+        }
+
+        public async Task AddDialogMessagePhotos(int dialogId, int messageId, IFormFileCollection photos)
+        {
+            var createFolder = _hostingEnvironment.WebRootPath + "/File/DialogFiles/" + dialogId;
+            if (!Directory.Exists(createFolder))
+            {
+                Directory.CreateDirectory(createFolder);
+            }
+
+            foreach (var photo in photos)
+            {
+                var path = "/File/DialogFiles/" + dialogId + '/' + photo.FileName;
+                using (var fileStream = new FileStream(createFolder + '/' + photo.FileName, FileMode.Create))
+                {
+                    await photo.CopyToAsync(fileStream);
+                }
+
+                var file = new FileModel
+                {
+                    MessageId = messageId,
                     Name = photo.FileName,
                     Path = path
                 };

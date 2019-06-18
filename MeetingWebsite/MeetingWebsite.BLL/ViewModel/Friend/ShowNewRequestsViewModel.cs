@@ -10,6 +10,7 @@ namespace MeetingWebsite.BLL.ViewModel
         public string LastName { get; set; }
         public long Age { get; set; }
         public string Avatar { get; set; }
+
         public ShowNewRequestsViewModel(Friendship friendship)
         {
             Id = friendship.Id;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using MeetingWebsite.Api.Hub;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.DAL.EF;
 using MeetingWebsite.DAL.Interfaces;
@@ -68,6 +69,8 @@ namespace MeetingWebsite.Api
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
+            services.AddSignalR();
+
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JwT_Secret"]);
             services.AddAuthentication(x =>
             {
@@ -108,25 +111,20 @@ namespace MeetingWebsite.Api
             services.AddScoped<IBlacklistService, BlacklistService>();
             services.AddScoped<IFriendService, FriendService>();
             services.AddScoped<ISearchService, SearchService>();
-
+            services.AddScoped<IDialogService, DialogService>();
             services.AddScoped<IPurposeService, PurposeService>();
             services.AddScoped<IUserPurposeService, UserPurposeService>();
-
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IUserLanguagesService, UserLanguagesService>();
-
             services.AddScoped<IBadHabitsService, BadHabitsService>();
             services.AddScoped<IUserBadHabitsService, UserBadHabitsService>();
-
             services.AddScoped<IInterestsService, InterestsService>();
             services.AddScoped<IUserInterestsService, UserInterestsService>();
-
             services.AddScoped<IGenderService, GenderService>();
             services.AddScoped<IFinancialSituationService, FinancialSituationService>();
             services.AddScoped<IEducationService, EducationService>();
             services.AddScoped<INationalityService, NationalityService>();
             services.AddScoped<IZodiacSignsService, ZodiacSignsService>();
-
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
 
@@ -151,6 +149,8 @@ namespace MeetingWebsite.Api
             }
 
             app.UseCors("MyAllowSpecificOrigins");
+
+            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat"); });
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
