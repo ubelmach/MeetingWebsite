@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel.Dialog;
@@ -16,24 +17,21 @@ namespace MeetingWebsite.Api.Hub
         public string ConnId;
     }
 
-    [Authorize]
+    //[Authorize]
     public class ChatHub : Microsoft.AspNetCore.SignalR.Hub
     {
         private readonly IDialogService _dialogService;
-        private readonly IAccountService _accountService;
         static List<UserIds> _usersList = new List<UserIds>();
 
-        public ChatHub(IDialogService dialogService,
-            IAccountService accountService)
+        public ChatHub(IDialogService dialogService)
         {
             _dialogService = dialogService;
-            _accountService = accountService;
         }
 
         public override async Task OnConnectedAsync()
         {
-            var caller = await _accountService.GetUserByEmail(Context.User.Identity.Name);
-            UpdateList(caller.Id);
+            var callerId = Context.User.Claims.First(c => c.Type == "UserID").Value;
+            UpdateList(callerId);
             await base.OnConnectedAsync();
         }
 
@@ -53,26 +51,32 @@ namespace MeetingWebsite.Api.Hub
             if (receiver != null)
             {
                 await Clients.Client(receiver.ConnId).SendAsync("Send", message, caller.UserId);
+                
                 //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
             }
         }
 
-        public async Task SendFromProfile(string message, string receiverId, int dialogId)
+        public async Task SendFromProfile(string message, string receiverId)
         {
             UserIds receiver, caller;
             FindCallerReceiverByIds(receiverId, out caller, out receiver);
+
             var file = Context.GetHttpContext().Request.Form.Files;
+
             var dialogExist = await _dialogService.IsExistDialog(caller.UserId, receiverId);
             if (dialogExist)
             {
-                await _dialogService.AddDialogMessage(caller.UserId, message, dialogId, file);
+                var dialog = _dialogService.GetDialogDetails(caller.UserId, receiverId);
+                await _dialogService.AddDialogMessage(caller.UserId, message, dialog.Id, file);
+
                 await Clients.Client(receiver.ConnId).SendAsync("Send", message, caller.UserId);
+
                 //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
             }
             else
             {
-                _dialogService.CreateDialog(receiverId, caller.UserId);
-                await _dialogService.AddDialogMessage(caller.UserId, message, dialogId, file);
+                var dialog =  _dialogService.CreateDialog(receiverId, caller.UserId);
+                await _dialogService.AddDialogMessage(caller.UserId, message, dialog.Id, file);
                 var dialogDetails = _dialogService.GetDialogDetails(caller.UserId, receiverId);
                 var result = JsonConvert.SerializeObject(dialogDetails);
                 if (receiver != null)

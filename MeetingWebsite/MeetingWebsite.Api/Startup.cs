@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using MeetingWebsite.Api.Hub;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.DAL.EF;
@@ -89,18 +90,33 @@ namespace MeetingWebsite.Api
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 };
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/chat")))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddAuthentication(options =>
             {
                 options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
-            })
-                .AddGoogle("Google", options =>
-                {
-                    options.CallbackPath = new PathString("/signin-google");
-                    options.ClientId = "526768688788-7b660hm931dfann35p93pn34cle8h2r6.apps.googleusercontent.com";
-                    options.ClientSecret = "KRVsEMbicD2sfWFLxHri6rjg";
-                });
+            });
+                //.AddGoogle("Google", options =>
+                //{
+                //    options.CallbackPath = new PathString("/signin-google");
+                //    options.ClientId = "526768688788-7b660hm931dfann35p93pn34cle8h2r6.apps.googleusercontent.com";
+                //    options.ClientSecret = "KRVsEMbicD2sfWFLxHri6rjg";
+                //});
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();

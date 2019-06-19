@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchService } from 'src/app/shared/search.service';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BlackListService } from 'src/app/shared/blacklist.service';
+import { SignalRService } from 'src/app/shared/signalR.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,11 +17,14 @@ export class UserProfileComponent implements OnInit {
 
   checkBlacklist: boolean;
 
+  message = '';
+  files: File[] = [];
+
   constructor(private activateRoute: ActivatedRoute,
     public service: SearchService,
-    private router: Router,
     private toastr: ToastrService,
-    public blacklist: BlackListService) { }
+    public blacklist: BlackListService,
+    public signalR: SignalRService) { }
 
   async ngOnInit() {
     await this.activateRoute.params.subscribe(params => this.userId = params.id);
@@ -40,6 +43,8 @@ export class UserProfileComponent implements OnInit {
         this.checkBlacklist = res as boolean;
       }
     )
+
+    this.signalR.startConnection();
   }
 
   onAddToFriend() {
@@ -70,5 +75,9 @@ export class UserProfileComponent implements OnInit {
           console.log(err);
       }
     )
+  }
+
+  onSendMessageFromProfile() {
+    this.signalR.SendFromProfile(this.message, this.userId);
   }
 }

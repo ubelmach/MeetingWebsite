@@ -350,7 +350,6 @@ C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Mod
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Models\bin\Debug\Microsoft.Extensions.FileProviders.Abstractions.xml
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Models\bin\Debug\Microsoft.Extensions.Hosting.Abstractions.xml
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Models\bin\Debug\Microsoft.Extensions.Identity.Core.xml
-C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Models\bin\Debug\Microsoft.Extensions.Identity.Stores.xml
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Models\bin\Debug\Microsoft.Extensions.Logging.xml
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Models\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
 C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.Models\bin\Debug\Microsoft.Extensions.ObjectPool.xml
