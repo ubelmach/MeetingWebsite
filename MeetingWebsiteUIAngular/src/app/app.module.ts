@@ -23,6 +23,8 @@ import { BlackListComponent } from './home/friend/black-list/black-list.componen
 import { AlbumComponent } from './home/album/album.component';
 import { DetailsAlbumComponent } from './home/album/details-album/details-album.component';
 import { LightboxModule } from 'ngx-lightbox';
+import { ChatComponent } from './home/chat/chat.component';
+import { ChatDetailsComponent } from './home/chat/chat-details/chat-details.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { LightboxModule } from 'ngx-lightbox';
     UserProfileComponent,
     BlackListComponent,
     AlbumComponent,
-    DetailsAlbumComponent
+    DetailsAlbumComponent,
+    ChatComponent,
+    ChatDetailsComponent
   ],
   imports: [
     BrowserModule,

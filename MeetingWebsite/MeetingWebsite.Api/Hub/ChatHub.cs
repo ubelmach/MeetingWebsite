@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel.Dialog;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 
 namespace MeetingWebsite.Api.Hub
 {
@@ -14,7 +16,8 @@ namespace MeetingWebsite.Api.Hub
         public string ConnId;
     }
 
-    public class ChatHub: Microsoft.AspNetCore.SignalR.Hub
+    [Authorize]
+    public class ChatHub : Microsoft.AspNetCore.SignalR.Hub
     {
         private readonly IDialogService _dialogService;
         private readonly IAccountService _accountService;
@@ -40,6 +43,20 @@ namespace MeetingWebsite.Api.Hub
             return base.OnDisconnectedAsync(exception);
         }
 
+        public async Task Send(string message, string receiverId, int dialogId)
+        {
+            UserIds receiver, caller;
+            FindCallerReceiverByIds(receiverId, out caller, out receiver);
+            var file = Context.GetHttpContext().Request.Form.Files;
+            await _dialogService.AddDialogMessage(caller.UserId, message, dialogId, file);
+            await Clients.Client(caller.ConnId).SendAsync("SendMyself", message);
+            if (receiver != null)
+            {
+                await Clients.Client(receiver.ConnId).SendAsync("Send", message, caller.UserId);
+                //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
+            }
+        }
+
         public async Task SendFromProfile(string message, string receiverId, int dialogId)
         {
             UserIds receiver, caller;
@@ -56,8 +73,14 @@ namespace MeetingWebsite.Api.Hub
             {
                 _dialogService.CreateDialog(receiverId, caller.UserId);
                 await _dialogService.AddDialogMessage(caller.UserId, message, dialogId, file);
+                var dialogDetails = _dialogService.GetDialogDetails(caller.UserId, receiverId);
+                var result = JsonConvert.SerializeObject(dialogDetails);
+                if (receiver != null)
+                {
+                    await Clients.Client(receiver.ConnId).SendAsync("AddNewDialog", message, result);
+                    //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
+                }
             }
-
         }
 
         private void UpdateList(string callerId)
@@ -69,7 +92,7 @@ namespace MeetingWebsite.Api.Hub
             }
             else
             {
-                _usersList.Add(new UserIds{ConnId = Context.ConnectionId, UserId = callerId});
+                _usersList.Add(new UserIds { ConnId = Context.ConnectionId, UserId = callerId });
             }
         }
 
