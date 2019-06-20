@@ -58,7 +58,8 @@ const routes: Routes = [
       {
         path: 'chat', component: ChatComponent,
         children: [
-          { path: 'chat-details/:id', component: ChatDetailsComponent }
+          // { path: 'chat-details/:id', component: ChatDetailsComponent }
+          { path: 'chat-details/', component: ChatDetailsComponent }
         ]
       }
     ]

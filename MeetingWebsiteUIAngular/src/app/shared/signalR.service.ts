@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
 import { HttpTransportType } from '@aspnet/signalr';
-import { HubConnection } from '@aspnet/signalr';
+import { stringify } from '@angular/core/src/util';
 
 
 @Injectable({
@@ -10,7 +10,10 @@ import { HubConnection } from '@aspnet/signalr';
 
 export class SignalRService {
 
-    public hubConnection: HubConnection
+    public hubConnection: signalR.HubConnection
+    private token = localStorage.getItem('token');
+
+    constructor() { }
 
     public startConnection = () => {
         this.hubConnection = new signalR.HubConnectionBuilder()
@@ -18,7 +21,7 @@ export class SignalRService {
                 { 
                     skipNegotiation: true, 
                     transport: HttpTransportType.WebSockets,
-                    accessTokenFactory: () => localStorage.getItem('token')
+                    accessTokenFactory: () => this.token
                 })
             .build();
 
@@ -29,9 +32,15 @@ export class SignalRService {
     }
 
 
+    Send(message: string, userId: string, dialogId: number) : void{
+        this.hubConnection
+        .invoke('Send', message, userId, dialogId)
+        .catch(err => console.error(err));
+    }       
+    
     SendFromProfile(message: string, userId: string): void {
         this.hubConnection
             .invoke('SendFromProfile', message, userId)
-            .catch(err => console.error(err));
+            .catch(err => console.error(err)); 
     }
 }

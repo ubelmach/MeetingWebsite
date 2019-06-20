@@ -62,10 +62,10 @@ namespace MeetingWebsite.BLL.Services
             fullList.AddRange(incomingDialogs);
             fullList.AddRange(outgoingDialogs);
 
-            return !fullList.Any() ? true : false;
+            return fullList.Any();
         }
 
-        public async Task AddDialogMessage(string userId, string message, int dialogId, IFormFileCollection files)
+        public async Task AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
         {
             var newMessage = new Message
             {
@@ -79,29 +79,38 @@ namespace MeetingWebsite.BLL.Services
             _database.MessageRepository.Create(newMessage);
             _database.Save();
 
-            if (!files.Any())
-            {
-                await _fileService.AddDialogMessagePhotos(dialogId, newMessage.Id, files);
-            }
+            //if (!files.Any())
+            //{
+            //    await _fileService.AddDialogMessagePhotos(dialogId, newMessage.Id, files);
+            //}
         }
 
         public async Task<Dialog> GetDialogDetails(string userId, string companionId)
         {
-            var user = await _accountService.GetUser(userId);
+            try
+            {
+                var user = await _accountService.GetUser(userId);
 
-            var incomingDialogs = user.IncomingMessages.Where(x =>
-                    x.ReceiverId == userId && x.SenderId == companionId)
-                .ToList();
+                var incomingDialogs = user.IncomingMessages.Where(x =>
+                        x.ReceiverId == userId && x.SenderId == companionId)
+                    .ToList();
 
-            var outgoingDialogs = user.OutgoingMessages.Where(x =>
-                    x.ReceiverId == companionId && x.SenderId == userId)
-                .ToList();
+                var outgoingDialogs = user.OutgoingMessages.Where(x =>
+                        x.ReceiverId == companionId && x.SenderId == userId)
+                    .ToList();
 
-            var fullList = new List<Dialog>();
-            fullList.AddRange(incomingDialogs);
-            fullList.AddRange(outgoingDialogs);
+                var fullList = new List<Dialog>();
+                fullList.AddRange(incomingDialogs);
+                fullList.AddRange(outgoingDialogs);
 
-            return fullList.First();
+                var result = fullList.First();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public Dialog CreateDialog(string receiverId, string senderId)

@@ -5,6 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { BlackListService } from 'src/app/shared/blacklist.service';
 import { SignalRService } from 'src/app/shared/signalR.service';
 
+import * as signalR from "@aspnet/signalr";
+import { HttpTransportType } from '@aspnet/signalr';
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -16,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   userDetails;
 
   checkBlacklist: boolean;
+  public hubConnection: signalR.HubConnection
 
   message = '';
   files: File[] = [];
@@ -27,6 +31,9 @@ export class UserProfileComponent implements OnInit {
     public signalR: SignalRService) { }
 
   async ngOnInit() {
+    
+    this.signalR.startConnection();
+    
     await this.activateRoute.params.subscribe(params => this.userId = params.id);
 
     this.service.getSearchUserDetails(this.userId).subscribe(
@@ -43,8 +50,6 @@ export class UserProfileComponent implements OnInit {
         this.checkBlacklist = res as boolean;
       }
     )
-
-    this.signalR.startConnection();
   }
 
   onAddToFriend() {

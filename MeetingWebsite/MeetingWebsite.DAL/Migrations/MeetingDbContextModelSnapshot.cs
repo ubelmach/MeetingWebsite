@@ -561,7 +561,8 @@ namespace MeetingWebsite.DAL.Migrations
                 {
                     b.HasOne("MeetingWebsite.Models.Entities.PhotoAlbum", "Album")
                         .WithMany("Files")
-                        .HasForeignKey("AlbumId");
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MeetingWebsite.Models.Entities.Message", "Message")
                         .WithMany("Files")

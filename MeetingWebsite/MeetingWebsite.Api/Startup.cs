@@ -57,7 +57,6 @@ namespace MeetingWebsite.Api
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:4200")
-
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
@@ -69,8 +68,6 @@ namespace MeetingWebsite.Api
                     ((DefaultContractResolver)resolver).NamingStrategy = null;
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-
-            services.AddSignalR();
 
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JwT_Secret"]);
             services.AddAuthentication(x =>
@@ -107,16 +104,18 @@ namespace MeetingWebsite.Api
                 };
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
-            });
-                //.AddGoogle("Google", options =>
-                //{
-                //    options.CallbackPath = new PathString("/signin-google");
-                //    options.ClientId = "526768688788-7b660hm931dfann35p93pn34cle8h2r6.apps.googleusercontent.com";
-                //    options.ClientSecret = "KRVsEMbicD2sfWFLxHri6rjg";
-                //});
+            services.AddSignalR();
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
+            //})
+            //    .AddGoogle("Google", options =>
+            //    {
+            //        options.CallbackPath = new PathString("/signin-google");
+            //        options.ClientId = "526768688788-7b660hm931dfann35p93pn34cle8h2r6.apps.googleusercontent.com";
+            //        options.ClientSecret = "KRVsEMbicD2sfWFLxHri6rjg";
+            //    });
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
@@ -166,12 +165,13 @@ namespace MeetingWebsite.Api
 
             app.UseCors("MyAllowSpecificOrigins");
 
-            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat"); });
-
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
             app.UseStaticFiles();
+
+
+            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat"); });
         }
     }
 }

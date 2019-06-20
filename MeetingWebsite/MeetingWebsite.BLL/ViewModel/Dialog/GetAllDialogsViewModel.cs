@@ -14,7 +14,7 @@ namespace MeetingWebsite.BLL.ViewModel.Dialog
 
         public GetAllDialogsViewModel(string userId, int dialogId, User user)
         {
-            UserId = userId;
+            UserId = user.Id;
             DialogId = dialogId;
             Firstname = user.FirstName;
             Lastname = user.LastName;

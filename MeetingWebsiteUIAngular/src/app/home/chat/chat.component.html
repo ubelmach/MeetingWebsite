@@ -1,3 +1,27 @@
-<p>
-  chat works!
-</p>
+<div class="main">
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <div>
+        <div *ngFor="let dialog of userList">
+          <div class="row" style="border: 1px solid black; padding: 0" (click)="onOpenDialog(dialog.DialogId)">
+            <div class="col-md-4" style="text-align: center">
+              <img src="https://localhost:44333{{dialog.Avatar}}"
+                style="max-height: 100px; max-width: 50px; border-radius: 100px;">
+            </div>
+            <div class="col-md-8" style="text-align: center">
+              {{dialog.Firstname}} {{dialog.Lastname}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!visibleChatDetails" class="col-md-8">
+      <div *ngFor="let dialog of userList">
+          <app-chat-details [userId]="dialog.UserId" [dialogId]="dialog.DialogId" ></app-chat-details>
+      </div> 
+    </div>
+
+  </div>

@@ -31,7 +31,10 @@ namespace MeetingWebsite.Api.Controllers
                 return BadRequest(new {message = "Error, you have no dialogs yet"});
             }
 
-            return Ok(GetAllDialogsViewModel.MapToViewModels(userId, dialogs).ToList());
+
+            var result = GetAllDialogsViewModel.MapToViewModels(userId, dialogs).ToList();
+
+            return Ok(result);
         }
 
         //GET: api/dialog/DialogDetails/id
@@ -39,6 +42,8 @@ namespace MeetingWebsite.Api.Controllers
         public IActionResult Get(int id)
         {
             var dialog = _dialogService.FindDialog(id);
+
+
             return null;
         }
     }
