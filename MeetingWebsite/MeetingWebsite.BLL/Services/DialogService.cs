@@ -65,7 +65,7 @@ namespace MeetingWebsite.BLL.Services
             return fullList.Any();
         }
 
-        public async Task AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
+        public Message AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
         {
             var newMessage = new Message
             {
@@ -78,6 +78,8 @@ namespace MeetingWebsite.BLL.Services
 
             _database.MessageRepository.Create(newMessage);
             _database.Save();
+
+            return newMessage;
 
             //if (!files.Any())
             //{

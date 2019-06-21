@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
 import { HttpTransportType } from '@aspnet/signalr';
 import { stringify } from '@angular/core/src/util';
+import { MessageInfo } from '../models/MessageInfo';
+import { Message } from '../models/Message';
 
 
 @Injectable({
@@ -12,6 +14,7 @@ export class SignalRService {
 
     public hubConnection: signalR.HubConnection
     private token = localStorage.getItem('token');
+    public incomingMessage = new Message();
 
     constructor() { }
 
@@ -32,15 +35,17 @@ export class SignalRService {
     }
 
 
-    Send(message: string, userId: string, dialogId: number) : void{
+    Send(outgoingMessage: MessageInfo) : void{
         this.hubConnection
-        .invoke('Send', message, userId, dialogId)
+        .invoke('Send', outgoingMessage)
         .catch(err => console.error(err));
     }       
     
-    SendFromProfile(message: string, userId: string): void {
+    // SendFromProfile(message: string, userId: string): void {
+        SendFromProfile(outgoingMessage: Message): void {
         this.hubConnection
-            .invoke('SendFromProfile', message, userId)
+            // .invoke('SendFromProfile', message, userId)
+            .invoke('SendFromProfile', outgoingMessage)
             .catch(err => console.error(err)); 
     }
 }

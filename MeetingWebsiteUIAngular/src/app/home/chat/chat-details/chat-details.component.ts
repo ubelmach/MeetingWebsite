@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Input } from '@angular/core';
 import { ChatService } from 'src/app/shared/char.service';
+import { Message } from 'src/app/models/Message';
+import { MessageInfo } from 'src/app/models/MessageInfo';
 
 @Component({
   selector: 'app-chat-details',
@@ -21,8 +23,12 @@ export class ChatDetailsComponent implements OnInit {
     public service: ChatService) { }
 
   message = '';
-  messages: string[] = [];
-  messagesFromDb;
+  //messages: string[] = [];
+
+  messages: Message[] = new Array();
+  outgoingMessage  = new MessageInfo();
+
+  //messagesFromDb;
 
   ngOnInit() {
     this.signalR.startConnection();
@@ -31,7 +37,8 @@ export class ChatDetailsComponent implements OnInit {
 
     this.service.getDetailsUserDialogs(this.dialogId).subscribe(
       res => {
-        this.messagesFromDb = res;
+        // this.messagesFromDb = res;
+        this.messages = res as Message[];
       },
       err => {
         console.log(err);
@@ -40,24 +47,36 @@ export class ChatDetailsComponent implements OnInit {
   }
 
   addSendListener() {
-    this.signalR.hubConnection.on('Send', (message: string) => {
-      this.messages.push(message);
+    this.signalR.hubConnection.on('Send', (data) => {
+      this.signalR.incomingMessage = data as Message;
+      this.messages.push(this.signalR.incomingMessage);
+
+      // this.messages.push(message);
     });
   }
 
   addSendMyselfListener() {
-    this.signalR.hubConnection.on('SendMyself', (message: string) => {
-      this.messages.push(message);
+    this.signalR.hubConnection.on('SendMyself', (data) => {
+      this.signalR.incomingMessage = data as Message;
+      this.messages.push(this.signalR.incomingMessage);
+      
+      // this.messages.push(message);
     });
   }
 
   addNewDialogListener() {
-    this.signalR.hubConnection.on('AddNewDialog', (message: string) => {
-      this.messages.push(message);
+    this.signalR.hubConnection.on('AddNewDialog', (data) => {
+      this.signalR.incomingMessage = data as Message;
+      this.messages.push(this.signalR.incomingMessage);
+
+      // this.messages.push(message);
     });
   }
 
   onSendMessage() {
-    this.signalR.Send(this.message, this.userId, this.dialogId);
+    this.outgoingMessage.DialogId = this.dialogId;
+    this.outgoingMessage.ReceiverId = this.userId;
+    this.outgoingMessage.Message = this.message;
+    this.signalR.Send(this.outgoingMessage);
   }
 }

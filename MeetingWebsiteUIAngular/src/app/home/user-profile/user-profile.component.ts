@@ -83,6 +83,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSendMessageFromProfile() {
-    this.signalR.SendFromProfile(this.message, this.userId);
+    //this.signalR.SendFromProfile(this.message, this.userId);
   }
 }

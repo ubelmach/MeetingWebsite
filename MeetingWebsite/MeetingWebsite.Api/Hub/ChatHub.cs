@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
+using MeetingWebsite.BLL.ViewModel.Dialog;
 using Microsoft.AspNetCore.SignalR;
 
 namespace MeetingWebsite.Api.Hub
@@ -56,22 +57,31 @@ namespace MeetingWebsite.Api.Hub
             caller = _usersList.Find(c => c.ConnId == Context.ConnectionId);
         }
 
-        public async Task Send(string message, string receiverId, int dialogId)
+        //public async Task Send(string message, string receiverId, int dialogId)
+        public async Task Send(DetailsParamsViewModel model)
         {
-            UserIds receiver, caller;
-            FindCallerReceiverByIds(receiverId, out caller, out receiver);
-
-            await _dialogService.AddDialogMessage(caller.UserId, message, dialogId);
-
-            await Clients.Client(caller.ConnId).SendAsync("SendMyself", message);
-
-            if (receiver != null)
+            try
             {
-                await Clients.Client(receiver.ConnId)
-                    .SendAsync("Send", message, caller.UserId);
+                UserIds receiver, caller;
+                FindCallerReceiverByIds(model.ReceiverId, out caller, out receiver);
 
-                //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
+                var newMessage = _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId);
+
+                await Clients.Client(caller.ConnId).SendAsync("SendMyself", new AddDialogMessageViewModel(newMessage));
+
+                if (receiver != null)
+                {
+                    await Clients.Client(receiver.ConnId)
+                        .SendAsync("Send", new AddDialogMessageViewModel(newMessage), caller.UserId);
+
+                    //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
+                }
             }
+            catch(Exception e)
+            {
+                throw e;
+            }
+
         }
 
         public async Task SendFromProfile(string message, string receiverId)
@@ -88,7 +98,7 @@ namespace MeetingWebsite.Api.Hub
                 {
                     var dialog = await _dialogService.GetDialogDetails(caller.UserId, receiverId);
 
-                    await _dialogService.AddDialogMessage(caller.UserId, message, dialog.Id/*, file*/);
+                    _dialogService.AddDialogMessage(caller.UserId, message, dialog.Id/*, file*/);
 
                     if (receiver != null)
                     {
@@ -99,7 +109,7 @@ namespace MeetingWebsite.Api.Hub
                 else
                 {
                     var dialog = _dialogService.CreateDialog(receiverId, caller.UserId);
-                    await _dialogService.AddDialogMessage(caller.UserId, message, dialog.Id/*, file*/);
+                    _dialogService.AddDialogMessage(caller.UserId, message, dialog.Id/*, file*/);
 
                     //var dialogDetails = _dialogService.GetDialogDetails(caller.UserId, receiverId);
                     //var result = JsonConvert.SerializeObject(dialogDetails);
