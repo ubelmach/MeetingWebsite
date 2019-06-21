@@ -31,7 +31,6 @@ namespace MeetingWebsite.Api.Hub
             await base.OnConnectedAsync();
         }
 
-
         public override Task OnDisconnectedAsync(Exception exception)
         {
             _usersList.Remove(_usersList.Find(user => user.ConnId == Context.ConnectionId));
@@ -61,12 +60,15 @@ namespace MeetingWebsite.Api.Hub
         {
             UserIds receiver, caller;
             FindCallerReceiverByIds(receiverId, out caller, out receiver);
-            //var file = Context.GetHttpContext().Request.Form.Files;
-            await _dialogService.AddDialogMessage(caller.UserId, message, dialogId/*, file*/);
+
+            await _dialogService.AddDialogMessage(caller.UserId, message, dialogId);
+
             await Clients.Client(caller.ConnId).SendAsync("SendMyself", message);
+
             if (receiver != null)
             {
-                await Clients.Client(receiver.ConnId).SendAsync("Send", message, caller.UserId);
+                await Clients.Client(receiver.ConnId)
+                    .SendAsync("Send", message, caller.UserId);
 
                 //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
             }

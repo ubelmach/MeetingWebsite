@@ -15,4 +15,8 @@ export class ChatService {
     getUserDialogs() {
         return this.http.get(this.BaseURI + '/dialog/GetAllDialogs');
     }
+
+    getDetailsUserDialogs(id: number){
+        return this.http.get(this.BaseURI + '/dialog/DialogDetails/' + id)
+    }
 }

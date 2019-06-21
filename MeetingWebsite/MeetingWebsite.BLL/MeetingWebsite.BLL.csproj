@@ -265,6 +265,7 @@
     <Compile Include="ViewModel\Dialog\AddDialogMessageViewModel.cs" />
     <Compile Include="ViewModel\Dialog\CreateDialogViewModel.cs" />
     <Compile Include="ViewModel\Dialog\DetailsDialogViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\DetailsParamsViewModel.cs" />
     <Compile Include="ViewModel\Dialog\GetAllDialogsViewModel.cs" />
     <Compile Include="ViewModel\Information\InfoViewModel.cs" />
     <Compile Include="ViewModel\User\EditUserAvatarViewModel.cs" />

@@ -41,10 +41,12 @@ namespace MeetingWebsite.Api.Controllers
         [HttpGet, Route("DialogDetails/{id}")]
         public IActionResult Get(int id)
         {
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
             var dialog = _dialogService.FindDialog(id);
 
+            var result = DetailsDialogViewModel.MapToViewModel(dialog.Messages, userId).ToList();
 
-            return null;
+            return Ok(result);
         }
     }
 }

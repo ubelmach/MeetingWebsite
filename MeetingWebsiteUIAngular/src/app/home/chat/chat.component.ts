@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class ChatComponent implements OnInit {
 
   userList;
+  UserId;
+  DialogId;
   visibleChatDetails = true;
 
   constructor(public signalR: SignalRService,
@@ -30,11 +32,10 @@ export class ChatComponent implements OnInit {
     );
   }
 
-  // onOpenDialog(id: number) {
-    onOpenDialog() {
+    onOpenDialog(userId: string, dialogId: number) {
+      this.UserId = userId;
+      this.DialogId = dialogId;
     this.visibleChatDetails = !this.visibleChatDetails;
-    
-    //this.router.navigateByUrl('/home/chat/chat-details/' + id.toString());
   }
 
 }

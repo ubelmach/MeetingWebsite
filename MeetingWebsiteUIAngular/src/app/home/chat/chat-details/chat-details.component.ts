@@ -3,6 +3,7 @@ import { SignalRService } from 'src/app/shared/signalR.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Input } from '@angular/core';
+import { ChatService } from 'src/app/shared/char.service';
 
 @Component({
   selector: 'app-chat-details',
@@ -16,18 +17,26 @@ export class ChatDetailsComponent implements OnInit {
 
   constructor(private activateRoute: ActivatedRoute,
     public signalR: SignalRService,
-    private router: Router) { }
+    private router: Router,
+    public service: ChatService) { }
 
   message = '';
   messages: string[] = [];
+  messagesFromDb;
 
   ngOnInit() {
     this.signalR.startConnection();
     this.addSendListener();
     this.addSendMyselfListener();
 
-    console.log(this.userId);
-    console.log(this.dialogId);
+    this.service.getDetailsUserDialogs(this.dialogId).subscribe(
+      res => {
+        this.messagesFromDb = res;
+      },
+      err => {
+        console.log(err);
+      }
+    )
   }
 
   addSendListener() {

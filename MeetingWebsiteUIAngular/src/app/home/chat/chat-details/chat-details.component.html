@@ -1,11 +1,36 @@
-<div style="height: 850px">
+<div style="height: 650px; overflow: auto;">
+  <div id="message">
+    <hr>
+    <div *ngFor="let message of messagesFromDb">
+      <div class="w3-card-4">
 
-  <div id="message" *ngIf="messages.length > 0">
-      <div *ngFor="let message of messages">
-          <span>{{message}}</span>
+        <header class="w3-container w3-white">
+          <img class="w3-circle" src="https://localhost:44333{{message.Avatar}}" style="max-height: 50px;
+              max-width: 80px; margin-top: 1%">
+          {{message.Firstname}} {{message.Lastname}}
+        </header>
+
+        <div class="w3-container">
+          {{message.Text}}
         </div>
-  </div>
 
+        <footer class="w3-container w3-black">
+          {{message.Date | date:'MMM d, y, h:mm:ss a' }}
+        </footer>
+
+      </div>
+      <hr>
+    </div>
+
+    <div *ngIf="messages.length > 0">
+      <div *ngFor="let message of messages">
+        <span>{{message}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
   <form (ngSubmit)="onSendMessage()" #chatForm="ngForm">
     <div id="panel" style="position: fixed;  bottom: 40px;">
       <hr>

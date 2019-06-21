@@ -7,10 +7,27 @@ namespace MeetingWebsite.BLL.ViewModel.Dialog
 {
     public class AddDialogMessageViewModel
     {
-        public string SenderId { get; set; }
-        public int DialogId { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public DateTime Date { get; set; }
+        public string Avatar { get; set; }
         public string Text { get; set; }
-        public bool New { get; set; }
-        public IFormFileCollection Files { get; set; }
+
+        public AddDialogMessageViewModel(Message message)
+        {
+            Firstname = message.Sender.FirstName;
+            Lastname = message.Sender.LastName;
+            Date = message.Date;
+            Text = message.Text;
+
+            if (message.Sender.Avatar != null)
+            {
+                Avatar = message.Sender.HomeDir + message.Sender.Avatar.Path;
+            }
+            else
+            {
+                Avatar = "/File/Nophoto.jpg";
+            }
+        }
     }
 }
