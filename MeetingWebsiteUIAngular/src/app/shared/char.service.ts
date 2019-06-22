@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { MessageInfo } from '../models/MessageInfo';
 
 @Injectable({
     providedIn: 'root'
@@ -18,5 +19,10 @@ export class ChatService {
 
     getDetailsUserDialogs(id: number){
         return this.http.get(this.BaseURI + '/dialog/DialogDetails/' + id)
+    }
+
+    sendMessage(outgoingMessage: MessageInfo){
+        console.log(outgoingMessage);
+        return this.http.post(this.BaseURI + '/dialog/SendMessage', outgoingMessage);
     }
 }

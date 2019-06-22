@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MeetingWebsite.Api.Hub;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel.Dialog;
+using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace MeetingWebsite.Api.Controllers
 {
@@ -14,10 +18,13 @@ namespace MeetingWebsite.Api.Controllers
     public class DialogController : ControllerBase
     {
         private readonly IDialogService _dialogService;
+        private readonly IHubContext<ChatHub> _chatHub;
 
-        public DialogController(IDialogService dialogService)
+        public DialogController(IDialogService dialogService,
+            IHubContext<ChatHub> chatHub)
         {
             _dialogService = dialogService;
+            _chatHub = chatHub;
         }
 
         //GET: api/dialog/GetAllDialogs
@@ -47,6 +54,48 @@ namespace MeetingWebsite.Api.Controllers
             var result = DetailsDialogViewModel.MapToViewModel(dialog.Messages, userId).ToList();
 
             return Ok(result);
+        }
+
+        //POST: api/dialog/SendMessage
+        [HttpPost, Route("SendMessage")]
+        public async Task<IActionResult> SendMessage([Fro] DetailsParamsViewModel model)
+        {
+            try
+            {
+                UserIds receiver, caller;
+                FindCallerReceiverByIds(model.ReceiverId, out caller, out receiver);
+
+                var newMessage = _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId);
+                var dialog = _dialogService.GetDialogDetails(caller.UserId, model.ReceiverId);
+                var lastMessage = dialog.Result.Messages.Last();
+
+                await _chatHub.Clients.Client(caller.ConnId).SendAsync("SendMyself", new AddDialogMessageViewModel(lastMessage));
+
+                if (receiver != null)
+                {
+                    await _chatHub.Clients.Client(receiver.ConnId)
+                        .SendAsync("Send", new AddDialogMessageViewModel(lastMessage), caller.UserId);
+
+                    //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        private void FindCallerReceiverByIds(string receiverId, out UserIds caller, out UserIds receiver)
+        {
+            var connId = ChatHub._usersList
+                .Where(x => x.UserId == User.Claims.First(c => c.Type == "UserID").Value)
+                .Select(x => x.ConnId)
+                .First();
+
+            receiver =  ChatHub._usersList.Find(r => r.UserId == receiverId);
+            caller = ChatHub._usersList.Find(c => c.ConnId == connId);
         }
     }
 }

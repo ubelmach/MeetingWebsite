@@ -32,9 +32,9 @@ export class ChatComponent implements OnInit {
     );
   }
 
-    onOpenDialog(userId: string, dialogId: number) {
-      this.UserId = userId;
-      this.DialogId = dialogId;
+  onOpenDialog(userId: string, dialogId: number) {
+    this.UserId = userId;
+    this.DialogId = dialogId;
     this.visibleChatDetails = !this.visibleChatDetails;
   }
 

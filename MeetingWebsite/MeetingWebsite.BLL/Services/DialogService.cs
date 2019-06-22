@@ -65,7 +65,7 @@ namespace MeetingWebsite.BLL.Services
             return fullList.Any();
         }
 
-        public async Task<Message> AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
+        public Message AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
         {
             //var user = await _accountService.GetUser(userId);
             //var dialog = FindDialog(dialogId);

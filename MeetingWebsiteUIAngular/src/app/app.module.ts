@@ -25,6 +25,7 @@ import { DetailsAlbumComponent } from './home/album/details-album/details-album.
 import { LightboxModule } from 'ngx-lightbox';
 import { ChatComponent } from './home/chat/chat.component';
 import { ChatDetailsComponent } from './home/chat/chat-details/chat-details.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ChatDetailsComponent } from './home/chat/chat-details/chat-details.comp
       progressBar: true
     }),
     FormsModule,
-    NgxBootstrapSliderModule
+    NgxBootstrapSliderModule,
+    NgxDropzoneModule
   ],
   providers: [UserService, {
     provide: HTTP_INTERCEPTORS,
