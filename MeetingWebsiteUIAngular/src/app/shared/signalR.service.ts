@@ -14,15 +14,14 @@ export class SignalRService {
 
     public hubConnection: signalR.HubConnection
     private token = localStorage.getItem('token');
-    public incomingMessage = new Message();
 
     constructor() { }
 
     public startConnection = () => {
         this.hubConnection = new signalR.HubConnectionBuilder()
             .withUrl('https://localhost:44333/chat',
-                { 
-                    skipNegotiation: true, 
+                {
+                    skipNegotiation: true,
                     transport: HttpTransportType.WebSockets,
                     accessTokenFactory: () => this.token
                 })
@@ -35,17 +34,15 @@ export class SignalRService {
     }
 
 
-    Send(outgoingMessage: MessageInfo) : void{
+    Send(outgoingMessage: MessageInfo): void {
         this.hubConnection
-        .invoke('Send', outgoingMessage)
-        .catch(err => console.error(err));
-    }       
-    
-    // SendFromProfile(message: string, userId: string): void {
-        SendFromProfile(outgoingMessage: Message): void {
+            .invoke('Send', outgoingMessage)
+            .catch(err => console.error(err));
+    }
+
+    SendFromProfile(outgoingMessage: MessageInfo): void {
         this.hubConnection
-            // .invoke('SendFromProfile', message, userId)
             .invoke('SendFromProfile', outgoingMessage)
-            .catch(err => console.error(err)); 
+            .catch(err => console.error(err));
     }
 }

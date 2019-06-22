@@ -65,19 +65,22 @@ namespace MeetingWebsite.Api.Hub
                 UserIds receiver, caller;
                 FindCallerReceiverByIds(model.ReceiverId, out caller, out receiver);
 
-                var newMessage = _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId);
+                var newMessage = await _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId);
 
-                await Clients.Client(caller.ConnId).SendAsync("SendMyself", new AddDialogMessageViewModel(newMessage));
+                var dialog = _dialogService.GetDialogDetails(caller.UserId, model.ReceiverId);
+                var lastMessage = dialog.Result.Messages.Last();
+
+                await Clients.Client(caller.ConnId).SendAsync("SendMyself", new AddDialogMessageViewModel(lastMessage));
 
                 if (receiver != null)
                 {
                     await Clients.Client(receiver.ConnId)
-                        .SendAsync("Send", new AddDialogMessageViewModel(newMessage), caller.UserId);
+                        .SendAsync("Send", new AddDialogMessageViewModel(lastMessage), caller.UserId);
 
                     //await Clients.Client(receiver.ConnId).SendAsync("SoundNotify", "");
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }

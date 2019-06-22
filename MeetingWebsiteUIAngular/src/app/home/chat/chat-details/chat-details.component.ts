@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Input } from '@angular/core';
 import { ChatService } from 'src/app/shared/char.service';
-import { Message } from 'src/app/models/Message';
 import { MessageInfo } from 'src/app/models/MessageInfo';
+import { Message } from 'src/app/models/Message';
 
 @Component({
   selector: 'app-chat-details',
@@ -23,12 +23,11 @@ export class ChatDetailsComponent implements OnInit {
     public service: ChatService) { }
 
   message = '';
-  //messages: string[] = [];
-
   messages: Message[] = new Array();
+  messagesRealTime: Message[] = new Array();
+ 
+  incomingMessage =  new Message();
   outgoingMessage  = new MessageInfo();
-
-  //messagesFromDb;
 
   ngOnInit() {
     this.signalR.startConnection();
@@ -37,7 +36,6 @@ export class ChatDetailsComponent implements OnInit {
 
     this.service.getDetailsUserDialogs(this.dialogId).subscribe(
       res => {
-        // this.messagesFromDb = res;
         this.messages = res as Message[];
       },
       err => {
@@ -47,29 +45,24 @@ export class ChatDetailsComponent implements OnInit {
   }
 
   addSendListener() {
-    this.signalR.hubConnection.on('Send', (data) => {
-      this.signalR.incomingMessage = data as Message;
-      this.messages.push(this.signalR.incomingMessage);
-
-      // this.messages.push(message);
+    this.signalR.hubConnection.on('Send', (data) => {    
+      this.incomingMessage = data as Message;
+      this.messagesRealTime.push(this.incomingMessage);
     });
   }
 
   addSendMyselfListener() {
-    this.signalR.hubConnection.on('SendMyself', (data) => {
-      this.signalR.incomingMessage = data as Message;
-      this.messages.push(this.signalR.incomingMessage);
-      
-      // this.messages.push(message);
+      this.signalR.hubConnection.on('SendMyself', (data) => {
+        debugger;
+        this.incomingMessage = data as Message;
+        this.messagesRealTime.push(this.incomingMessage);
     });
   }
 
   addNewDialogListener() {
-    this.signalR.hubConnection.on('AddNewDialog', (data) => {
-      this.signalR.incomingMessage = data as Message;
-      this.messages.push(this.signalR.incomingMessage);
-
-      // this.messages.push(message);
+      this.signalR.hubConnection.on('AddNewDialog', (data) => {
+        this.incomingMessage = data as Message;
+        this.messagesRealTime.push(this.incomingMessage);
     });
   }
 

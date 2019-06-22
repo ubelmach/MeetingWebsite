@@ -65,8 +65,23 @@ namespace MeetingWebsite.BLL.Services
             return fullList.Any();
         }
 
-        public Message AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
+        public async Task<Message> AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
         {
+            //var user = await _accountService.GetUser(userId);
+            //var dialog = FindDialog(dialogId);
+            //var msg = new Message
+            //{
+            //    SenderId = userId,
+            //    IdDialog = dialogId,
+            //    Text = message,
+            //    Date = DateTime.Now,
+            //    New = false
+            //};
+
+            ////dialog.Messages.Add(msg);
+
+            //user.Messages.Add(msg);
+
             var newMessage = new Message
             {
                 SenderId = userId,
@@ -78,6 +93,10 @@ namespace MeetingWebsite.BLL.Services
 
             _database.MessageRepository.Create(newMessage);
             _database.Save();
+
+            //var test = _database.MessageRepository.Get(newMessage.Id);
+
+            //var test = msg;
 
             return newMessage;
 

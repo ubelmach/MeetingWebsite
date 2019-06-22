@@ -1,26 +1,6 @@
 <div style="height: 650px; overflow: auto;">
   <div id="message">
     <hr>
-    <!-- <div *ngFor="let message of messagesFromDb">
-      <div class="w3-card-4">
-
-        <header class="w3-container w3-white">
-          <img class="w3-circle" src="https://localhost:44333{{message.Avatar}}" style="max-height: 50px;
-              max-width: 80px; margin-top: 1%">
-          {{message.Firstname}} {{message.Lastname}}
-        </header>
-
-        <div class="w3-container">
-          {{message.Text}}
-        </div>
-
-        <footer class="w3-container w3-black">
-          {{message.Date | date:'MMM d, y, h:mm:ss a' }}
-        </footer>
-
-      </div>
-      <hr>
-    </div> -->
 
     <div *ngIf="messages.length > 0">
       <div *ngFor="let message of messages">
@@ -42,8 +22,32 @@
   
         </div>
         <hr>
+
       </div>
     </div>
+
+    <div *ngFor="let message of messagesRealTime">
+        <div class="w3-card-4">
+
+          <header class="w3-container w3-white">
+            <img class="w3-circle" src="https://localhost:44333{{message.avatar}}" style="max-height: 50px;
+                max-width: 80px; margin-top: 1%">
+            {{message.firstname}} {{message.lastname}}
+          </header>
+  
+          <div class="w3-container">
+            {{message.text}}
+          </div>
+  
+          <footer class="w3-container w3-black">
+            {{message.date | date:'MMM d, y, h:mm:ss a' }}
+          </footer>
+  
+        </div>
+        <hr>
+
+      </div>
+
   </div>
 </div>
 

@@ -7,8 +7,6 @@ namespace MeetingWebsite.BLL.ViewModel.Dialog
 {
     public class AddDialogMessageViewModel
     {
-        public int DialogId { get; set; }
-        public string SenderId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime Date { get; set; }
@@ -17,8 +15,6 @@ namespace MeetingWebsite.BLL.ViewModel.Dialog
 
         public AddDialogMessageViewModel(Message message)
         {
-            DialogId = message.Id;
-            SenderId = message.SenderId;
             Firstname = message.Sender.FirstName;
             Lastname = message.Sender.LastName;
             Date = message.Date;
