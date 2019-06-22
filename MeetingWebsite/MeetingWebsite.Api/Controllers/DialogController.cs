@@ -58,7 +58,7 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST: api/dialog/SendMessage
         [HttpPost, Route("SendMessage")]
-        public async Task<IActionResult> SendMessage([Fro] DetailsParamsViewModel model)
+        public async Task<IActionResult> SendMessage([FromBody] DetailsParamsViewModel model)
         {
             try
             {

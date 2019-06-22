@@ -23,6 +23,7 @@ export class ChatService {
 
     sendMessage(outgoingMessage: MessageInfo){
         console.log(outgoingMessage);
+        debugger;
         return this.http.post(this.BaseURI + '/dialog/SendMessage', outgoingMessage);
     }
 }

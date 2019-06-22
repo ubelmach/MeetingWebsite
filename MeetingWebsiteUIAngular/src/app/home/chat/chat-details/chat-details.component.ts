@@ -68,6 +68,7 @@ export class ChatDetailsComponent implements OnInit {
   }
 
   onSendMessage() {
+    debugger;
     var outgoingMessage  = new MessageInfo();
     outgoingMessage.DialogId = this.dialogId;
     outgoingMessage.ReceiverId = this.userId;
@@ -75,7 +76,7 @@ export class ChatDetailsComponent implements OnInit {
 
     console.log(this.dialogId, this.userId, this.message);
 
-    this.service.sendMessage(outgoingMessage);
+    this.service.sendMessage(outgoingMessage).subscribe();
   }
 
   onOpenDropzone(){
