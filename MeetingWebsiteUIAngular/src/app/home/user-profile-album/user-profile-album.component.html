@@ -1,0 +1,35 @@
+<div class="container" style="margin-top: 3%;">
+  <div class="jumbotron">
+    <div style="text-align: right">
+      <div class="flex-container">
+        <div *ngFor="let album of albums" class="flex-element" (click)="onOpenAlbum(album.Id)"
+          onclick="document.getElementById('id02').style.display='block'">
+          <div style="text-align: center">
+            <img [src]="imageUrl" style="max-height: 150px; max-width: 431px">
+            <p>{{album.Name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="we-container" style="z-index: 999999;">
+    <div id="id02" class="w3-modal">
+      <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px; z-index: 999999;">
+        <div class="w3-center"><br>
+          <span onclick="document.getElementById('id02').style.display='none'" (click)="onGoHome()"
+            class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+        </div>
+
+        <router-outlet></router-outlet>
+
+        <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+          <div style="text-align: right">
+            <button onclick="document.getElementById('id02').style.display='none'" type="button" (click)="onGoHome()"
+              class="w3-button w3-red">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

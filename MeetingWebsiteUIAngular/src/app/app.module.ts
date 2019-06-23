@@ -26,6 +26,8 @@ import { LightboxModule } from 'ngx-lightbox';
 import { ChatComponent } from './home/chat/chat.component';
 import { ChatDetailsComponent } from './home/chat/chat-details/chat-details.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { UserProfileAlbumComponent } from './home/user-profile-album/user-profile-album.component';
+import { UserProfileDetailsAlbumComponent } from './home/user-profile-album/user-profile-details-album/user-profile-details-album.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     AlbumComponent,
     DetailsAlbumComponent,
     ChatComponent,
-    ChatDetailsComponent
+    ChatDetailsComponent,
+    UserProfileAlbumComponent,
+    UserProfileDetailsAlbumComponent
   ],
   imports: [
     BrowserModule,

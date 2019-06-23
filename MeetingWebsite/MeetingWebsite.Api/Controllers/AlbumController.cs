@@ -39,6 +39,21 @@ namespace MeetingWebsite.Api.Controllers
             return Ok(showAlbumCurrentUser);
         }
 
+        //GET: api/album/GetAllAlbumUser/id
+        [HttpGet, Route("GetAllAlbumUser/{id}")]
+        public IActionResult GetAlbum(string id)
+        {
+            var albums = _albumService.FindAllAlbumsCurrentUser(id).ToList();
+
+            if (!albums.Any())
+            {
+                return BadRequest(new { message = "Error, current user has no albums" });
+            }
+
+            var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel(item)).ToList();
+            return Ok(showAlbumCurrentUser);
+        }
+
         //GET: api/album/AlbumDetails
         [HttpGet, Route("AlbumDetails/{id}")]
         public IActionResult Get(int id)

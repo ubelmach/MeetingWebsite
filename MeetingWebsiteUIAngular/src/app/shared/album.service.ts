@@ -19,6 +19,10 @@ export class AlbumService {
     getAlbums(){
         return this.http.get(this.BaseURI + '/album/GetAllAlbum');
     }
+
+    getAlbumsUser(id: string){
+        return this.http.get(this.BaseURI + '/album/GetAllAlbumUser/' + id);
+    }
     
     createAlbum() {
         var body = {

@@ -10,41 +10,46 @@
             friend</button>
         </div>
         <div>
-          <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('id01').style.display='block'" style="margin-top: 2%;">Send a message</button>
+          <button type="button" class="btn btn-outline-primary"
+            onclick="document.getElementById('id01').style.display='block'" style="margin-top: 2%;">Send a
+            message</button>
         </div>
       </ng-template>
       <div>
-      <button type="button" class="btn btn-outline-danger" style="margin-top: 2%;" (click)="onAddToBlacklist()">Add to
-        blacklist</button>
-    </div>
+        <button type="button" class="btn btn-outline-danger" style="margin-top: 2%;" (click)="onAddToBlacklist()">Add to
+          blacklist</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-outline-danger" style="margin-top: 2%;" (click)="onOpenAlbums()">View
+          albums</button>
+      </div>
     </div>
   </div>
 
   <div class="w3-container">
- 
+
     <div id="id01" class="w3-modal">
       <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-  
-        <form class="w3-container" (ngSubmit)="onSendMessageFromProfile()" 
-        #chatForm="ngForm">
-          
+
+        <form class="w3-container" (ngSubmit)="onSendMessageFromProfile()" #chatForm="ngForm">
+
           <div class="w3-section">
 
-            <textarea rows="10" cols="57" id="message" name="message"
-            placeholder="Enter message" [(ngModel)]="message" style="resize: none;"></textarea>
+            <textarea rows="10" cols="57" id="message" name="message" placeholder="Enter message" [(ngModel)]="message"
+              style="resize: none;"></textarea>
 
             <button type="button" style="text-align: right" class="btn btn-link">attach photo</button>
-            
-            <button class="w3-button w3-block w3-green w3-section w3-padding"
-            type="submit">Send</button>
+
+            <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Send</button>
           </div>
 
         </form>
-  
+
         <div class="w3-container w3-border-top w3-padding-16 w3-light-grey" style="text-align: right">
-          <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+          <button onclick="document.getElementById('id01').style.display='none'" type="button"
+            class="w3-button w3-red">Cancel</button>
         </div>
-  
+
       </div>
     </div>
   </div>

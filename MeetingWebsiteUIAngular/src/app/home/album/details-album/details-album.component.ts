@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Lightbox } from 'ngx-lightbox';
-import { forEach } from '@angular/router/src/utils/collection';
+
 
 @Component({
   selector: 'app-details-album',

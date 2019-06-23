@@ -16,6 +16,8 @@ import { AlbumComponent } from './home/album/album.component';
 import { DetailsAlbumComponent } from './home/album/details-album/details-album.component';
 import { ChatComponent } from './home/chat/chat.component';
 import { ChatDetailsComponent } from './home/chat/chat-details/chat-details.component';
+import { UserProfileAlbumComponent } from './home/user-profile-album/user-profile-album.component';
+import { UserProfileDetailsAlbumComponent } from './home/user-profile-album/user-profile-details-album/user-profile-details-album.component';
 
 
 const routes: Routes = [
@@ -47,6 +49,12 @@ const routes: Routes = [
         path: 'user-profile/:id', component: UserProfileComponent
       },
       {
+        path: 'user-profile-album/:id', component: UserProfileAlbumComponent,
+        children: [
+          {path: 'user-profile-details-album/:id', component: UserProfileDetailsAlbumComponent}
+        ]
+      },
+      {
         path: 'search', component: SearchComponent
       },
       {
@@ -58,7 +66,6 @@ const routes: Routes = [
       {
         path: 'chat', component: ChatComponent,
         children: [
-          // { path: 'chat-details/:id', component: ChatDetailsComponent }
           { path: 'chat-details/', component: ChatDetailsComponent }
         ]
       }

@@ -4,9 +4,11 @@ import { SearchService } from 'src/app/shared/search.service';
 import { ToastrService } from 'ngx-toastr';
 import { BlackListService } from 'src/app/shared/blacklist.service';
 import { SignalRService } from 'src/app/shared/signalR.service';
+import { Router } from '@angular/router';
 
 import * as signalR from "@aspnet/signalr";
 import { HttpTransportType } from '@aspnet/signalr';
+import { AlbumService } from 'src/app/shared/album.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -28,7 +30,9 @@ export class UserProfileComponent implements OnInit {
     public service: SearchService,
     private toastr: ToastrService,
     public blacklist: BlackListService,
-    public signalR: SignalRService) { }
+    public signalR: SignalRService,
+    public albumService: AlbumService,
+    private router: Router) { }
 
   async ngOnInit() {
     
@@ -80,6 +84,10 @@ export class UserProfileComponent implements OnInit {
           console.log(err);
       }
     )
+  }
+
+  onOpenAlbums(){
+    this.router.navigateByUrl('/home/user-profile-album/' + this.userId);
   }
 
   onSendMessageFromProfile() {
