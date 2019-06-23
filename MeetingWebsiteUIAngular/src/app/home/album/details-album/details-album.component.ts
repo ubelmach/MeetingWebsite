@@ -94,25 +94,6 @@ export class DetailsAlbumComponent implements OnInit {
     )
   }
 
-  // fileToUpload: File = null;
-
-  // onAddPhoto(file: FileList) {
-  //   this.fileToUpload = file.item(0);
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(this.fileToUpload);
-
-  //   this.service.AddPhoto(this.idAlbum, this.fileToUpload).subscribe(
-  //     (res: any) => {
-  //       console.log('add photo');
-  //       this.ngOnInit();
-  //       this.toastr.success('Success', 'Photo added');
-  //     },
-  //     err => {
-  //       console.log(err);
-  //     }
-  //   )
-  // }
-
   fileToUpload: File[] = new Array();
 
   onFilesAdded(files: File[]) {   
