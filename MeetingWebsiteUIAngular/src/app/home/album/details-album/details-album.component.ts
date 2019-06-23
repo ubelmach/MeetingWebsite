@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Lightbox } from 'ngx-lightbox';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-details-album',
@@ -93,22 +94,51 @@ export class DetailsAlbumComponent implements OnInit {
     )
   }
 
-  fileToUpload: File = null;
+  // fileToUpload: File = null;
 
-  onAddPhoto(file: FileList) {
-    this.fileToUpload = file.item(0);
-    const reader = new FileReader();
-    reader.readAsDataURL(this.fileToUpload);
+  // onAddPhoto(file: FileList) {
+  //   this.fileToUpload = file.item(0);
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(this.fileToUpload);
 
-    this.service.AddPhoto(this.idAlbum, this.fileToUpload).subscribe(
-      (res: any) => {
-        console.log('add photo');
-        this.ngOnInit();
-        this.toastr.success('Success', 'Photo added');
-      },
-      err => {
-        console.log(err);
-      }
-    )
+  //   this.service.AddPhoto(this.idAlbum, this.fileToUpload).subscribe(
+  //     (res: any) => {
+  //       console.log('add photo');
+  //       this.ngOnInit();
+  //       this.toastr.success('Success', 'Photo added');
+  //     },
+  //     err => {
+  //       console.log(err);
+  //     }
+  //   )
+  // }
+
+  fileToUpload: File[] = new Array();
+
+  onFilesAdded(files: File[]) {   
+    this.fileToUpload = files;
+    files.forEach(file => {
+      const reader = new FileReader();   
+      reader.onload = (e: ProgressEvent) => {
+        const content = (e.target as FileReader).result;
+      };
+      reader.readAsText(file);
+    });
+
+    this.fileToUpload.forEach(file => {
+      this.service.AddPhoto(this.idAlbum, file).subscribe(
+            (res: any) => {
+              this.ngOnInit();
+              this.toastr.success('Success', 'Photo added');
+            },
+            err => {
+              console.log(err);
+            }
+          )
+    });
+  }
+   
+  onFilesRejected(files: File[]) {
+    console.log(files);
   }
 }

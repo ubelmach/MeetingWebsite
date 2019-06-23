@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace MeetingWebsite.BLL.Services
 {
-    public class DialogService: IDialogService
+    public class DialogService : IDialogService
     {
         private readonly IUnitOfWork _database;
         private readonly IAccountService _accountService;
@@ -65,73 +65,56 @@ namespace MeetingWebsite.BLL.Services
             return fullList.Any();
         }
 
-        public Message AddDialogMessage(string userId, string message, int dialogId/*, IFormFileCollection files*/)
-        {
-            //var user = await _accountService.GetUser(userId);
-            //var dialog = FindDialog(dialogId);
-            //var msg = new Message
-            //{
-            //    SenderId = userId,
-            //    IdDialog = dialogId,
-            //    Text = message,
-            //    Date = DateTime.Now,
-            //    New = false
-            //};
-
-            ////dialog.Messages.Add(msg);
-
-            //user.Messages.Add(msg);
-
-            var newMessage = new Message
-            {
-                SenderId = userId,
-                IdDialog = dialogId,
-                Text = message,
-                Date = DateTime.Now,
-                New = false
-            };
-
-            _database.MessageRepository.Create(newMessage);
-            _database.Save();
-
-            //var test = _database.MessageRepository.Get(newMessage.Id);
-
-            //var test = msg;
-
-            return newMessage;
-
-            //if (!files.Any())
-            //{
-            //    await _fileService.AddDialogMessagePhotos(dialogId, newMessage.Id, files);
-            //}
-        }
-
-        public async Task<Dialog> GetDialogDetails(string userId, string companionId)
+        public async Task<Message> AddDialogMessage(string userId, string message, int dialogId, IFormFileCollection files)
         {
             try
             {
-                var user = await _accountService.GetUser(userId);
+                var newMessage = new Message
+                {
+                    SenderId = userId,
+                    IdDialog = dialogId,
+                    Text = message,
+                    Date = DateTime.Now,
+                    New = false
+                };
 
-                var incomingDialogs = user.IncomingMessages.Where(x =>
-                        x.ReceiverId == userId && x.SenderId == companionId)
-                    .ToList();
+                _database.MessageRepository.Create(newMessage);
+                _database.Save();
 
-                var outgoingDialogs = user.OutgoingMessages.Where(x =>
-                        x.ReceiverId == companionId && x.SenderId == userId)
-                    .ToList();
+                if (files.Any())
+                {
+                    await _fileService.AddDialogMessagePhotos(userId, dialogId, newMessage.Id, files);
+                }
 
-                var fullList = new List<Dialog>();
-                fullList.AddRange(incomingDialogs);
-                fullList.AddRange(outgoingDialogs);
-
-                var result = fullList.First();
-
-                return result;
+                return newMessage;
             }
             catch (Exception e)
             {
                 throw e;
             }
+            
+        }
+
+        public async Task<Dialog> GetDialogDetails(string userId, string companionId)
+        {
+            var user = await _accountService.GetUser(userId);
+
+            var incomingDialogs = user.IncomingMessages.Where(x =>
+                    x.ReceiverId == userId && x.SenderId == companionId)
+                .ToList();
+
+            var outgoingDialogs = user.OutgoingMessages.Where(x =>
+                    x.ReceiverId == companionId && x.SenderId == userId)
+                .ToList();
+
+            var fullList = new List<Dialog>();
+            fullList.AddRange(incomingDialogs);
+            fullList.AddRange(outgoingDialogs);
+
+            var result = fullList.First();
+
+            return result;
+
         }
 
         public Dialog CreateDialog(string receiverId, string senderId)

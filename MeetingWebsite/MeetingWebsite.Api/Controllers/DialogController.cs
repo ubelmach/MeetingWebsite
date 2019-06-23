@@ -58,14 +58,14 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST: api/dialog/SendMessage
         [HttpPost, Route("SendMessage")]
-        public async Task<IActionResult> SendMessage([FromBody] DetailsParamsViewModel model)
+        public async Task<IActionResult> SendMessage([FromForm] DetailsParamsViewModel model)
         {
             try
             {
                 UserIds receiver, caller;
                 FindCallerReceiverByIds(model.ReceiverId, out caller, out receiver);
 
-                var newMessage = _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId);
+                var newMessage = _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId, model.Photo);
                 var dialog = _dialogService.GetDialogDetails(caller.UserId, model.ReceiverId);
                 var lastMessage = dialog.Result.Messages.Last();
 

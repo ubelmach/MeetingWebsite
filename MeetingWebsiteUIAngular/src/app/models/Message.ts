@@ -4,4 +4,5 @@ export class Message {
     Date = null;
     Avatar = '';
     Text = '';
+    Photos = new Array();
 }

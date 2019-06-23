@@ -25,8 +25,9 @@ export class ChatDetailsComponent implements OnInit {
   message = '';
   messages: Message[] = new Array();
   messagesRealTime: Message[] = new Array();
- 
-  incomingMessage =  new Message();
+  messagePhotos: File[] = new Array();
+
+  incomingMessage = new Message();
 
   visibleDropZone = true;
 
@@ -45,58 +46,61 @@ export class ChatDetailsComponent implements OnInit {
     )
   }
 
-  addSendListener() {
-    this.signalR.hubConnection.on('Send', (data) => {    
+  addSendListener() {    
+    this.signalR.hubConnection.on('Send', (data) => {
       this.incomingMessage = data as Message;
       this.messagesRealTime.push(this.incomingMessage);
     });
   }
 
   addSendMyselfListener() {
-      this.signalR.hubConnection.on('SendMyself', (data) => {
-        debugger;
-        this.incomingMessage = data as Message;
-        this.messagesRealTime.push(this.incomingMessage);
+    this.signalR.hubConnection.on('SendMyself', (data) => {
+      debugger;
+      this.incomingMessage = data as Message;
+      this.messagesRealTime.push(this.incomingMessage);
     });
   }
 
   addNewDialogListener() {
-      this.signalR.hubConnection.on('AddNewDialog', (data) => {
-        this.incomingMessage = data as Message;
-        this.messagesRealTime.push(this.incomingMessage);
+    this.signalR.hubConnection.on('AddNewDialog', (data) => {
+      this.incomingMessage = data as Message;
+      this.incomingMessage.Photos = this.messagePhotos;
+      this.messagesRealTime.push(this.incomingMessage);
     });
   }
 
   onSendMessage() {
-    debugger;
-    var outgoingMessage  = new MessageInfo();
-    outgoingMessage.DialogId = this.dialogId;
-    outgoingMessage.ReceiverId = this.userId;
-    outgoingMessage.Message = this.message;
+    var formData = new FormData();
+    formData.append('DialogId', this.dialogId.toString());
+    formData.append('ReceiverId', this.userId);
+    formData.append('Message', this.message);
+    this.messagePhotos.forEach(photo => {
+      formData.append('Photo', photo);
+    });
 
-    console.log(this.dialogId, this.userId, this.message);
-
-    this.service.sendMessage(outgoingMessage).subscribe();
+    this.service.sendMessage(formData).subscribe();
   }
 
-  onOpenDropzone(){
+  onOpenDropzone() {
     this.visibleDropZone = !this.visibleDropZone;
   }
 
   onFilesAdded(files: File[]) {
-   
-    files.forEach(file => {
-      const reader = new FileReader();
-   
-      reader.onload = (e: ProgressEvent) => {
-        const content = (e.target as FileReader).result;
-      };
-   
-      reader.readAsText(file);
 
-    });
+    this.messagePhotos = files;
+
+    // files.forEach(file => {
+    //   const reader = new FileReader();
+
+    //   reader.onload = (e: ProgressEvent) => {
+    //     const content = (e.target as FileReader).result;
+    //   };
+
+    //   reader.readAsText(file);
+
+    // });
   }
-   
+
   onFilesRejected(files: File[]) {
     console.log(files);
   }

@@ -11,7 +11,7 @@ namespace MeetingWebsite.BLL.Services
         void SetUserFolder(User user);
         Task AddUserAvatar(EditUserAvatarViewModel editAvatar);
         Task AddPhotoInAlbum(AddPhotoInAlbumViewModel photo);
-        Task AddDialogMessagePhotos(int dialogId, int messageId, IFormFileCollection photos);
+        Task AddDialogMessagePhotos(string userId, int dialogId, int messageId, IFormFileCollection photos);
         FileModel FindPhotoInAlbum(int id);
         void DeletePhotoInAlbum(int id);
         IEnumerable<FileModel> FindPhotosInAlbum(int id);

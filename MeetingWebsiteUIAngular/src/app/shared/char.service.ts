@@ -21,9 +21,11 @@ export class ChatService {
         return this.http.get(this.BaseURI + '/dialog/DialogDetails/' + id)
     }
 
-    sendMessage(outgoingMessage: MessageInfo){
-        console.log(outgoingMessage);
-        debugger;
-        return this.http.post(this.BaseURI + '/dialog/SendMessage', outgoingMessage);
+    sendMessage(formData: FormData){
+        console.log(formData.getAll('DialogId'));
+        console.log(formData.getAll('ReceiverId'));
+        console.log(formData.getAll('Message'));
+        console.log(formData.getAll('Photo'));
+        return this.http.post(this.BaseURI + '/dialog/SendMessage', formData);
     }
 }

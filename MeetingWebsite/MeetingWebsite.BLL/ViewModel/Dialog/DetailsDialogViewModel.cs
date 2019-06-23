@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.BLL.ViewModel.Dialog
 {
     public class DetailsDialogViewModel
     {
-        public int DialogId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime Date { get; set; }
         public string Avatar { get; set; }
         public string Text { get; set; }
+        public List<string> Photos { get; set; }
 
         public DetailsDialogViewModel(Message message)
         {
@@ -27,6 +28,17 @@ namespace MeetingWebsite.BLL.ViewModel.Dialog
             else
             {
                 Avatar = "/File/Nophoto.jpg";
+            }
+
+            var path = new List<string>();
+            if (message.Files.Any())
+            {
+                foreach (var file in message.Files)
+                {
+                    path.Add(file.Path);
+                }
+
+                Photos = path;
             }
 
         }

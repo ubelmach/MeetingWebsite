@@ -1,13 +1,16 @@
 <form class="w3-container" action="/action_page.php">
   <div class="row">
-    <div>
-      <input type="file" #Image accept="image/*" (change)="onAddPhoto($event.target.files)">
-    </div>
     <div style="text-align: right">
       <button class="btn btn-link" onclick="document.getElementById('id02').style.display='none'"
         (click)="onDeleteAlbum()">Delete album</button>
     </div>
   </div>
+
+  <div>
+      <ngx-dropzone [showPreviews]="true" #dropzone (filesAdded)="onFilesAdded($event)"></ngx-dropzone>
+      <button (click)="dropzone.reset()">Reset</button>
+  </div>
+
   <div class="w3-section">
     <div class="flex-container">
       <div *ngFor="let photo of photos; let i = index" class="flex-element">

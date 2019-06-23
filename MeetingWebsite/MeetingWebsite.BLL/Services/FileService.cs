@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
@@ -66,7 +67,7 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task AddPhotoInAlbum(AddPhotoInAlbumViewModel photos)
         {
-            var album =_hostingEnvironment.WebRootPath + photos.HomeDir + photos.AlbumDir + '/';
+            var album = _hostingEnvironment.WebRootPath + photos.HomeDir + photos.AlbumDir + '/';
 
             foreach (var photo in photos.Photos)
             {
@@ -88,7 +89,7 @@ namespace MeetingWebsite.BLL.Services
             _database.Save();
         }
 
-        public async Task AddDialogMessagePhotos(int dialogId, int messageId, IFormFileCollection photos)
+        public async Task AddDialogMessagePhotos(string userId, int dialogId, int messageId, IFormFileCollection photos)
         {
             var createFolder = _hostingEnvironment.WebRootPath + "/File/DialogFiles/" + dialogId;
             if (!Directory.Exists(createFolder))
@@ -96,23 +97,32 @@ namespace MeetingWebsite.BLL.Services
                 Directory.CreateDirectory(createFolder);
             }
 
-            foreach (var photo in photos)
+            try
             {
-                var path = "/File/DialogFiles/" + dialogId + '/' + photo.FileName;
-                using (var fileStream = new FileStream(createFolder + '/' + photo.FileName, FileMode.Create))
+                foreach (var photo in photos)
                 {
-                    await photo.CopyToAsync(fileStream);
-                }
+                    var path = "/File/DialogFiles/" + dialogId + '/' + photo.FileName;
+                    using (var fileStream = new FileStream(createFolder + '/' + photo.FileName, FileMode.Create))
+                    {
+                        await photo.CopyToAsync(fileStream);
+                    }
 
-                var file = new FileModel
-                {
-                    MessageId = messageId,
-                    Name = photo.FileName,
-                    Path = path
-                };
-                _database.FileRepository.Create(file);
+                    var file = new FileModel
+                    {
+                        UserId = userId,
+                        MessageId = messageId,
+                        Name = photo.FileName,
+                        Path = path
+                    };
+                    _database.FileRepository.Create(file);
+                }
+                _database.Save();
             }
-            _database.Save();
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public FileModel FindPhotoInAlbum(int id)

@@ -12,6 +12,9 @@
           </header>
           <div class="w3-container">
             {{message.Text}}
+              <div *ngFor="let path of message.Photos">
+                <img src="https://localhost:44333{{path}}">
+              </div>
           </div>
           <footer class="w3-container w3-black">
             {{message.Date | date:'MMM d, y, h:mm:ss a' }}
@@ -30,6 +33,9 @@
         </header>
         <div class="w3-container">
           {{message.text}}
+          <div *ngFor="let path of message.photos">
+            <img src="https://localhost:44333{{path}}">
+          </div>
         </div>
         <footer class="w3-container w3-black">
           {{message.date | date:'MMM d, y, h:mm:ss a' }}
@@ -49,10 +55,10 @@
       <!-- <button type="button" style="text-align: right" class="btn btn-link" data-toggle="collapse"
         style="text-align: right" data-target="#demo">attach photo</button> -->
 
-        <button type="button" style="text-align: right" class="btn btn-link" 
-        (click)="dropzone.showFileSelector()">attach photo</button>
-      
-        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Send</button>
+      <button type="button" style="text-align: right" class="btn btn-link" (click)="dropzone.showFileSelector()">attach
+        photo</button>
+
+      <button class="w3-button w3-block w3-green w3-section w3-padding" (click)="dropzone.reset()" type="submit">Send</button>
     </div>
 
     <div class="additional-options">
