@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MeetingWebsite.BLL.ViewModel.Dialog;
 using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Http;
@@ -67,32 +66,24 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task<Message> AddDialogMessage(string userId, string message, int dialogId, IFormFileCollection files)
         {
-            try
+            var newMessage = new Message
             {
-                var newMessage = new Message
-                {
-                    SenderId = userId,
-                    IdDialog = dialogId,
-                    Text = message,
-                    Date = DateTime.Now,
-                    New = false
-                };
+                SenderId = userId,
+                IdDialog = dialogId,
+                Text = message,
+                Date = DateTime.Now,
+                New = false
+            };
 
-                _database.MessageRepository.Create(newMessage);
-                _database.Save();
+            _database.MessageRepository.Create(newMessage);
+            _database.Save();
 
-                if (files.Any())
-                {
-                    await _fileService.AddDialogMessagePhotos(userId, dialogId, newMessage.Id, files);
-                }
-
-                return newMessage;
-            }
-            catch (Exception e)
+            if (files != null)
             {
-                throw e;
+                await _fileService.AddDialogMessagePhotos(userId, dialogId, newMessage.Id, files);
             }
-            
+
+            return newMessage;
         }
 
         public async Task<Dialog> GetDialogDetails(string userId, string companionId)

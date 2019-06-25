@@ -12,9 +12,9 @@
           </header>
           <div class="w3-container">
             {{message.Text}}
-              <div *ngFor="let path of message.Photos">
-                <img src="https://localhost:44333{{path}}">
-              </div>
+            <div *ngFor="let path of message.Photos">
+              <img src="https://localhost:44333{{path}}">
+            </div>
           </div>
           <footer class="w3-container w3-black">
             {{message.Date | date:'MMM d, y, h:mm:ss a' }}
@@ -48,25 +48,27 @@
 
 <div>
   <form (submit)="onSendMessage()">
-    <div id="panel" style="position: fixed;  bottom: 40px;" *ngIf="visibleDropZone">
+    <div id="panel" style="position: fixed;  bottom: 40px;">
       <hr>
-      <textarea rows="3" cols="55" id="message" name="message" placeholder="Enter message" [(ngModel)]="message"
-        style="resize: none;"></textarea>
-      <button type="button" style="text-align: right" class="btn btn-link" (click)="dropzone.showFileSelector()">attach
-        photo</button>
 
-      <button class="w3-button w3-block w3-green w3-section w3-padding" (click)="dropzone.reset()" type="submit">Send</button>
-    </div>
-
-    <div class="additional-options">
-      <div id="demo" class="collapse">
-        <ngx-dropzone [showPreviews]="true" #dropzone (filesAdded)="onFilesAdded($event)"
-          (filesRejected)="onFilesRejected($event)">
-        </ngx-dropzone>
-
-        <button type="button" (click)="dropzone.reset()">Reset</button>
-        <button type="button" (click)="dropzone.showFileSelector()">Show file selector</button>
+      <div class="input-group">
+        <textarea rows="2" cols="55" id="message" name="message" placeholder="Enter message" [(ngModel)]="message"
+          style="resize: none;"></textarea>
+        <button type="button" (click)="dropzone.showFileSelector()">attach photo</button>
+        <button type="button" (click)="onOpenStikers()" class="input-addon">☺</button>
       </div>
+      <ngx-dropzone style="height: 43px;" [showPreviews]="true" #dropzone (filesAdded)="onFilesAdded($event)"
+        (filesRejected)="onFilesRejected($event)">
+      </ngx-dropzone>
+
+      <div *ngIf="!visibleStikers">
+        <emoji-mart title="Pick your emoji…" emoji="point_up" set="emojione" (emojiClick)="addEmoji($event)"
+          [style]="{ position: 'absolute', bottom: '150px', right: '-170px' }"
+          [i18n]="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }">
+        </emoji-mart>
+      </div>
+      <button class="w3-button w3-block w3-green w3-section w3-padding" (click)="dropzone.reset()"
+        type="submit">Send</button>
     </div>
   </form>
 </div>

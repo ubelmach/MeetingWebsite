@@ -6,6 +6,7 @@ import { Input } from '@angular/core';
 import { ChatService } from 'src/app/shared/char.service';
 import { MessageInfo } from 'src/app/models/MessageInfo';
 import { Message } from 'src/app/models/Message';
+import { EmojiModule, Emoji } from '@ctrl/ngx-emoji-mart/ngx-emoji'
 
 @Component({
   selector: 'app-chat-details',
@@ -22,14 +23,14 @@ export class ChatDetailsComponent implements OnInit {
     private router: Router,
     public service: ChatService) { }
 
-  message = '';
+  message :any;
   messages: Message[] = new Array();
   messagesRealTime: Message[] = new Array();
   messagePhotos: File[] = new Array();
 
   incomingMessage = new Message();
 
-  visibleDropZone = true;
+  visibleStikers = true;
 
   ngOnInit() {
     this.signalR.startConnection();
@@ -80,8 +81,8 @@ export class ChatDetailsComponent implements OnInit {
     this.service.sendMessage(formData).subscribe();
   }
 
-  onOpenDropzone() {
-    this.visibleDropZone = !this.visibleDropZone;
+  onOpenStikers() {
+    this.visibleStikers = !this.visibleStikers;
   }
 
   onFilesAdded(files: File[]) {
@@ -90,5 +91,11 @@ export class ChatDetailsComponent implements OnInit {
 
   onFilesRejected(files: File[]) {
     console.log(files);
+  }
+
+  addEmoji(event){
+    const { message } = this;
+    const text = `${message}${event.emoji.native}`;
+    this.message = text;
   }
 }

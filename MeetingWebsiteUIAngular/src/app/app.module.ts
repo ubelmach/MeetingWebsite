@@ -29,6 +29,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { UserProfileAlbumComponent } from './home/user-profile-album/user-profile-album.component';
 import { UserProfileDetailsAlbumComponent } from './home/user-profile-album/user-profile-details-album/user-profile-details-album.component';
 import { ResetComponent } from './user/reset/reset.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart'
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ResetComponent } from './user/reset/reset.component';
     }),
     FormsModule,
     NgxBootstrapSliderModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    PickerModule
   ],
   providers: [UserService, {
     provide: HTTP_INTERCEPTORS,

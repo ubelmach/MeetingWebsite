@@ -26,7 +26,8 @@
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css",
-              "./node_modules/ngx-lightbox/lightbox.css"
+              "./node_modules/ngx-lightbox/lightbox.css",
+              "./node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ],
             "scripts": [
               "node_modules/bootstrap-slider/dist/bootstrap-slider.min.js"

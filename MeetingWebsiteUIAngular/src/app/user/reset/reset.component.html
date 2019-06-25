@@ -4,7 +4,7 @@
       <label>Email</label>
       <input class="form-control" formControlName="Email">
       <label class="text-danger"
-        *ngIf="service.formModel.get('Email').touched && service.formModel.get('Email').errors?.email">Invalid email
+        *ngIf="service.resetModel.get('Email').touched && service.resetModel.get('Email').errors?.email">Invalid email
         address.</label>
     </div>
   
@@ -14,10 +14,10 @@
         <label>Password</label>
         <input type="password" class="form-control" formControlName="Password">
         <label class="text-danger"
-          *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.required">This
+          *ngIf="service.resetModel.get('Passwords.Password').touched && service.resetModel.get('Passwords.Password').errors?.required">This
           field is mandatory.</label>
         <label class="text-danger"
-          *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.minlength">Minimum
+          *ngIf="service.resetModel.get('Passwords.Password').touched && service.resetModel.get('Passwords.Password').errors?.minlength">Minimum
           4 characters required.</label>
       </div>
   
@@ -25,10 +25,10 @@
         <label>Password Confirm</label>
         <input type="password" class="form-control" formControlName="PasswordConfirm">
         <label class="text-danger"
-          *ngIf="service.formModel.get('Passwords.PasswordConfirm').touched && service.formModel.get('Passwords.PasswordConfirm').errors?.required">This
+          *ngIf="service.resetModel.get('Passwords.PasswordConfirm').touched && service.resetModel.get('Passwords.PasswordConfirm').errors?.required">This
           field is mandatory.</label>
         <label class="text-danger"
-          *ngIf="service.formModel.get('Passwords.PasswordConfirm').touched && service.formModel.get('Passwords.PasswordConfirm').errors?.passwordMismatch">Confirm
+          *ngIf="service.resetModel.get('Passwords.PasswordConfirm').touched && service.resetModel.get('Passwords.PasswordConfirm').errors?.passwordMismatch">Confirm
           Password does not match.</label>
       </div>
   
