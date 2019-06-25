@@ -107,11 +107,6 @@ namespace MeetingWebsite.BLL.Services
             return test.Any();
         }
 
-        public async Task<bool> CheckFromDialogs(string senderId, string receiverId)
-        {
-
-        }
-
         public void DeleteFromBlackList(int id)
         {
             _database.BlacklistRepository.Delete(id);
