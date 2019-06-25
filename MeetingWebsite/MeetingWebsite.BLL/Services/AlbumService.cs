@@ -23,8 +23,6 @@ namespace MeetingWebsite.BLL.Services
             return _database.AlbumRepository.Find(x => x.UserId == userId);
         }
 
-
-
         public PhotoAlbum FindAlbum(int id)
         {
             return _database.AlbumRepository.Get(id);

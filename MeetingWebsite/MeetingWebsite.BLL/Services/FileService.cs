@@ -96,49 +96,40 @@ namespace MeetingWebsite.BLL.Services
             {
                 Directory.CreateDirectory(createFolder);
             }
-
-            try
+            foreach (var photo in photos)
             {
-                foreach (var photo in photos)
+                var path = "/File/DialogFiles/" + dialogId + '/' + photo.FileName;
+                using (var fileStream = new FileStream(createFolder + '/' + photo.FileName, FileMode.Create))
                 {
-                    var path = "/File/DialogFiles/" + dialogId + '/' + photo.FileName;
-                    using (var fileStream = new FileStream(createFolder + '/' + photo.FileName, FileMode.Create))
-                    {
-                        await photo.CopyToAsync(fileStream);
-                    }
-
-                    var file = new FileModel
-                    {
-                        UserId = userId,
-                        MessageId = messageId,
-                        Name = photo.FileName,
-                        Path = path
-                    };
-                    _database.FileRepository.Create(file);
+                    await photo.CopyToAsync(fileStream);
                 }
-                _database.Save();
+
+                var file = new FileModel
+                {
+                    UserId = userId,
+                    MessageId = messageId,
+                    Name = photo.FileName,
+                    Path = path
+                };
+                _database.FileRepository.Create(file);
             }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
-        public FileModel FindPhotoInAlbum(int id)
-        {
-            return _database.FileRepository.Get(id);
-        }
-
-        public void DeletePhotoInAlbum(int id)
-        {
-            _database.FileRepository.Delete(id);
             _database.Save();
         }
 
-        public IEnumerable<FileModel> FindPhotosInAlbum(int id)
-        {
-            return _database.FileRepository.Find(x => x.AlbumId == id);
-        }
+    public FileModel FindPhotoInAlbum(int id)
+    {
+        return _database.FileRepository.Get(id);
     }
+
+    public void DeletePhotoInAlbum(int id)
+    {
+        _database.FileRepository.Delete(id);
+        _database.Save();
+    }
+
+    public IEnumerable<FileModel> FindPhotosInAlbum(int id)
+    {
+        return _database.FileRepository.Find(x => x.AlbumId == id);
+    }
+}
 }

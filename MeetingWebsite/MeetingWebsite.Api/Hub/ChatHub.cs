@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel.Dialog;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace MeetingWebsite.Api.Hub
@@ -14,16 +15,9 @@ namespace MeetingWebsite.Api.Hub
         public string ConnId;
     }
 
-    //[Authorize]
     public class ChatHub : Microsoft.AspNetCore.SignalR.Hub
     {
-        private readonly IDialogService _dialogService;
         public static List<UserIds> _usersList = new List<UserIds>();
-
-        public ChatHub(IDialogService dialogService)
-        {
-            _dialogService = dialogService;
-        }
 
         public override async Task OnConnectedAsync()
         {

@@ -18,9 +18,9 @@ export class ProfileComponent implements OnInit {
   visibleDetailsUser = true;
   visiblePhotoUser = true;
 
-  constructor(public service: UserService, 
-    private toastr: ToastrService, 
-    private router: Router) {  }
+  constructor(public service: UserService,
+    private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit() {
     this.service.getUserProfile().subscribe(
@@ -74,7 +74,7 @@ export class ProfileComponent implements OnInit {
     this.visiblePhotoUser = !this.visiblePhotoUser;
   }
 
-  onViewAlbums(){
+  onViewAlbums() {
     this.router.navigateByUrl('/home/album');
   }
 
@@ -93,5 +93,20 @@ export class ProfileComponent implements OnInit {
           console.log(err);
       }
     )
+  }
+
+  onChangePassword() {
+    this.service.change().subscribe(
+      (res: any) => {
+        this.toastr.success("Password change");
+        this.service.changeModel.reset();
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Faild change password');
+        else
+          console.log(err);
+      }
+    );
   }
 }

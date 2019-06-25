@@ -37,12 +37,12 @@ namespace MeetingWebsite.Api.Controllers
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
             var friends = await _friendService.FindFriendCurrentUser(userId);
-            if (friends == null)
+            if (friends != null)
             {
-                return NotFound(new { message = "Error, you have no friends yet" });
+                return Ok(ShowFriendViewModel.MapToViewModels(userId, friends).ToList());
             }
 
-           return Ok(ShowFriendViewModel.MapToViewModels(userId, friends).ToList());
+           return Ok();
         }
 
         //GET: api/friend/FriendInfo/id
@@ -80,9 +80,13 @@ namespace MeetingWebsite.Api.Controllers
         {
             var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
             var friendRequests = _friendService.FindNewRequests(currentUserId);
-            var showNewRequests = friendRequests.Select(request => 
-                new ShowNewRequestsViewModel(request)).ToList();
-            return Ok(showNewRequests);
+            if (friendRequests != null)
+            {
+                return Ok(friendRequests.Select(request =>
+                    new ShowNewRequestsViewModel(request)).ToList());
+            }
+
+            return Ok();
         }
 
         //GET: api/friend/AcceptNewRequest/id
@@ -109,5 +113,4 @@ namespace MeetingWebsite.Api.Controllers
             _friendService.MoveRequest(friendshipId, userId);
             return Ok();
         }
-    }
-}
+    }}

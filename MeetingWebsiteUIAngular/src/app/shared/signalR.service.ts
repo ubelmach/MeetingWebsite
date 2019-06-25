@@ -32,17 +32,4 @@ export class SignalRService {
             .then(() => console.log('Connection started'))
             .catch(err => console.log('Error while starting connection: ' + err))
     }
-
-
-    // Send(outgoingMessage: MessageInfo): void {
-    //     this.hubConnection
-    //         .invoke('Send', outgoingMessage)
-    //         .catch(err => console.error(err));
-    // }
-
-    // SendFromProfile(outgoingMessage: MessageInfo): void {
-    //     this.hubConnection
-    //         .invoke('SendFromProfile', outgoingMessage)
-    //         .catch(err => console.error(err));
-    // }
 }

@@ -258,6 +258,9 @@
     <Compile Include="Services\UserProfileService.cs" />
     <Compile Include="Services\Additional service\UserPurposeService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="ViewModel\Account\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModel\Account\ForgotPasswordViewModel.cs" />
+    <Compile Include="ViewModel\Account\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModel\Album\AddPhotoInAlbumViewModel.cs" />
     <Compile Include="ViewModel\Blacklist\AddUserInBlackListViewModel.cs" />
     <Compile Include="ViewModel\Album\CreateAlbumViewModel.cs" />

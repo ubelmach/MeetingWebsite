@@ -35,6 +35,7 @@ export class ChatDetailsComponent implements OnInit {
     this.signalR.startConnection();
     this.addSendListener();
     this.addSendMyselfListener();
+    this.addNewDialogListener();
 
     this.service.getDetailsUserDialogs(this.dialogId).subscribe(
       res => {
@@ -55,7 +56,6 @@ export class ChatDetailsComponent implements OnInit {
 
   addSendMyselfListener() {
     this.signalR.hubConnection.on('SendMyself', (data) => {
-      debugger;
       this.incomingMessage = data as Message;
       this.messagesRealTime.push(this.incomingMessage);
     });
@@ -64,7 +64,6 @@ export class ChatDetailsComponent implements OnInit {
   addNewDialogListener() {
     this.signalR.hubConnection.on('AddNewDialog', (data) => {
       this.incomingMessage = data as Message;
-      this.incomingMessage.Photos = this.messagePhotos;
       this.messagesRealTime.push(this.incomingMessage);
     });
   }
@@ -77,7 +76,7 @@ export class ChatDetailsComponent implements OnInit {
     this.messagePhotos.forEach(photo => {
       formData.append('Photo', photo);
     });
-
+    
     this.service.sendMessage(formData).subscribe();
   }
 
@@ -86,19 +85,7 @@ export class ChatDetailsComponent implements OnInit {
   }
 
   onFilesAdded(files: File[]) {
-
     this.messagePhotos = files;
-
-    // files.forEach(file => {
-    //   const reader = new FileReader();
-
-    //   reader.onload = (e: ProgressEvent) => {
-    //     const content = (e.target as FileReader).result;
-    //   };
-
-    //   reader.readAsText(file);
-
-    // });
   }
 
   onFilesRejected(files: File[]) {

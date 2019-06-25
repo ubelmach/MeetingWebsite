@@ -47,7 +47,7 @@ namespace MeetingWebsite.Api.Controllers
 
             if (!albums.Any())
             {
-                return BadRequest(new { message = "Error, current user has no albums" });
+                return BadRequest(new { message = "Error, user has no albums" });
             }
 
             var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel(item)).ToList();
@@ -65,9 +65,7 @@ namespace MeetingWebsite.Api.Controllers
             }
 
             var photoAlbum = _fileService.FindPhotosInAlbum(id);
-            var showAlbumPhotos = photoAlbum.Select(photo => 
-                new ShowAlbumPhotosViewModel(photo, id)).ToList();
-
+            var showAlbumPhotos = photoAlbum.Select(photo => new ShowAlbumPhotosViewModel(photo, id)).ToList();
             return Ok(showAlbumPhotos);
         }
 
@@ -106,9 +104,7 @@ namespace MeetingWebsite.Api.Controllers
             var files = HttpContext.Request.Form.Files;
             var userId = GetUserId();
             var user = await _accountService.GetUser(userId);
-
             addPhoto.AppendAdditionalInfo(album, user, files);
-
             await _fileService.AddPhotoInAlbum(addPhoto);
             return Ok(addPhoto);
         }

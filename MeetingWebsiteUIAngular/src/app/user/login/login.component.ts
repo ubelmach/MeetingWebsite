@@ -16,12 +16,15 @@ export class LoginComponent implements OnInit {
     Email: '',
     Password: ''
   }
-  constructor(private service: UserService, private router: Router, private toastr:ToastrService, private http: HttpClient) { }
+  constructor(private service: UserService, private router: Router, private toastr: ToastrService, private http: HttpClient) { }
+
+  visibleForgotPassword = true;
+  ForgotEmail;
 
   readonly BaseURI = 'https://localhost:44333/api';
   ngOnInit() {
-    if(localStorage.getItem('token') != null)
-    this.router.navigateByUrl('/home');
+    if (localStorage.getItem('token') != null)
+      this.router.navigateByUrl('/home');
   }
 
   onSubmit(form: NgForm) {
@@ -31,11 +34,32 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/home/search');
       },
       err => {
-        if(err.status == 400)
-        this.toastr.error('Username or password is incorrect or not confirm email.', "Authentication failed.");
+        if (err.status == 400)
+          this.toastr.error('Username or password is incorrect or not confirm email.', "Authentication failed.");
         else
-        console.log(err);
-       }
+          console.log(err);
+      }
     );
+  }
+
+  onOpenForgotPassword() {
+    this.visibleForgotPassword = !this.visibleForgotPassword;
+  }
+
+  onForgotPassword() {
+    var formData = new FormData();
+    formData.append('Email', this.ForgotEmail);
+    this.service.formotPassword(formData).subscribe(
+      (res: any) => {
+        this.toastr.success("Message send");
+        this.visibleForgotPassword = true;
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Faild');
+        else
+          console.log(err);
+      }
+    )
   }
 }

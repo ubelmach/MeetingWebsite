@@ -15,8 +15,72 @@
           (click)="onViewAlbums()"style="margin-top: 2%;">View albums
           </button>
         </div>
+        <div>
+            <button type="button" class="btn btn-link" onclick="document.getElementById('id01').style.display='block'"
+            style="margin-top: 2%;">Change password
+            </button>
+        </div>
       </div>
     </div>
+
+    <div class="w3-container">
+        <div id="id01" class="w3-modal">
+          <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+              <div class="w3-center"><br>
+              <span onclick="document.getElementById('id01').style.display='none'"
+                class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            </div>  
+
+            <form class="w3-container" [formGroup]="service.changeModel" autocomplete="off" (submit)="onChangePassword()">
+                <div class="form-group required">
+                  <label>Old password</label>
+                  <input type="password" class="form-control" formControlName="OldPassword">
+                </div>              
+                
+                <div formGroupName="Passwords">
+                  <div class="form-group required">
+                    <label>Password</label>
+                    <input type="password" class="form-control" formControlName="Password">
+                    <label class="text-danger"
+                      *ngIf="service.changeModel.get('Passwords.Password').touched && service.changeModel.get('Passwords.Password').errors?.required">This
+                      field is mandatory.</label>
+                    <label class="text-danger"
+                      *ngIf="service.changeModel.get('Passwords.Password').touched && service.changeModel.get('Passwords.Password').errors?.minlength">Minimum
+                      4 characters required.</label>
+                  </div>
+              
+                  <div class="form-group required">
+                    <label>Password Confirm</label>
+                    <input type="password" class="form-control" formControlName="PasswordConfirm">
+                    <label class="text-danger"
+                      *ngIf="service.changeModel.get('Passwords.PasswordConfirm').touched && service.changeModel.get('Passwords.PasswordConfirm').errors?.required">This
+                      field is mandatory.</label>
+                    <label class="text-danger"
+                      *ngIf="service.changeModel.get('Passwords.PasswordConfirm').touched && service.changeModel.get('Passwords.PasswordConfirm').errors?.passwordMismatch">Confirm
+                      Password does not match.</label>
+                  </div>
+              
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-8 offset-md-2">
+                    <button onclick="document.getElementById('id01').style.display='none'" 
+                    type="submit" class="btn btn-lg btn-block" [disabled]="!service.changeModel.valid">Cnahge</button>
+                  </div>
+                </div>
+              </form>
+
+            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+              <div style="text-align: right">
+                <button onclick="document.getElementById('id01').style.display='none'" type="button"
+                  class="w3-button w3-red">Cancel</button>
+              </div>
+            </div>  
+          </div>
+        </div>
+      </div>
+
+
     <div *ngIf="!visiblePhotoUser">
       <div class="user-profile-picture">
         <form #imageForm=ngForm (ngSubmit)="onChangeImage(Image)">
@@ -100,7 +164,7 @@
 
         <div class="form-group required">
           <label>Date of birthday</label>
-          <input class="form-control" formControlName="Birthday" type="date" value="{{userDetails.Birthday}}">
+          <input class="form-control" formControlName="Birthday" type="date" value="{{userDetails.Birthday  | date: 'yyyy-MM-dd'}}">
         </div>
 
         <div class="form-group required">

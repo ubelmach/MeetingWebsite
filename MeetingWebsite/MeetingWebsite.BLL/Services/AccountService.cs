@@ -21,6 +21,7 @@ namespace MeetingWebsite.BLL.Services
         private readonly IFileService _fileService;
         private readonly IUserProfileService _userProfileService;
         private const string ConfirmEmailController = "/api/account/ConfirmEmail";
+        //private const string ResetPasswordController = "/api/account/ResetPassword";
 
         public AccountService(IUnitOfWork uow,
             UserManager<User> userManager,
@@ -53,6 +54,27 @@ namespace MeetingWebsite.BLL.Services
             return result;
         }
 
+        public async Task<object> UserForgotPassword(ForgotPasswordViewModel model, string url)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return null;
+            }
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encode = HttpUtility.UrlEncode(code);
+            var callbackUrl = new StringBuilder("http://")
+                .AppendFormat("localhost:4200/user/reset/")
+                .AppendFormat($"{encode}");
+
+            await _emailService.SendEmailAsync(user.Email, "Confirm your account",
+                $"Confirm the registration by clicking on the " +
+                $"link: <a href='{callbackUrl}'>link</a>");
+
+            return user;
+        }
+
         private async Task<StringBuilder> CreateCallbackUrl(User user, string url)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -61,6 +83,10 @@ namespace MeetingWebsite.BLL.Services
                 { "userId", user.Id },
                 { "code", HttpUtility.UrlEncode(code) }
             };
+            //if (await _userManager.IsEmailConfirmedAsync(user))
+            //{
+            //   return new CallbackUrlBuilder().Build(url, ResetPasswordController, urlParams);
+            //}
             return new CallbackUrlBuilder().Build(url, ConfirmEmailController, urlParams);
         }
 
@@ -83,19 +109,29 @@ namespace MeetingWebsite.BLL.Services
                 .Subject(user.Id).ExpiresInOneDay().SigningCredentials(_applicationSettingsOption.JWT_secret).Build();
         }
 
+        public async Task<IdentityResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.Email);
+            if (user == null)
+            {
+                return null;
+            }
+            return await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+        }
+
+        public async Task<IdentityResult> ChangePassword(ChangePasswordViewModel model, string userId)
+        {
+            var user = await GetUser(userId);
+            if (user == null)
+            {
+                return null;
+            }
+            return await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
+        }
+
         public async Task<User> GetUser(string userId)
         {
             return await _userManager.FindByIdAsync(userId);
-        }
-
-        public async Task<User> GetUserByEmail(string email)
-        {
-            return await _userManager.FindByEmailAsync(email);
-        }
-
-        public void Dispose()
-        {
-            _database.Dispose();
         }
     }
 }

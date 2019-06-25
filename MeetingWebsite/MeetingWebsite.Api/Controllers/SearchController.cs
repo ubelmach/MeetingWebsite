@@ -22,10 +22,8 @@ namespace MeetingWebsite.Api.Controllers
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
             criteria.CurrentUserId = userId;
-
             var search = _searchService.FindUsers(criteria).ToList();
-            var resultSearch = ResultSearchByCriteriaViewModel.MapToViewModels(search);
-            return Ok(resultSearch);
+            return Ok(ResultSearchByCriteriaViewModel.MapToViewModels(search));
         }
     }
 }

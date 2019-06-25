@@ -129,6 +129,12 @@
   <data name="ConfirmationEmail_Subject" xml:space="preserve">
     <value>Confirm your account</value>
   </data>
+  <data name="ResetPassword_Message" xml:space="preserve">
+    <value>Confirm the registration by clicking on the link: &lt;a href='{0}'&gt;link&lt;/a&gt;</value>
+  </data>
+  <data name="ResetPassword_Subject" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
   <data name="Smtp_Host" xml:space="preserve">
     <value>smtp.mail.ru</value>
   </data>

@@ -22,10 +22,10 @@ export class ChatService {
     }
 
     sendMessage(formData: FormData){
-        console.log(formData.getAll('DialogId'));
-        console.log(formData.getAll('ReceiverId'));
-        console.log(formData.getAll('Message'));
-        console.log(formData.getAll('Photo'));
         return this.http.post(this.BaseURI + '/dialog/SendMessage', formData);
+    }
+
+    sendMessageFromProfile(formData: FormData){
+        return this.http.post(this.BaseURI + '/dialog/SendFromProfile', formData);
     }
 }

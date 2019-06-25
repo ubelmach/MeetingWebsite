@@ -23,15 +23,12 @@ namespace MeetingWebsite.Api.Controllers
         {
             var userId = GetUserId();
             var blackList = await _blacklistService.GetListUsersInBlackList(userId);
-            if (blackList == null)
+            if (blackList != null)
             {
-                return BadRequest();
+                return Ok(ShowBlackListCurrentUserViewModel.MapToViewModels(blackList).ToList());
             }
 
-            var showBlackList =  
-                ShowBlackListCurrentUserViewModel.MapToViewModels(blackList).ToList();
-
-            return Ok(showBlackList);
+            return Ok();
         }
 
         //GET: api/blacklist/AddUserInBlackList/userId
@@ -39,8 +36,7 @@ namespace MeetingWebsite.Api.Controllers
         public async Task<IActionResult> Add(string userId)
         {
             var currentUserId = User.Claims.First(c => c.Type == "UserID").Value;
-            var add = new AddUserInBlackListViewModel(currentUserId, userId);
-            var addInBlackList = await _blacklistService.AddUserInBlackList(add);
+            var addInBlackList = await _blacklistService.AddUserInBlackList(new AddUserInBlackListViewModel(currentUserId, userId));
             if (addInBlackList == null)
             {
                 return BadRequest();

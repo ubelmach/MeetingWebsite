@@ -10,7 +10,6 @@ namespace MeetingWebsite.BLL.Services
     {
         Task<List<Dialog>> FindAllDialogs(string userId);
         Dialog FindDialog(int id);
-
         Task<bool> IsExistDialog(string userId, string receiverId);
         Dialog CreateDialog(string receiverId, string senderId);
         Task<Message> AddDialogMessage(string userId, string message, int dialogId, IFormFileCollection file);

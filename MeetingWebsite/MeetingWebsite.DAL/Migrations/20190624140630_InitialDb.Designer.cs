@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingWebsite.DAL.Migrations
 {
     [DbContext(typeof(MeetingDbContext))]
-    [Migration("20190621195518_InitialDB")]
-    partial class InitialDB
+    [Migration("20190624140630_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("MeetingWebsite.Models.Entities.BadHabits", b =>

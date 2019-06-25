@@ -676,5 +676,5 @@ F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\o
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.csproj.CopyComplete
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.dll
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\obj\Debug\MeetingWebsite.BLL.pdb
-C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll
 F:\VironIT\Projects\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\User\Desktop\FinalTask\MeetingWebsite\MeetingWebsite\MeetingWebsite.BLL\bin\Debug\Pomelo.EntityFrameworkCore.MySql.dll

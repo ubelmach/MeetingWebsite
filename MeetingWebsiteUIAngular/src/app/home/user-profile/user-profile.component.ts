@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import * as signalR from "@aspnet/signalr";
 import { HttpTransportType } from '@aspnet/signalr';
 import { AlbumService } from 'src/app/shared/album.service';
+import { ChatService } from 'src/app/shared/char.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,7 +25,8 @@ export class UserProfileComponent implements OnInit {
   public hubConnection: signalR.HubConnection
 
   message = '';
-  files: File[] = [];
+  messagePhotos: File[] = new Array();
+  visibleDropZone = true;
 
   constructor(private activateRoute: ActivatedRoute,
     public service: SearchService,
@@ -32,12 +34,12 @@ export class UserProfileComponent implements OnInit {
     public blacklist: BlackListService,
     public signalR: SignalRService,
     public albumService: AlbumService,
-    private router: Router) { }
+    private router: Router,
+    private chatService: ChatService) { }
 
   async ngOnInit() {
-    
     this.signalR.startConnection();
-    
+
     await this.activateRoute.params.subscribe(params => this.userId = params.id);
 
     this.service.getSearchUserDetails(this.userId).subscribe(
@@ -86,11 +88,40 @@ export class UserProfileComponent implements OnInit {
     )
   }
 
-  onOpenAlbums(){
+  onOpenAlbums() {
     this.router.navigateByUrl('/home/user-profile-album/' + this.userId);
   }
 
   onSendMessageFromProfile() {
-    //this.signalR.SendFromProfile(this.message, this.userId);
+    var formData = new FormData();
+    formData.append('ReceiverId', this.userId);
+    formData.append('Message', this.message);
+    this.messagePhotos.forEach(photo => {
+      formData.append('Photo', photo);
+    });
+
+    this.chatService.sendMessageFromProfile(formData).subscribe(
+      (res: any) => {
+        this.toastr.success("Message send");
+      },
+      (err: any) => {
+        if (err.status == 400)
+          this.toastr.error('Faild');
+        else
+          console.log(err);
+      }
+    )
+  }
+
+  onOpenDropzone(){
+    this.visibleDropZone = !this.visibleDropZone;
+  }
+
+  onFilesAdded(files: File[]) {
+    this.messagePhotos = files;
+  }
+
+  onFilesRejected(files: File[]) {
+    console.log(files);
   }
 }

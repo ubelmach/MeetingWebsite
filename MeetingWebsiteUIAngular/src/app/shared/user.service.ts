@@ -44,6 +44,22 @@ export class UserService {
     AnonymityMode: ['']
   })
 
+  resetModel = this.fb.group({
+    Email: ['', Validators.email],
+    Passwords: this.fb.group({
+      Password: ['', [Validators.required, Validators.minLength(4)]],
+      PasswordConfirm: ['', Validators.required],
+    }, { validator: this.comparePasswords })
+  })
+
+  changeModel = this.fb.group({
+    OldPassword: [''],
+    Passwords: this.fb.group({
+      Password: ['', [Validators.required, Validators.minLength(4)]],
+      PasswordConfirm: ['', Validators.required],
+    }, { validator: this.comparePasswords })
+  })
+
   comparePasswords(fb: FormGroup) {
     let confirmPswrdCtrl = fb.get('PasswordConfirm');
     if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
@@ -68,6 +84,24 @@ export class UserService {
 
   login(formData) {
     return this.http.post(this.BaseURI + '/account/Login', formData);
+  }
+
+  reset(code:string){
+    var formData = new FormData();
+    formData.append('Email', this.resetModel.value.Email);
+    formData.append('Password',  this.resetModel.value.Passwords.Password);
+    formData.append('Code', code);
+
+    return this.http.post(this.BaseURI + '/account/Reset', formData);  
+  }
+
+  change(){
+    var formData = new FormData();
+    debugger;
+    formData.append('OldPassword', this.changeModel.value.OldPassword);
+    formData.append('Password', this.changeModel.value.Passwords.Password);
+
+    return this.http.post(this.BaseURI + '/account/Change', formData);  
   }
 
   getUserProfile() {
@@ -108,5 +142,9 @@ export class UserService {
     const formData: FormData = new FormData();
     formData.append('Image', fileToUpload);
     return this.http.put(this.BaseURI + '/user/EditUserAvatar', formData);
+  }
+
+  formotPassword(formData: FormData){
+    return this.http.post(this.BaseURI + '/account/ForgotPassword', formData);
   }
 }
