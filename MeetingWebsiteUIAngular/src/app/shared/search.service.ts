@@ -32,6 +32,7 @@ export class SearchService {
     }
 
     searchUsers(){
+        debugger;
         var body = {
             AgeFrom: this.searchModel.value.AgeFrom,
             AgeTo: this.searchModel.value.AgeTo,

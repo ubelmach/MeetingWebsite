@@ -23,7 +23,7 @@ export class ChatDetailsComponent implements OnInit {
     private router: Router,
     public service: ChatService) { }
 
-  message :any;
+  message = '';
   messages: Message[] = new Array();
   messagesRealTime: Message[] = new Array();
   messagePhotos: File[] = new Array();
@@ -94,8 +94,8 @@ export class ChatDetailsComponent implements OnInit {
   }
 
   addEmoji(event){
-    const { message } = this;
-    const text = `${message}${event.emoji.native}`;
+    console.log(event.emoji.native);
+    const text = `${this.message}${event.emoji.native}`;
     this.message = text;
   }
 }

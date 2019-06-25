@@ -88,6 +88,9 @@
     <Reference Include="Microsoft.AspNetCore.Identity, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Identity.2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Identity.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.SignalR.Core">
+      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.signalr.core\1.0.1\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.WebSockets">
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.websockets\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.WebSockets.dll</HintPath>
     </Reference>

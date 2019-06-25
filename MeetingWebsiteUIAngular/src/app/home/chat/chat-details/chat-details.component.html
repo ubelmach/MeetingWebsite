@@ -62,7 +62,7 @@
       </ngx-dropzone>
 
       <div *ngIf="!visibleStikers">
-        <emoji-mart title="Pick your emoji…" emoji="point_up" set="emojione" (emojiClick)="addEmoji($event)"
+        <emoji-mart title="Pick your emoji…" emoji="point_up" set="emojione" (emojiSelect)="addEmoji($event)"
           [style]="{ position: 'absolute', bottom: '150px', right: '-170px' }"
           [i18n]="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }">
         </emoji-mart>

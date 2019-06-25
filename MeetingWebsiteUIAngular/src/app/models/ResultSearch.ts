@@ -4,6 +4,7 @@ export class ResultSearch{
         FirstName = '',
         LastName = '',
         Age = null,
-        Avatar= ''
+        Avatar= '',
+        Online: boolean
     ) {}
 }

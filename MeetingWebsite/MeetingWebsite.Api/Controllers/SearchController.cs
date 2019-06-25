@@ -1,7 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using MeetingWebsite.Api.Hub;
 using MeetingWebsite.BLL.Services;
 using MeetingWebsite.BLL.ViewModel;
+using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace MeetingWebsite.Api.Controllers
 {
@@ -18,12 +22,20 @@ namespace MeetingWebsite.Api.Controllers
 
         //POST: /api/search/SearchUsersByCriteria
         [HttpPost, Route("SearchUsersByCriteria")]
-        public IActionResult Get(SearchByCriteriaViewModel criteria)
+        public IEnumerable<ResultSearchByCriteriaViewModel> Get(SearchByCriteriaViewModel criteria)
         {
             var userId = User.Claims.First(c => c.Type == "UserID").Value;
             criteria.CurrentUserId = userId;
             var search = _searchService.FindUsers(criteria).ToList();
-            return Ok(ResultSearchByCriteriaViewModel.MapToViewModels(search));
+            var searchResult = search.Select(item => new ResultSearchByCriteriaViewModel(item)).ToList();
+            var userConnectionList = ChatHub._usersList;
+
+            foreach (var user in searchResult)
+            {
+                user.Online = userConnectionList.Any(x => x.UserId == user.UserId);
+            }
+
+            return searchResult;
         }
     }
 }

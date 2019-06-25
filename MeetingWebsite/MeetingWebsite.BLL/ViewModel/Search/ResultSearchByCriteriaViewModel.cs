@@ -11,6 +11,7 @@ namespace MeetingWebsite.BLL.ViewModel
         public string LastName { get; set; }
         public long Age { get; set; }
         public string Avatar { get; set; }
+        public bool Online { get; set; }
 
         public ResultSearchByCriteriaViewModel(User user)
         {
@@ -26,13 +27,6 @@ namespace MeetingWebsite.BLL.ViewModel
             else
             {
                 Avatar = "/File/Nophoto.jpg";
-            }
-        }
-        public static IEnumerable<ResultSearchByCriteriaViewModel> MapToViewModels(List<User> users)
-        {
-            foreach (var user in users)
-            {
-                yield return new ResultSearchByCriteriaViewModel(user);
             }
         }
     }
