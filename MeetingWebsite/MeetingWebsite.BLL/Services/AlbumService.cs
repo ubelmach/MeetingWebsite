@@ -49,9 +49,9 @@ namespace MeetingWebsite.BLL.Services
                 UserId = createAlbum.UserId,
                 Path = path
             };
-
             _database.AlbumRepository.Create(newAlbum);
             _database.Save();
+
             return newAlbum;
         }
 

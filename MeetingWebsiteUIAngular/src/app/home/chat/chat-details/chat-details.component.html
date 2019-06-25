@@ -47,28 +47,36 @@
 </div>
 
 <div>
-  <form (submit)="onSendMessage()">
-    <div id="panel" style="position: fixed;  bottom: 40px;">
-      <hr>
+  <ng-template [ngIf]="!checkBlacklist" [ngIfElse]="loggedOut">
+    <form (submit)="onSendMessage()">
+      <div id="panel" style="position: fixed;  bottom: 40px;">
+        <hr>
 
-      <div class="input-group">
-        <textarea rows="2" cols="55" id="message" name="message" placeholder="Enter message" [(ngModel)]="message"
-          style="resize: none;"></textarea>
-        <button type="button" (click)="dropzone.showFileSelector()">attach photo</button>
-        <button type="button" (click)="onOpenStikers()" class="input-addon">☺</button>
-      </div>
-      <ngx-dropzone style="height: 43px;" [showPreviews]="true" #dropzone (filesAdded)="onFilesAdded($event)"
-        (filesRejected)="onFilesRejected($event)">
-      </ngx-dropzone>
+        <div class="input-group">
+          <textarea rows="2" cols="55" id="message" name="message" placeholder="Enter message" [(ngModel)]="message"
+            style="resize: none;"></textarea>
+          <button type="button" (click)="dropzone.showFileSelector()">attach photo</button>
+          <button type="button" (click)="onOpenStikers()" class="input-addon">☺</button>
+        </div>
+        <ngx-dropzone style="height: 43px;" [showPreviews]="true" #dropzone (filesAdded)="onFilesAdded($event)"
+          (filesRejected)="onFilesRejected($event)">
+        </ngx-dropzone>
 
-      <div *ngIf="!visibleStikers">
-        <emoji-mart title="Pick your emoji…" emoji="point_up" set="emojione" (emojiSelect)="addEmoji($event)"
-          [style]="{ position: 'absolute', bottom: '150px', right: '-170px' }"
-          [i18n]="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }">
-        </emoji-mart>
+        <div *ngIf="!visibleStikers">
+          <emoji-mart title="Pick your emoji…" emoji="point_up" set="emojione" (emojiSelect)="addEmoji($event)"
+            [style]="{ position: 'absolute', bottom: '150px', right: '-170px' }"
+            [i18n]="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }">
+          </emoji-mart>
+        </div>
+        <button class="w3-button w3-block w3-green w3-section w3-padding" (click)="dropzone.reset()"
+          type="submit">Send</button>
       </div>
-      <button class="w3-button w3-block w3-green w3-section w3-padding" (click)="dropzone.reset()"
-        type="submit">Send</button>
-    </div>
-  </form>
+    </form>
+  </ng-template>
 </div>
+
+<ng-template #loggedOut>
+    <div class="p-3 mb-2 bg-danger text-white" style="text-align: center">
+      You are blacklisted by this user.
+    </div>
+  </ng-template>

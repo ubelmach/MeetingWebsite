@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
@@ -24,11 +23,9 @@ namespace MeetingWebsite.BLL.Services
         public async Task<List<Friendship>> FindFriendCurrentUser(string userId)
         {
             var user = await _accountService.GetUser(userId);
-
             var incomingFriendships = user.IncomingFriendships
                 .Where(x => x.InviteStatus == InviteStatuses.Accepted &&
                             x.SecondFriendId == userId);
-
             var outgoingFriendships = user.OutgoingFriendships
                 .Where(x => x.InviteStatus == InviteStatuses.Accepted &&
                             x.FirstFriendId == userId);
@@ -79,8 +76,6 @@ namespace MeetingWebsite.BLL.Services
             _database.Save();
             return newRequest;
         }
-
-
 
         public IEnumerable<Friendship> FindNewRequests(string userId)
         {

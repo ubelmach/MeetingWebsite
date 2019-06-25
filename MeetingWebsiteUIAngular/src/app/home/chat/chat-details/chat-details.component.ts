@@ -7,6 +7,8 @@ import { ChatService } from 'src/app/shared/char.service';
 import { MessageInfo } from 'src/app/models/MessageInfo';
 import { Message } from 'src/app/models/Message';
 import { EmojiModule, Emoji } from '@ctrl/ngx-emoji-mart/ngx-emoji'
+import { BlackListService } from 'src/app/shared/blacklist.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-chat-details',
@@ -21,7 +23,9 @@ export class ChatDetailsComponent implements OnInit {
   constructor(private activateRoute: ActivatedRoute,
     public signalR: SignalRService,
     private router: Router,
-    public service: ChatService) { }
+    private toastr: ToastrService,
+    public service: ChatService,
+    public blackService: BlackListService) { }
 
   message = '';
   messages: Message[] = new Array();
@@ -31,6 +35,8 @@ export class ChatDetailsComponent implements OnInit {
   incomingMessage = new Message();
 
   visibleStikers = true;
+
+  checkBlacklist: boolean;
 
   ngOnInit() {
     this.signalR.startConnection();
@@ -46,9 +52,21 @@ export class ChatDetailsComponent implements OnInit {
         console.log(err);
       }
     )
+
+    this.blackService.CheckBlacklist(this.userId).subscribe(
+      res => {
+        this.checkBlacklist = res as boolean;
+      },
+      (err: any) => {
+        if (err.status == 400)
+          this.toastr.error('Faild');
+        else
+          console.log(err);
+      }
+    )
   }
 
-  addSendListener() {    
+  addSendListener() {
     this.signalR.hubConnection.on('Send', (data) => {
       this.incomingMessage = data as Message;
       this.messagesRealTime.push(this.incomingMessage);
@@ -77,7 +95,7 @@ export class ChatDetailsComponent implements OnInit {
     this.messagePhotos.forEach(photo => {
       formData.append('Photo', photo);
     });
-    
+
     this.service.sendMessage(formData).subscribe();
   }
 
@@ -93,7 +111,7 @@ export class ChatDetailsComponent implements OnInit {
     console.log(files);
   }
 
-  addEmoji(event){
+  addEmoji(event) {
     console.log(event.emoji.native);
     const text = `${this.message}${event.emoji.native}`;
     this.message = text;

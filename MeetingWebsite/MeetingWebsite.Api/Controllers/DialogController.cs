@@ -14,12 +14,15 @@ namespace MeetingWebsite.Api.Controllers
     public class DialogController : ControllerBase
     {
         private readonly IDialogService _dialogService;
+        private readonly IBlacklistService _blacklistService;
         private readonly IHubContext<ChatHub> _chatHub;
 
         public DialogController(IDialogService dialogService,
+            IBlacklistService blacklistService,
             IHubContext<ChatHub> chatHub)
         {
             _dialogService = dialogService;
+            _blacklistService = blacklistService;
             _chatHub = chatHub;
         }
 
@@ -98,6 +101,15 @@ namespace MeetingWebsite.Api.Controllers
                 }
             }
 
+        }
+
+        //GET: api/dialog/CheckBlackListFromDialog/id
+        [HttpGet, Route("CheckBlackListFromDialog/{id}")]
+        public bool CheckBlackListFromDialog(int id)
+        {
+            var dialog = _dialogService.FindDialog(id);
+
+            return false;
         }
 
         private void FindCallerReceiverByIds(string receiverId, out UserIds caller, out UserIds receiver)

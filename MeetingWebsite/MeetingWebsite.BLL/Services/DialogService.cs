@@ -26,17 +26,16 @@ namespace MeetingWebsite.BLL.Services
         public async Task<List<Dialog>> FindAllDialogs(string userId)
         {
             var user = await _accountService.GetUser(userId);
-
-            var incomingDialogs = user.IncomingMessages.Where(x =>
-                x.ReceiverId == userId).ToList();
-
-            var outgoingDialogs = user.OutgoingMessages.Where(x =>
-                x.SenderId == userId).ToList();
+            var incomingDialogs = user.IncomingMessages
+                .Where(x => x.ReceiverId == userId)
+                .ToList();
+            var outgoingDialogs = user.OutgoingMessages
+                .Where(x => x.SenderId == userId)
+                .ToList();
 
             var dialogs = new List<Dialog>();
             dialogs.AddRange(incomingDialogs);
             dialogs.AddRange(outgoingDialogs);
-
             return dialogs;
         }
 
@@ -48,19 +47,16 @@ namespace MeetingWebsite.BLL.Services
         public async Task<bool> IsExistDialog(string userId, string receiverId)
         {
             var user = await _accountService.GetUser(userId);
-
-            var incomingDialogs = user.IncomingMessages.Where(x =>
-                x.ReceiverId == userId && x.SenderId == receiverId)
+            var incomingDialogs = user.IncomingMessages
+                .Where(x => x.ReceiverId == userId && x.SenderId == receiverId)
                 .ToList();
-
-            var outgoingDialogs = user.OutgoingMessages.Where(x =>
-                x.ReceiverId == receiverId && x.SenderId == userId)
+            var outgoingDialogs = user.OutgoingMessages
+                .Where(x => x.ReceiverId == receiverId && x.SenderId == userId)
                 .ToList();
 
             var fullList = new List<Dialog>();
             fullList.AddRange(incomingDialogs);
             fullList.AddRange(outgoingDialogs);
-
             return fullList.Any();
         }
 
@@ -74,7 +70,6 @@ namespace MeetingWebsite.BLL.Services
                 Date = DateTime.Now,
                 New = false
             };
-
             _database.MessageRepository.Create(newMessage);
             _database.Save();
 
@@ -82,30 +77,23 @@ namespace MeetingWebsite.BLL.Services
             {
                 await _fileService.AddDialogMessagePhotos(userId, dialogId, newMessage.Id, files);
             }
-
             return newMessage;
         }
 
         public async Task<Dialog> GetDialogDetails(string userId, string companionId)
         {
             var user = await _accountService.GetUser(userId);
-
-            var incomingDialogs = user.IncomingMessages.Where(x =>
-                    x.ReceiverId == userId && x.SenderId == companionId)
+            var incomingDialogs = user.IncomingMessages
+                .Where(x => x.ReceiverId == userId && x.SenderId == companionId)
                 .ToList();
-
-            var outgoingDialogs = user.OutgoingMessages.Where(x =>
-                    x.ReceiverId == companionId && x.SenderId == userId)
+            var outgoingDialogs = user.OutgoingMessages
+                .Where(x => x.ReceiverId == companionId && x.SenderId == userId)
                 .ToList();
 
             var fullList = new List<Dialog>();
             fullList.AddRange(incomingDialogs);
             fullList.AddRange(outgoingDialogs);
-
-            var result = fullList.First();
-
-            return result;
-
+            return fullList.First();
         }
 
         public Dialog CreateDialog(string receiverId, string senderId)
@@ -116,7 +104,6 @@ namespace MeetingWebsite.BLL.Services
                 ReceiverId = receiverId,
                 Date = DateTime.Now
             };
-
             _database.DialogRepository.Create(newDialog);
             _database.Save();
 

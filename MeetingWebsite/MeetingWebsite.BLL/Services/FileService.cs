@@ -116,20 +116,20 @@ namespace MeetingWebsite.BLL.Services
             _database.Save();
         }
 
-    public FileModel FindPhotoInAlbum(int id)
-    {
-        return _database.FileRepository.Get(id);
-    }
+        public FileModel FindPhotoInAlbum(int id)
+        {
+            return _database.FileRepository.Get(id);
+        }
 
-    public void DeletePhotoInAlbum(int id)
-    {
-        _database.FileRepository.Delete(id);
-        _database.Save();
-    }
+        public void DeletePhotoInAlbum(int id)
+        {
+            _database.FileRepository.Delete(id);
+            _database.Save();
+        }
 
-    public IEnumerable<FileModel> FindPhotosInAlbum(int id)
-    {
-        return _database.FileRepository.Find(x => x.AlbumId == id);
+        public IEnumerable<FileModel> FindPhotosInAlbum(int id)
+        {
+            return _database.FileRepository.Find(x => x.AlbumId == id);
+        }
     }
-}
 }

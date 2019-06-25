@@ -33,12 +33,10 @@ namespace MeetingWebsite.BLL.Services
         public async Task<BlackList> AddUserInBlackList(AddUserInBlackListViewModel addInBlackList)
         {
             var badUser = await _accountService.GetUser(addInBlackList.WhomId);
-
             var incomingFriendships = badUser.IncomingFriendships
                 .Where(x => x.FirstFriendId == addInBlackList.CurrentUserId &&
                             x.SecondFriendId == addInBlackList.WhomId)
                 .ToList();
-
             var outgoingFriendships = badUser.OutgoingFriendships
                 .Where(x => x.FirstFriendId == addInBlackList.WhomId &&
                             x.SecondFriendId == addInBlackList.CurrentUserId)
@@ -47,7 +45,6 @@ namespace MeetingWebsite.BLL.Services
             var fullList = new List<Friendship>();
             fullList.AddRange(incomingFriendships);
             fullList.AddRange(outgoingFriendships);
-
 
             var whomTheUserAdded = badUser.WhomTheUserAdded
                 .Where(x => x.CurrentUserId == addInBlackList.CurrentUserId &&
@@ -69,9 +66,9 @@ namespace MeetingWebsite.BLL.Services
                     WhomId = addInBlackList.WhomId,
                     Date = addInBlackList.Date
                 };
-
                 _database.BlacklistRepository.Create(addUserInBlackList);
                 _database.Save();
+
                 return addUserInBlackList;
             }
 
@@ -84,13 +81,13 @@ namespace MeetingWebsite.BLL.Services
 
             _database.BlacklistRepository.Create(addUserInBlackList);
             _database.Save();
+
             return addUserInBlackList;
         }
 
         public async Task<bool> CheckBlackList(string userId, string who)
         {
             var user = await _accountService.GetUser(userId);
-
             var test = user.WhoAddedCurrentUser
                 .Where(x => x.CurrentUserId == userId &&
                             x.WhomId == who)
@@ -102,7 +99,6 @@ namespace MeetingWebsite.BLL.Services
         public async Task<bool> Check(string userId, string who)
         {
             var user = await _accountService.GetUser(userId);
-
             var test = user.WhomTheUserAdded
                 .Where(x => x.CurrentUserId == who &&
                             x.WhomId == userId)
@@ -111,6 +107,10 @@ namespace MeetingWebsite.BLL.Services
             return test.Any();
         }
 
+        public async Task<bool> CheckFromDialogs(string senderId, string receiverId)
+        {
+
+        }
 
         public void DeleteFromBlackList(int id)
         {
