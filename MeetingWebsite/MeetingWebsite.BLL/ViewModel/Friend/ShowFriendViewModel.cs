@@ -1,6 +1,7 @@
 ﻿using MeetingWebsite.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MeetingWebsite.BLL.ViewModel
 {
@@ -36,12 +37,9 @@ namespace MeetingWebsite.BLL.ViewModel
 
         public static IEnumerable<ShowFriendViewModel> MapToViewModels(string userId, IEnumerable<Friendship> friendships)
         {
-            foreach (var friendship in friendships)
-            {
-                yield return friendship.FirstFriendId == userId
-                    ? new ShowFriendViewModel(userId, friendship.Id, friendship.SecondFriend)
-                    : new ShowFriendViewModel(userId, friendship.Id, friendship.FirstFriend);
-            }
+            return friendships.Select(friendship => friendship.FirstFriendId == userId
+                ? new ShowFriendViewModel(userId, friendship.Id, friendship.SecondFriend)
+                : new ShowFriendViewModel(userId, friendship.Id, friendship.FirstFriend));
         }
     }
 }

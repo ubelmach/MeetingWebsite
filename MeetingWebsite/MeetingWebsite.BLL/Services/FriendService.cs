@@ -102,20 +102,17 @@ namespace MeetingWebsite.BLL.Services
 
         public async Task<bool> IsFriend(string currentUserId, string userId)
         {
-            var user = await _accountService.GetUser(currentUserId);
-
-            var incomingFriends = user.IncomingFriendships
-                .Where(x => x.SecondFriendId == currentUserId && x.FirstFriendId == userId)
-                .ToList();
-            var outgoingFriends = user.OutgoingFriendships
-                .Where(x => x.FirstFriendId == currentUserId && x.SecondFriendId == userId)
-                .ToList();
-
-            var fullList = incomingFriends.Union(outgoingFriends);
-            return fullList.Any();
+            var isFriend = await CheckFriendship(currentUserId, userId);
+            return isFriend.Any();
         }
 
         public async Task<Friendship> FindFriendship(string currentUserId, string userId)
+        {
+            var friendship = await CheckFriendship(currentUserId, userId);
+            return friendship.First();
+        }
+
+        private async Task<IEnumerable<Friendship>> CheckFriendship(string currentUserId, string userId)
         {
             var user = await _accountService.GetUser(currentUserId);
             var incomingFriends = user.IncomingFriendships
@@ -125,10 +122,7 @@ namespace MeetingWebsite.BLL.Services
                 .Where(x => x.FirstFriendId == currentUserId && x.SecondFriendId == userId)
                 .ToList();
 
-            var fullList = incomingFriends.Union(outgoingFriends);
-            return fullList.First();
+            return incomingFriends.Union(outgoingFriends);
         }
-
-
     }
 }

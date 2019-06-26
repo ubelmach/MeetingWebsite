@@ -97,7 +97,10 @@ export class ChatDetailsComponent implements OnInit {
     });
 
     this.service.sendMessage(formData).subscribe(
-      (err: any) => {
+      (res: any) => {
+        console.log('done');
+      },
+      err => {
         this.toastr.error(err.error.message);
       }
     );

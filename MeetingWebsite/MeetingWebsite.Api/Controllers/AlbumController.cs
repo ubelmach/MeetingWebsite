@@ -101,7 +101,6 @@ namespace MeetingWebsite.Api.Controllers
             {
                 return NotFound();
             }
-
             var addPhoto = new AddPhotoInAlbumViewModel();
             var files = HttpContext.Request.Form.Files;
             var userId = GetUserId();

@@ -46,25 +46,6 @@ namespace MeetingWebsite.BLL.ViewModel
             { Weight = user.UserProfile.Weight; }
 
             AnonymityMode = user.AnonymityMode;
-
-            //if (!string.IsNullOrEmpty(user.Gender.ToString()))
-            //{ Genders = user.Gender; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.ZodiacSign.ToString()))
-            //{ ZodiacSign = user.UserProfile.ZodiacSign; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.Education))
-            //{ Education = user.UserProfile.Education; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.Nationality))
-            //{ Nationality = user.UserProfile.Nationality; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.BadHabits))
-            //{ BadHabits = user.UserProfile.BadHabits; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.FinancialSituation))
-            //{ FinancialSituation = user.UserProfile.FinancialSituation; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.Interests))
-            //{ Interests = user.UserProfile.Interests; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.KnowledgeOfLanguages))
-            //{ KnowledgeOfLanguages = user.UserProfile.KnowledgeOfLanguages; }
-            //if (!string.IsNullOrEmpty(user.UserProfile.PurposeOfDating))
-            //{ PurposeOfDating = user.UserProfile.PurposeOfDating; }
         }
     }
 }

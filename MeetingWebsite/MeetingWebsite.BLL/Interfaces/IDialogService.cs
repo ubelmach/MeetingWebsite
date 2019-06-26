@@ -8,7 +8,7 @@ namespace MeetingWebsite.BLL.Services
 {
     public interface IDialogService
     {
-        Task<List<Dialog>> FindAllDialogs(string userId);
+        Task<IEnumerable<Dialog>> FindAllDialogs(string userId);
         Dialog FindDialog(int id);
         Task<bool> IsExistDialog(string userId, string receiverId);
         Dialog CreateDialog(string receiverId, string senderId);

@@ -5,7 +5,7 @@ namespace MeetingWebsite.BLL.Services
 {
     public class UserProfileService : IUserProfileService
     {
-        public IUnitOfWork _database;
+        private readonly IUnitOfWork _database;
 
         public UserProfileService(IUnitOfWork database)
         {

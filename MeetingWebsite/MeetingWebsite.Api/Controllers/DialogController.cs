@@ -17,15 +17,12 @@ namespace MeetingWebsite.Api.Controllers
         private const string CorrectType = "image/jpeg";
 
         private readonly IDialogService _dialogService;
-        private readonly IBlacklistService _blacklistService;
         private readonly IHubContext<ChatHub> _chatHub;
 
         public DialogController(IDialogService dialogService,
-            IBlacklistService blacklistService,
             IHubContext<ChatHub> chatHub)
         {
             _dialogService = dialogService;
-            _blacklistService = blacklistService;
             _chatHub = chatHub;
         }
 
@@ -61,21 +58,21 @@ namespace MeetingWebsite.Api.Controllers
             UserIds receiver, caller;
             FindCallerReceiverByIds(model.ReceiverId, out caller, out receiver);
 
-            //if (model.Photo.Any())
-            //{
-            //    foreach (var photo in model.Photo)
-            //    {
-            //        if (photo.ContentType != CorrectType)
-            //        {
-            //            return BadRequest(new { message = "Error, allowed image resolution jpg / jpeg" });
-            //        }
+            if (model.Photo != null)
+            {
+                foreach (var photo in model.Photo)
+                {
+                    if (photo.ContentType != CorrectType)
+                    {
+                        return BadRequest(new { message = "Error, allowed image resolution jpg / jpeg" });
+                    }
 
-            //        if (photo.Length > UploadFileMaxLength)
-            //        {
-            //            return BadRequest(new { message = "Error, permissible image size should not exceed 2 MB" });
-            //        }
-            //    }
-            //}
+                    if (photo.Length > UploadFileMaxLength)
+                    {
+                        return BadRequest(new { message = "Error, permissible image size should not exceed 2 MB" });
+                    }
+                }
+            }
 
             var newMessage = await _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId, model.Photo);
             var dialog = await _dialogService.GetDialogDetails(caller.UserId, model.ReceiverId);
@@ -121,15 +118,6 @@ namespace MeetingWebsite.Api.Controllers
                 }
             }
 
-        }
-
-        //GET: api/dialog/CheckBlackListFromDialog/id
-        [HttpGet, Route("CheckBlackListFromDialog/{id}")]
-        public bool CheckBlackListFromDialog(int id)
-        {
-            var dialog = _dialogService.FindDialog(id);
-
-            return false;
         }
 
         private void FindCallerReceiverByIds(string receiverId, out UserIds caller, out UserIds receiver)

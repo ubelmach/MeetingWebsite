@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using MeetingWebsite.Models.Entities;
 
 namespace MeetingWebsite.BLL.ViewModel.Dialog
@@ -30,14 +31,11 @@ namespace MeetingWebsite.BLL.ViewModel.Dialog
         }
 
         public static IEnumerable<GetAllDialogsViewModel> MapToViewModels(string userId,
-            List<Models.Entities.Dialog> dialogs)
+            IEnumerable<Models.Entities.Dialog> dialogs)
         {
-            foreach (var dialog in dialogs)
-            {
-                yield return dialog.SenderId == userId
-                    ? new GetAllDialogsViewModel(userId, dialog.Id, dialog.Receiver)
-                    : new GetAllDialogsViewModel(userId, dialog.Id, dialog.Sender);
-            }
+            return dialogs.Select(dialog => dialog.SenderId == userId
+                ? new GetAllDialogsViewModel(userId, dialog.Id, dialog.Receiver)
+                : new GetAllDialogsViewModel(userId, dialog.Id, dialog.Sender));
         }
     }
 }

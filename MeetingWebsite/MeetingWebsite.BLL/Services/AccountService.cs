@@ -5,7 +5,6 @@ using System.Web;
 using MeetingWebsite.BLL.Builders;
 using MeetingWebsite.BLL.Infrastructure;
 using MeetingWebsite.BLL.ViewModel;
-using MeetingWebsite.DAL.Interfaces;
 using MeetingWebsite.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -14,24 +13,19 @@ namespace MeetingWebsite.BLL.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IUnitOfWork _database;
         private readonly UserManager<User> _userManager;
         private readonly ApplicationSettings _applicationSettingsOption;
         private readonly IEmailService _emailService;
         private readonly IFileService _fileService;
         private readonly IUserProfileService _userProfileService;
         private const string ConfirmEmailController = "/api/account/ConfirmEmail";
-        //private const string ResetPasswordController = "/api/account/ResetPassword";
 
-        public AccountService(IUnitOfWork uow,
-            UserManager<User> userManager,
+        public AccountService(UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettingsOption,
             IEmailService emailService,
             IFileService fileService,
-            IUserProfileService userProfileService
-            )
+            IUserProfileService userProfileService)
         {
-            _database = uow;
             _userManager = userManager;
             _applicationSettingsOption = applicationSettingsOption.Value;
             _emailService = emailService;
@@ -83,10 +77,7 @@ namespace MeetingWebsite.BLL.Services
                 { "userId", user.Id },
                 { "code", HttpUtility.UrlEncode(code) }
             };
-            //if (await _userManager.IsEmailConfirmedAsync(user))
-            //{
-            //   return new CallbackUrlBuilder().Build(url, ResetPasswordController, urlParams);
-            //}
+
             return new CallbackUrlBuilder().Build(url, ConfirmEmailController, urlParams);
         }
 
