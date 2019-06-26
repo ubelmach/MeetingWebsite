@@ -13,6 +13,9 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class DialogController : ControllerBase
     {
+        private const int UploadFileMaxLength = 2 * 1024 * 1024;
+        private const string CorrectType = "image/jpeg";
+
         private readonly IDialogService _dialogService;
         private readonly IBlacklistService _blacklistService;
         private readonly IHubContext<ChatHub> _chatHub;
@@ -57,6 +60,23 @@ namespace MeetingWebsite.Api.Controllers
         {
             UserIds receiver, caller;
             FindCallerReceiverByIds(model.ReceiverId, out caller, out receiver);
+
+            //if (model.Photo.Any())
+            //{
+            //    foreach (var photo in model.Photo)
+            //    {
+            //        if (photo.ContentType != CorrectType)
+            //        {
+            //            return BadRequest(new { message = "Error, allowed image resolution jpg / jpeg" });
+            //        }
+
+            //        if (photo.Length > UploadFileMaxLength)
+            //        {
+            //            return BadRequest(new { message = "Error, permissible image size should not exceed 2 MB" });
+            //        }
+            //    }
+            //}
+
             var newMessage = await _dialogService.AddDialogMessage(caller.UserId, model.Message, model.DialogId, model.Photo);
             var dialog = await _dialogService.GetDialogDetails(caller.UserId, model.ReceiverId);
             var lastMessage = dialog.Messages.Last();

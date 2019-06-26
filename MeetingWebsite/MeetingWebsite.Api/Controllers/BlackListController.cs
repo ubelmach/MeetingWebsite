@@ -52,6 +52,25 @@ namespace MeetingWebsite.Api.Controllers
             return Ok();
         }
 
+        //GET: api/blacklist/CheckBlacklist/id
+        [HttpGet, Route("CheckBlacklist/{id}")]
+        public async Task<bool> CheckBlacklist(string id)
+        {
+            var userId = GetUserId();
+            var check = await _blacklistService.CheckBlacklistFromProfile(userId, id);
+            return check;
+        }
+
+        //GET: api/blacklist/DeleteFromUserProfile/id
+        [HttpGet, Route("DeleteFromUserProfile/{id}")]
+        public async Task<IActionResult> DeleteFromUserProfile(string id)
+        {
+            var userId = GetUserId();
+            var blacklist = await _blacklistService.FindUserInBlacklist(userId, id);
+            _blacklistService.DeleteFromBlackList(blacklist.Id);
+            return Ok();
+        }
+
         private string GetUserId()
         {
             return User.Claims.First(c => c.Type == "UserID").Value;

@@ -7,11 +7,13 @@ namespace MeetingWebsite.BLL.Services
 {
     public interface IFriendService
     {
-        Task<List<Friendship>> FindFriendCurrentUser(string userId);
+        Task<IEnumerable<Friendship>> FindFriendCurrentUser(string userId);
         Friendship MoveRequest(int friendId, string userId);
         Friendship SendRequest(SendFriendRequestViewModel request);
         IEnumerable<Friendship> FindNewRequests(string userId);
         void Accepted(int id);
         void Rejected(int id);
+        Task<bool> IsFriend(string currentUserId, string userId);
+        Task<Friendship> FindFriendship(string currentUserId, string userId);
     }
 }

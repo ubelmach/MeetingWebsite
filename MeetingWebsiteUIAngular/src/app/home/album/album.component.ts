@@ -12,7 +12,7 @@ export class AlbumComponent implements OnInit {
 
   userAlbums;
   photos = [];
-  imageUrl: string = "/assets/img/Nophoto.jpg";
+  imageUrl: string = "/assets/img/cameras-clipart-pdf-1.png";
   constructor(public service: AlbumService,
     private toastr: ToastrService,
     private router: Router) { }

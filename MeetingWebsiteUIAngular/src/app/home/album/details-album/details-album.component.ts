@@ -113,7 +113,7 @@ export class DetailsAlbumComponent implements OnInit {
               this.toastr.success('Success', 'Photo added');
             },
             err => {
-              console.log(err);
+              this.toastr.error(err.error.message);
             }
           )
     });

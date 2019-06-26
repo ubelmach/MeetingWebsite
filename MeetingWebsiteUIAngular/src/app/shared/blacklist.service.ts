@@ -25,4 +25,12 @@ export class BlackListService {
         return this.http.get(this.BaseURI + '/friend/checkBlacklist/' + id.toString());
     }
 
+    CheckBlackListFromProfile(id: string){
+        return this.http.get(this.BaseURI + '/blacklist/CheckBlacklist/' + id);
+    }
+
+    DeleteBlackListFromUserProfile(id: string){
+        return this.http.get(this.BaseURI + '/blacklist/DeleteFromUserProfile/' + id);
+    }
+
 }

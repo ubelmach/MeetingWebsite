@@ -12,5 +12,7 @@ namespace MeetingWebsite.BLL.Services
         Task<bool> CheckBlackList(string userId, string who);
         Task<bool> Check(string userId, string who);
         void DeleteFromBlackList(int id);
+        Task<BlackList> FindUserInBlacklist(string userId, string who);
+        Task<bool> CheckBlacklistFromProfile(string userId, string who);
     }
 }

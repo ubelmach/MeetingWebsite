@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
         this.toastr.success('Update!', 'Edit user infrormation successful.');
       },
       err => {
-        console.log(err);
+        this.toastr.error(err.error.message);
       }
     );
   }

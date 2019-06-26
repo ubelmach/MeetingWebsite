@@ -75,14 +75,12 @@ namespace MeetingWebsite.Api.Controllers
 
             if (editUserAvatar.Avatar.ContentType != CorrectType)
             {
-                ModelState.AddModelError("Avatar", "Error, allowed image resolution jpg / jpeg");
-                return BadRequest(ModelState);
+                return BadRequest(new { message = "Error, allowed image resolution jpg / jpeg"});
             }
 
             if (editUserAvatar.Avatar.Length > UploadFileMaxLength)
             {
-                ModelState.AddModelError("Avatar", "Error, permissible image size should not exceed 2 MB");
-                return BadRequest(ModelState);
+                return BadRequest(new { message = "Error, permissible image size should not exceed 5 MB"});
             }
 
             await _fileService.AddUserAvatar(editUserAvatar);

@@ -123,9 +123,10 @@
     </div>
   </div>
 </div>
-<div class="container" style="margin-top: 3%;" *ngIf="visibleSearch">
 
-  <!-- <form [formGroup]="service.searchModel" autocomplete="off">
+<div class="container" style="margin-top: 3%;" *ngIf="visibleSearch">
+  <ng-template [ngIf]="resultSearch?.length > 0" [ngIfElse]="loggedOut">
+    <!-- <form [formGroup]="service.searchModel" autocomplete="off">
 
     <div class="jumbotron" style="background: white">
       <div class="search-panel">
@@ -258,38 +259,45 @@
 
   </form> -->
 
+    <div class="result-search" *ngFor="let result of resultSearch" (click)="onCheckInfo(result.UserId)">
+      <div class="row">
 
-  <div class="result-search" *ngFor="let result of resultSearch" (click)="onCheckInfo(result.UserId)">
-    <div class="row">
+        <div class="col-sm-3">
+          <div class="text-center">
+            <img src="https://localhost:44333{{result.Avatar}}" style="max-height: 196px; max-width: 431px">
+          </div>
+        </div>
 
-      <div class="col-sm-3">
-        <div class="text-center">
-          <img src="https://localhost:44333{{result.Avatar}}" style="max-height: 196px; max-width: 431px">
+        <div class="col-md-9" style="padding-right: 30px;">
+          <ul class="list-group">
+            <li class="list-group-item" style="border:0px">
+              <strong>FirstName: </strong>{{result.FirstName}}</li>
+
+            <li class="list-group-item" style="border:0px">
+              <strong>LastName: </strong>{{result.LastName}}</li>
+
+            <li class="list-group-item" style="border:0px">
+              <strong>Age: </strong>{{result.Age}}</li>
+
+            <div *ngIf="result.Online">
+              <li class="list-group-item" style="border:0px">
+                <strong>Online: </strong>Online</li>
+            </div>
+
+            <div *ngIf="!result.Online">
+              <li class="list-group-item" style="border:0px">
+                <strong>Online: </strong>Offline</li>
+            </div>
+          </ul>
         </div>
       </div>
-
-      <div class="col-md-9" style="padding-right: 30px;">
-        <ul class="list-group">
-          <li class="list-group-item" style="border:0px">
-            <strong>FirstName: </strong>{{result.FirstName}}</li>
-
-          <li class="list-group-item" style="border:0px">
-            <strong>LastName: </strong>{{result.LastName}}</li>
-
-          <li class="list-group-item" style="border:0px">
-            <strong>Age: </strong>{{result.Age}}</li>
-
-          <div *ngIf="result.Online">
-            <li class="list-group-item" style="border:0px">
-              <strong>Online: </strong>Online</li>
-          </div>
-          
-          <div *ngIf="!result.Online">
-            <li class="list-group-item" style="border:0px">
-              <strong>Online: </strong>Offline</li>
-          </div>
-        </ul>
-      </div>
     </div>
-  </div>
+  </ng-template>
 </div>
+
+
+<ng-template #loggedOut>
+  <div class="p-3 mb-2 bg-light text-dark" style="text-align: center">
+      No users found for your request.
+  </div>
+</ng-template>

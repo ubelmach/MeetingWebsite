@@ -34,7 +34,7 @@ namespace MeetingWebsite.BLL.ViewModel
             FriendshipId = friendshipId;
         }
 
-        public static IEnumerable<ShowFriendViewModel> MapToViewModels(string userId, List<Friendship> friendships)
+        public static IEnumerable<ShowFriendViewModel> MapToViewModels(string userId, IEnumerable<Friendship> friendships)
         {
             foreach (var friendship in friendships)
             {

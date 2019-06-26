@@ -107,10 +107,37 @@ namespace MeetingWebsite.BLL.Services
             return test.Any();
         }
 
+        public async Task<bool> CheckBlacklistFromProfile(string userId, string who)
+        {
+            var user = await _accountService.GetUser(userId);
+            var test = user.WhoAddedCurrentUser
+                .Where(x => x.CurrentUserId == userId &&
+                                              x.WhomId == who)
+                .ToList();
+            return test.Any();
+        }
+
         public void DeleteFromBlackList(int id)
         {
             _database.BlacklistRepository.Delete(id);
             _database.Save();
+        }
+
+        public async Task<BlackList> FindUserInBlacklist(string userId, string who)
+        {
+            var user = await _accountService.GetUser(userId);
+
+            var whomTheUserAdded = user.WhomTheUserAdded
+                .Where(x => x.CurrentUserId == who && x.WhomId == userId)
+                .ToList();
+
+            var whoAddedCurrentUser = user.WhoAddedCurrentUser
+                .Where(x => x.CurrentUserId == userId && x.WhomId == who)
+                .ToList();
+
+            var fillList = whomTheUserAdded.Union(whoAddedCurrentUser);
+            return fillList.First();
+
         }
     }
 }

@@ -96,7 +96,12 @@ export class ChatDetailsComponent implements OnInit {
       formData.append('Photo', photo);
     });
 
-    this.service.sendMessage(formData).subscribe();
+    this.service.sendMessage(formData).subscribe(
+      (err: any) => {
+        this.toastr.error(err.error.message);
+      }
+    );
+    this.message='';
   }
 
   onOpenStikers() {

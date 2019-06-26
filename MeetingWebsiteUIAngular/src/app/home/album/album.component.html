@@ -5,16 +5,25 @@
       <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-primary">Create
         album</button>
 
-      <div class="flex-container">
-        <div *ngFor="let album of userAlbums" class="flex-element" (click)="onOpenAlbum(album.Id)"
-          onclick="document.getElementById('id02').style.display='block'">
-          <div style="text-align: center">
-            <img [src]="imageUrl" style="max-height: 150px; max-width: 431px">
-            <p>{{album.Name}}</p>
+      <ng-template [ngIf]="userAlbums?.length > 0" [ngIfElse]="loggedOut">
+
+        <div class="flex-container">
+          <div *ngFor="let album of userAlbums" class="flex-element" (click)="onOpenAlbum(album.Id)"
+            onclick="document.getElementById('id02').style.display='block'">
+            <div style="text-align: center">
+              <img [src]="imageUrl" style="max-height: 150px; max-width: 431px">
+              <p>{{album.Name}}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-template>
     </div>
+
+    <ng-template #loggedOut>
+      <div class="p-3 mb-2 bg-light text-dark" style="text-align: center">
+        This user has no albums yet.
+      </div>
+    </ng-template>
 
     <div class="w3-container">
 
@@ -35,7 +44,7 @@
                 formControlName="Name" required>
 
               <button onclick="document.getElementById('id01').style.display='none'"
-              class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Create</button>
+                class="btn btn-lg btn-block" [disabled]="!service.formModel.valid" type="submit">Create</button>
             </div>
           </form>
 

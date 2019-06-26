@@ -109,7 +109,7 @@
           <li class="list-group-item" *ngIf="userDetails.Email != null" style="border:0px">
             <strong>Email: </strong>{{userDetails.Email}}</li>
           <li class="list-group-item" *ngIf="userDetails.Birthday != null" style="border:0px">
-            <strong>Birthday: </strong>{{userDetails.Birthday}}</li>
+            <strong>Birthday: </strong>{{userDetails.Birthday | date}}</li>
           <li class="list-group-item" *ngIf="userDetails.Gender != null" style="border:0px">
             <strong>Gender: </strong>{{userDetails.Gender}}</li>
           <li class="list-group-item" *ngIf="userDetails.PurposeOfDating != null" style="border:0px">
@@ -117,9 +117,9 @@
           <li class="list-group-item" *ngIf="userDetails.MaritalStatus != null" style="border:0px">
             <strong>Marital status: </strong>{{userDetails.MaritalStatus}}</li>
           <li class="list-group-item" *ngIf="userDetails.Height != null" style="border:0px">
-            <strong>Height: </strong>{{userDetails.Height}}</li>
+            <strong>Height: </strong>{{userDetails.Height}} sm</li>
           <li class="list-group-item" *ngIf="userDetails.Weight != null" style="border:0px">
-            <strong>Weight: </strong>{{userDetails.Weight}}</li>
+            <strong>Weight: </strong>{{userDetails.Weight}} kg</li>
           <li class="list-group-item" *ngIf="userDetails.Education != null" style="border:0px">
             <strong>Education: </strong>{{userDetails.Education}}</li>
           <li class="list-group-item" *ngIf="userDetails.Nationality != null" style="border:0px">
@@ -187,12 +187,12 @@
 
         <div class="form-group">
           <label>Height</label>
-          <input class="form-control" formControlName="Height" value="{{userDetails.Height}}">
+          <input type="number" class="form-control" formControlName="Height" value="{{userDetails.Height}}">
         </div>
 
         <div class="form-group">
           <label>Weight</label>
-          <input class="form-control" formControlName="Weight" value="{{userDetails.Weight}}">
+          <input type="number" class="form-control" formControlName="Weight" value="{{userDetails.Weight}}">
         </div>
 
         <div class="form-group">

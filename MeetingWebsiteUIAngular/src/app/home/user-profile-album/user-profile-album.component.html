@@ -1,5 +1,6 @@
 <div class="container" style="margin-top: 3%;">
   <div class="jumbotron">
+    <ng-template [ngIf]="albums?.length > 0" [ngIfElse]="loggedOut">
     <div style="text-align: right">
       <div class="flex-container">
         <div *ngFor="let album of albums" class="flex-element" (click)="onOpenAlbum(album.Id)"
@@ -11,7 +12,14 @@
         </div>
       </div>
     </div>
+    </ng-template>
   </div>
+
+  <ng-template #loggedOut>
+      <div class="p-3 mb-2 bg-light text-dark" style="text-align: center">
+        This user has no albums yet.
+      </div>
+    </ng-template>
 
   <div class="we-container" style="z-index: 999999;">
     <div id="id02" class="w3-modal">

@@ -5,7 +5,11 @@
         <img src="https://localhost:44333{{userDetails.Avatar}}" style="max-height: 320px; max-width: 431px">
       </div>
       <ng-template [ngIf]="!checkBlacklist" [ngIfElse]="loggedOut">
-        <div>
+        <div *ngIf="checkFriend">
+          <button type="button" class="btn btn-outline-danger" (click)="onDeleteFriend()" style="margin-top: 2%;">Delete friend</button>
+        </div>
+
+        <div *ngIf="!checkFriend">
           <button type="button" class="btn btn-outline-info" (click)="onAddToFriend()" style="margin-top: 2%;">Add to
             friend</button>
         </div>
@@ -19,7 +23,12 @@
             albums</button>
         </div>
       </ng-template>
-      <div>
+      <div *ngIf="checkBlacklistFromProfile">
+          <button type="button" class="btn btn-outline-success" (click)="onDeleteFromBlacklist()" style="margin-top: 2%;" >Delete from
+            blacklist</button>
+        </div>      
+      
+      <div *ngIf="!checkBlacklistFromProfile">
         <button type="button" class="btn btn-outline-danger" style="margin-top: 2%;" (click)="onAddToBlacklist()">Add to
           blacklist</button>
       </div>

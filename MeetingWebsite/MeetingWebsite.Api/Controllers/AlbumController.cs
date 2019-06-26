@@ -10,6 +10,9 @@ namespace MeetingWebsite.Api.Controllers
     [ApiController]
     public class AlbumController : ControllerBase
     {
+        private const int UploadFileMaxLength = 5 * 1024 * 1024;
+        private const string CorrectType = "image/jpeg";
+
         private readonly IAlbumService _albumService;
         private readonly IAccountService _accountService;
         private readonly IFileService _fileService;
@@ -29,14 +32,13 @@ namespace MeetingWebsite.Api.Controllers
         {
             var userId = GetUserId();
             var albums = _albumService.FindAllAlbumsCurrentUser(userId).ToList();
-
-            if (!albums.Any())
-            {
-                return BadRequest(new { message = "Error, current user has no albums" });
-            }
-
             var showAlbumCurrentUser = albums.Select(item => new ShowCurrentUserAlbumViewModel(item)).ToList();
-            return Ok(showAlbumCurrentUser);
+
+            if (showAlbumCurrentUser.Any())
+            {
+                return Ok(showAlbumCurrentUser);  
+            }
+            return BadRequest(new { message = "Error, current user has no albums" });
         }
 
         //GET: api/album/GetAllAlbumUser/id
@@ -105,6 +107,20 @@ namespace MeetingWebsite.Api.Controllers
             var userId = GetUserId();
             var user = await _accountService.GetUser(userId);
             addPhoto.AppendAdditionalInfo(album, user, files);
+
+            foreach (var photo in addPhoto.Photos)
+            {
+                if (photo.ContentType != CorrectType)
+                {
+                    return BadRequest(new { message = "Error, allowed image resolution jpg / jpeg" });
+                }
+
+                if (photo.Length > UploadFileMaxLength)
+                {
+                    return BadRequest(new { message = "Error, permissible image size should not exceed 5 MB" });
+                }
+            }
+
             await _fileService.AddPhotoInAlbum(addPhoto);
             return Ok(addPhoto);
         }

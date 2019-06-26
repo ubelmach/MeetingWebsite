@@ -10,6 +10,7 @@ import * as signalR from "@aspnet/signalr";
 import { HttpTransportType } from '@aspnet/signalr';
 import { AlbumService } from 'src/app/shared/album.service';
 import { ChatService } from 'src/app/shared/char.service';
+import { FriendService } from 'src/app/shared/friend.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +23,10 @@ export class UserProfileComponent implements OnInit {
   userDetails;
 
   checkBlacklist: boolean;
+  checkBlacklistFromProfile: boolean;
   public hubConnection: signalR.HubConnection
+
+  checkFriend: boolean;
 
   message = '';
   messagePhotos: File[] = new Array();
@@ -35,7 +39,8 @@ export class UserProfileComponent implements OnInit {
     public signalR: SignalRService,
     public albumService: AlbumService,
     private router: Router,
-    private chatService: ChatService) { }
+    private chatService: ChatService,
+    private friendService: FriendService) { }
 
   async ngOnInit() {
     this.signalR.startConnection();
@@ -56,12 +61,25 @@ export class UserProfileComponent implements OnInit {
         this.checkBlacklist = res as boolean;
       }
     )
+
+    this.blacklist.CheckBlackListFromProfile(this.userId).subscribe(
+      res => {
+        this.checkBlacklistFromProfile = res as boolean;
+      }
+    )
+
+    this.friendService.checkFriend(this.userId).subscribe(
+      res => {
+        this.checkFriend = res as boolean;
+      }
+    )
   }
 
   onAddToFriend() {
     this.service.sendRequestUser(this.userId).subscribe(
       (res: any) => {
         this.toastr.success('Success!', 'User received friend request.');
+        this.ngOnInit();
         console.log('sendrequest');
       },
       (err: any) => {
@@ -73,10 +91,23 @@ export class UserProfileComponent implements OnInit {
     )
   }
 
+  onDeleteFriend() {
+    this.friendService.deleteFriendFromProfile(this.userId).subscribe(
+      (res: any) => {
+        this.toastr.success('Success!');
+        this.ngOnInit();
+      },
+      (err: any) => {
+        this.toastr.error('Faild');
+      }
+    )
+  }
+
   onAddToBlacklist() {
     this.blacklist.AddToBlackList(this.userId).subscribe(
       (res: any) => {
         this.toastr.success('Success!', 'User added to blacklist');
+        this.ngOnInit();
         console.log('blacklist');
       },
       (err: any) => {
@@ -84,6 +115,15 @@ export class UserProfileComponent implements OnInit {
           this.toastr.error('Faild');
         else
           console.log(err);
+      }
+    )
+  }
+
+  onDeleteFromBlacklist() {
+    this.blacklist.DeleteBlackListFromUserProfile(this.userId).subscribe(
+      (res: any) => {
+        this.toastr.success("Success");
+        this.ngOnInit();
       }
     )
   }
@@ -113,7 +153,7 @@ export class UserProfileComponent implements OnInit {
     )
   }
 
-  onOpenDropzone(){
+  onOpenDropzone() {
     this.visibleDropZone = !this.visibleDropZone;
   }
 

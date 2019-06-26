@@ -32,4 +32,12 @@ export class FriendService {
     getSearchUserDetails(userId: string){
         return this.http.get(this.BaseURI + '/friend/FriendInfo/' + userId)
     }
+
+    checkFriend(userId: string){
+        return this.http.get(this.BaseURI + '/friend/CheckFriend/' + userId)
+    }
+
+    deleteFriendFromProfile(userId: string){
+        return this.http.get(this.BaseURI + '/friend/DeleteFriendFromProfile/' + userId);
+    }
 }

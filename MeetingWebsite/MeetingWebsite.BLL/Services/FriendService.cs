@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MeetingWebsite.BLL.ViewModel;
 using MeetingWebsite.DAL.Interfaces;
@@ -20,19 +21,19 @@ namespace MeetingWebsite.BLL.Services
             _accountService = accountService;
         }
 
-        public async Task<List<Friendship>> FindFriendCurrentUser(string userId)
+        public async Task<IEnumerable<Friendship>> FindFriendCurrentUser(string userId)
         {
             var user = await _accountService.GetUser(userId);
             var incomingFriendships = user.IncomingFriendships
                 .Where(x => x.InviteStatus == InviteStatuses.Accepted &&
-                            x.SecondFriendId == userId);
+                            x.SecondFriendId == userId)
+                .ToList();
             var outgoingFriendships = user.OutgoingFriendships
                 .Where(x => x.InviteStatus == InviteStatuses.Accepted &&
-                            x.FirstFriendId == userId);
+                            x.FirstFriendId == userId)
+                .ToList();
 
-            var fullList = new List<Friendship>();
-            fullList.AddRange(incomingFriendships);
-            fullList.AddRange(outgoingFriendships);
+            var fullList = incomingFriendships.Union(outgoingFriendships).ToList();
 
             return !fullList.Any() ? null : fullList;
         }
@@ -98,5 +99,36 @@ namespace MeetingWebsite.BLL.Services
             _database.FriendRepository.Delete(id);
             _database.Save();
         }
+
+        public async Task<bool> IsFriend(string currentUserId, string userId)
+        {
+            var user = await _accountService.GetUser(currentUserId);
+
+            var incomingFriends = user.IncomingFriendships
+                .Where(x => x.SecondFriendId == currentUserId && x.FirstFriendId == userId)
+                .ToList();
+            var outgoingFriends = user.OutgoingFriendships
+                .Where(x => x.FirstFriendId == currentUserId && x.SecondFriendId == userId)
+                .ToList();
+
+            var fullList = incomingFriends.Union(outgoingFriends);
+            return fullList.Any();
+        }
+
+        public async Task<Friendship> FindFriendship(string currentUserId, string userId)
+        {
+            var user = await _accountService.GetUser(currentUserId);
+            var incomingFriends = user.IncomingFriendships
+                .Where(x => x.SecondFriendId == currentUserId && x.FirstFriendId == userId)
+                .ToList();
+            var outgoingFriends = user.OutgoingFriendships
+                .Where(x => x.FirstFriendId == currentUserId && x.SecondFriendId == userId)
+                .ToList();
+
+            var fullList = incomingFriends.Union(outgoingFriends);
+            return fullList.First();
+        }
+
+
     }
 }

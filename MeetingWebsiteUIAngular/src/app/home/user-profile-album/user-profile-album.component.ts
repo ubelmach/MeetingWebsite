@@ -15,7 +15,7 @@ export class UserProfileAlbumComponent implements OnInit {
 
   userId: string;
   albums;
-  imageUrl: string = "/assets/img/Nophoto.jpg";
+  imageUrl: string = "/assets/img/cameras-clipart-pdf-1.png";
 
   async ngOnInit() {
     await this.activateRoute.params.subscribe(

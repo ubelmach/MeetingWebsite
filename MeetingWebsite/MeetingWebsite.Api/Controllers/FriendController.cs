@@ -113,4 +113,24 @@ namespace MeetingWebsite.Api.Controllers
             _friendService.MoveRequest(friendshipId, userId);
             return Ok();
         }
-    }}
+
+        //GET: api/friend/CheckFriend/id
+        [HttpGet, Route("CheckFriend/{id}")]
+        public async Task<bool> CheckFriend(string id)
+        {
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var check = await _friendService.IsFriend(userId, id);
+            return check;
+        }
+
+        //GET: api/friend/DeleteFriendFromProfile/id
+        [HttpGet, Route("DeleteFriendFromProfile/{id}")]
+        public async Task<IActionResult> DeleteFriendFromProfile(string id)
+        {
+            var userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var friendship = await _friendService.FindFriendship(userId, id);
+            _friendService.Rejected(friendship.Id);
+            return Ok();
+        }
+    }
+}
